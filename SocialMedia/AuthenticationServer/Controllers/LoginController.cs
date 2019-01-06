@@ -50,6 +50,5 @@ namespace AuthenticationServer.Controllers
             }
             return null;
         }
-
     }
 }
