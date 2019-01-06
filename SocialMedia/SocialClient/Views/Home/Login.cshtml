@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Login</h2>
+<p>Fill Login...</p>
+<button class="btn">
+    @Html.ActionLink("Login","Main","Home",
+    routeValues: new { email = "rit@g.com"},
+    htmlAttributes: null)
+</button>
+

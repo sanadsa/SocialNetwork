@@ -16,6 +16,17 @@
     white-space: normal;
 }
 
+.index {
+    border: 3px solid green;
+    text-align: center;
+    display: block;
+}
+
+.identity {
+    border: 3px solid green;
+    float: left;
+}
+
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,

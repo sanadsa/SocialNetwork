@@ -1,0 +1,11 @@
+﻿@model Client.ViewModels.UserIdentityViewModel
+@{
+    ViewBag.Title = "Main";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Welcome, we miss you</h2>
+
+<div class="identity">
+    @Html.Partial("_Identity", Model.Identity);
+</div>
