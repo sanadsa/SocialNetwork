@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Social.Common.Enums
 {
+    /// <summary>
+    /// who can see my post
+    /// </summary>
     public enum PostPrivacy
     {
         Public = 1,
