@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using SocialClient.Models;
+using SocialClient.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +16,7 @@ namespace SocialClient.Controllers
         public IdentityController()
         {
             _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:39265/");
+            _client.BaseAddress = new Uri("http://localhost:33452/");
         }
 
         /// <summary>

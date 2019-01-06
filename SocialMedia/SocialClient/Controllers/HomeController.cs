@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using SocialClient.Models;
+using SocialClient.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -17,7 +20,7 @@ namespace SocialClient.Controllers
         public HomeController()
         {
             _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:39265/");
+            _client.BaseAddress = new Uri("http://localhost:33452/");
         }
 
         /// <summary>
