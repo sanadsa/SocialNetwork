@@ -14,5 +14,7 @@ namespace Common.Interfaces
         Task<User> Login(string email, string password);
 
         Task<bool> CheckIfUserExist(AuthenticationUser user);
+
+        User LoginViaFacebook(string facebookToken, string email, string username);
     }
 }

@@ -57,6 +57,7 @@
     <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Interfaces\IValidation.cs" />
     <Compile Include="Models\AuthenticationUser.cs" />
+    <Compile Include="Models\FacebookUser.cs" />
     <Compile Include="Models\Token.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

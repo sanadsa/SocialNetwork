@@ -11,7 +11,7 @@ namespace Common.Interfaces
     {
         User Login(string username, string password);
 
-        AuthenticationUser LoginViaFacebook(string token);
+        User LoginViaFacebook(string token, string email, string username);
 
         bool Logout(string token);
     }

@@ -47,6 +47,11 @@ namespace Dal.UserRepositories
             }
         }
 
+        /// <summary>
+        /// Checks whether a user exist in the database or not
+        /// </summary>
+        /// <param name="user"> the wanted user </param>
+        /// <returns> returns true if exist, otherwise false </returns>
         public async Task<bool> CheckIfUserExist(AuthenticationUser user)
         {
             using (var context = new DynamoDBContext(_contextConfig))
@@ -64,11 +69,11 @@ namespace Dal.UserRepositories
         }
 
         /// <summary>
-        /// 
+        /// Login methods gets email and password from the ui and ganerate a new one and save to the database.
         /// </summary>
-        /// <param name="email"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
+        /// <param name="email"> email from ui </param>
+        /// <param name="password"> password from ui </param>
+        /// <returns> full user </returns>
         public async Task<User> Login(string email, string password)
         {
             using (var context = new DynamoDBContext(_contextConfig))
@@ -89,6 +94,26 @@ namespace Dal.UserRepositories
                     }
                     else return null;
                 else return null;
+            }
+        }
+
+        /// <summary>
+        /// Login via facebook method gets a facebook token and ganerate a new one and finally save it to the database.
+        /// </summary>
+        /// <param name="facebookToken"> This the actual token that i get from the facebook login proccess </param>
+        /// <param name="email"> This is the facebook user email that i get from facebook </param>
+        /// <param name="username"> This is the facebook user username that i get from facebook </param>
+        /// <returns> returns the user </returns>
+        public User LoginViaFacebook(string facebookToken, string email, string username)
+        {
+            FacebookUser facebookUser = new FacebookUser() { Email = email, Username = username, IsAvilable = true };
+            using (var context = new DynamoDBContext(_contextConfig))
+            {
+                //string token = _tokenRipository.AddNewToken(facebookToken);
+                return new User()
+                {
+                    
+                };
             }
         }
     }

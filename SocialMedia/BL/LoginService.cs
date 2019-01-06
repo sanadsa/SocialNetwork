@@ -31,9 +31,18 @@ namespace BL
             }
         }
 
-        public AuthenticationUser LoginViaFacebook(string token)
+        public User LoginViaFacebook(string facebookToken, string email, string username)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _userRepository.LoginViaFacebook(facebookToken, email, username).Result;
+            }
+            catch (Exception ex)
+            {
+                LogService.WriteExceptionsToLogger(ex);
+                return null;
+            }
+
         }
 
         public bool Logout(string token)
