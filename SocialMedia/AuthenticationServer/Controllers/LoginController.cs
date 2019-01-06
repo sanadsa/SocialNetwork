@@ -38,11 +38,11 @@ namespace AuthenticationServer.Controllers
 
         [HttpPost]
         [Route("api/LoginViaFacebook")]
-        public AuthenticationUser LoginViaFacebook(string facebookToken)
+        public User LoginViaFacebook(string facebookToken, string email, string username)
         {
             try
             {
-                return _loginService.LoginViaFacebook(facebookToken);
+                return _loginService.LoginViaFacebook(facebookToken, email, username);
             }
             catch (Exception ex)
             {

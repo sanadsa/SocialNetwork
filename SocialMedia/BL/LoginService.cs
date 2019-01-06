@@ -35,7 +35,7 @@ namespace BL
         {
             try
             {
-                return _userRepository.LoginViaFacebook(facebookToken, email, username).Result;
+                return _userRepository.LoginViaFacebook(facebookToken, email, username);
             }
             catch (Exception ex)
             {

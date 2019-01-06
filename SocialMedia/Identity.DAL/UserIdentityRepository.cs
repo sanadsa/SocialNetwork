@@ -58,11 +58,11 @@ namespace Identity.DAL
         /// <summary>
         /// Search For User Identity
         /// </summary>
-        /// <param name="mail"></param>
+        /// <param name="email"></param>
         /// <param name="age"></param>
-        public IEnumerable<UserIdentity> SearchUserIdentities(string mail)
+        public IEnumerable<UserIdentity> SearchUserIdentities(string email)
         {
-            IEnumerable<UserIdentity> filteredUserIdentities = _dynamoService.DbContext.Query<UserIdentity>(mail, QueryOperator.Equal);
+            IEnumerable<UserIdentity> filteredUserIdentities = _dynamoService.DbContext.Query<UserIdentity>(email, QueryOperator.Equal);
 
             return filteredUserIdentities;
         }
@@ -70,9 +70,9 @@ namespace Identity.DAL
         /// <summary>
         /// search for item in dynamodb, return null if didnt find
         /// </summary>
-        public UserIdentity GetUserIdentity(string mail)
+        public UserIdentity GetUserIdentity(string email)
         {
-            return _dynamoService.GetItem<UserIdentity>(mail);
+            return _dynamoService.GetItem<UserIdentity>(email);
         }
 
         /// <summary>
