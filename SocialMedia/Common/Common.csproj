@@ -51,6 +51,7 @@
     <Compile Include="Environment Services\LogService.cs" />
     <Compile Include="Exceptions\GetFromDatabaseException.cs" />
     <Compile Include="Exceptions\SaveToDatabaseException.cs" />
+    <Compile Include="Exceptions\UserNotFoundException.cs" />
     <Compile Include="Interfaces\ILoginService.cs" />
     <Compile Include="Interfaces\IRegisterService.cs" />
     <Compile Include="Interfaces\ITokenRepository.cs" />

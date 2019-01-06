@@ -14,7 +14,6 @@ namespace Common.Models
         [DynamoDBHashKey]
         public string Email { get; set; }
 
-        [DynamoDBRangeKey]
         public string Username { get; set; }
 
         public string Password { get; set; }

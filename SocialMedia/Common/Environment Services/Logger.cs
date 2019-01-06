@@ -25,7 +25,7 @@ namespace Common.Environment_Services
         {
             lock (_DOR)
             {
-                File.WriteAllText(@"D:\Programming\Programming Works\Sela Work\Social media\AuthenticationService\Common\Environment Services\Logger output.txt", DateTime.Now.Millisecond + " --> " + str);
+                File.WriteAllText(@"D:\Programming\Programming Works\Sela Work\SocialNetwork\SocialNetwork\SocialMedia\Common\Environment Services\Logger output.txt", DateTime.Now.Second + " ---> " + str);
             }
         }
     }

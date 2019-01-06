@@ -86,8 +86,13 @@ namespace Dal.TokenRepositories
         public string ChangeUserToken(User user)
         {
             DateTime time = DateTime.Now.AddMinutes(-15);
-            //var token = _pocoDynamo.FromQuery<Token>(x => x.TokenId == user.TokenId && x.CreatedTime >= time).Exec()
-
+            var token = _pocoDynamo.FromQuery<Token>(x => x.TokenId == user.TokenId && x.CreatedTime <= time)
+                                    .Exec()
+                                    .FirstOrDefault(x => x.Email == user.Email && x.IsValid == true);
+            if (token == null)
+                throw new UserNotFoundException("Not found the wanted user");
+            else
+                token.IsValid = false;
             Token newToken = new Token() { CreatedTime = DateTime.Now, Email = user.Email, IsValid = true, TokenId = TokenGenerator() };
             _pocoDynamo.PutItem<Token>(newToken);
             return newToken.TokenId;
