@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 
-namespace SocialMedia.Controllers
+namespace SocialClient.Controllers
 {
     public class HomeController : Controller
     {
