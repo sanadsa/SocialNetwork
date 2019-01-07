@@ -6,6 +6,8 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using Client_SocialNetwork.Models;
+using Microsoft.Owin.Security.Facebook;
+using Client_SocialNetwork.Facebook;
 
 namespace Client_SocialNetwork
 {
@@ -57,6 +59,15 @@ namespace Client_SocialNetwork
             //app.UseFacebookAuthentication(
             //   appId: "",
             //   appSecret: "");
+            var facebookOptions = new FacebookAuthenticationOptions()
+            {
+                AppId = "",
+                AppSecret = "",
+                BackchannelHttpHandler = new FacebookBackChannelHandler(),
+                UserInformationEndpoint = "https://graph.facebook.com/v3.2/me?fields=id,email"
+            };
+            facebookOptions.Scope.Add("email");
+            app.UseFacebookAuthentication(facebookOptions);
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
