@@ -31,11 +31,18 @@ namespace BL
             }
         }
 
-        public User LoginViaFacebook(string facebookToken, string email, string username)
+        public User LoginViaFacebook(string userFacebookId, string email, string username)
         {
             try
             {
-                return _userRepository.LoginViaFacebook(facebookToken, email, username);
+                FacebookUser facebookUser = new FacebookUser()
+                {
+                    Email = email,
+                    IsAvilable = false,
+                    Username = username,
+                    UserFacebookId = userFacebookId
+                };
+                return _userRepository.LoginViaFacebook(userFacebookId, facebookUser);
             }
             catch (Exception ex)
             {
