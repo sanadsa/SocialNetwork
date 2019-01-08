@@ -37,7 +37,7 @@ namespace Dal.UserRepositories
             {
                 try
                 {
-                    if (CheckIfUserExist(user).Result)
+                    if (!CheckIfUserExist(user).Result)
                         context.Save(user);
                 }
                 catch (Exception ex)
@@ -59,7 +59,10 @@ namespace Dal.UserRepositories
                 try
                 {
                     var userCheck = await context.LoadAsync<AuthenticationUser>(user.Email);
-                    return userCheck.Email == user.Email ? true : false;
+                    if (userCheck != null)
+                        return userCheck.Email == user.Email ? true : false;
+                    else
+                        return false;
                 }
                 catch (Exception ex)
                 {
@@ -74,11 +77,11 @@ namespace Dal.UserRepositories
         /// <param name="email"> email from ui </param>
         /// <param name="password"> password from ui </param>
         /// <returns> full user </returns>
-        public async Task<User> Login(string email, string password)
+        public async Task<User> Login(string username, string password)
         {
             using (var context = new DynamoDBContext(_contextConfig))
             {
-                var userCheck = await context.LoadAsync<AuthenticationUser>(email);
+                var userCheck = await context.LoadAsync<AuthenticationUser>(username    );
                 if (userCheck != null)
                     if (userCheck.Password == password)
                     {
@@ -104,16 +107,41 @@ namespace Dal.UserRepositories
         /// <param name="email"> This is the facebook user email that i get from facebook </param>
         /// <param name="username"> This is the facebook user username that i get from facebook </param>
         /// <returns> returns the user </returns>
-        public User LoginViaFacebook(string facebookToken, string email, string username)
+        public User LoginViaFacebook(string facebookToken, FacebookUser facebookUser)
         {
-            FacebookUser facebookUser = new FacebookUser() { Email = email, Username = username, IsAvilable = true };
             using (var context = new DynamoDBContext(_contextConfig))
             {
-                //string token = _tokenRipository.AddNewToken(facebookToken);
+                if (!CheckIfFacebookUserExist(facebookUser).Result)
+                    context.Save(facebookUser);
+                string token = _tokenRipository.AddNewFacebookUserToken(facebookUser);
                 return new User()
                 {
-                    
+                    Email = facebookUser.Email,
+                    IsAvailable = true,
+                    TokenId = token,
+                    Username = facebookUser.Username
                 };
+            }
+        }
+
+        /// <summary>
+        /// Checks whether a user exist in the database or not
+        /// </summary>
+        /// <param name="user"> the wanted user </param>
+        /// <returns> returns true if exist, otherwise false </returns>
+        private async Task<bool> CheckIfFacebookUserExist(FacebookUser facebookUser)
+        {
+            using (var context = new DynamoDBContext(_contextConfig))
+            {
+                try
+                {
+                    var userCheck = await context.LoadAsync<FacebookUser>(facebookUser.UserFacebookId);
+                    return userCheck.UserFacebookId == facebookUser.UserFacebookId ? true : false;
+                }
+                catch (Exception ex)
+                {
+                    throw new GetFromDatabaseException("A problrm during the Load from context operation", ex.InnerException);
+                }
             }
         }
     }

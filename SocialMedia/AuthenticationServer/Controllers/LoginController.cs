@@ -1,6 +1,8 @@
-﻿using Common.Environment_Services;
+﻿using AuthenticationServer.Models;
+using Common.Environment_Services;
 using Common.Interfaces;
 using Common.Models;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,13 +23,14 @@ namespace AuthenticationServer.Controllers
             _validation = validation;
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("api/Login")]
-        public User Login(string username, string password)
+        public User Login([FromBody]object user)
         {
             try
             {
-                return _loginService.Login(username, password);
+                //var othe = (UserLogin)user;
+                //return _loginService.Login(user.Email, user.Password);
             }
             catch (Exception ex)
             {

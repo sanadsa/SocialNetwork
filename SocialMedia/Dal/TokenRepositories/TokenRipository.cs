@@ -64,7 +64,7 @@ namespace Dal.TokenRepositories
         {
             using (var context = new DynamoDBContext(_contextConfig))
             {
-                Token token = new Token() { CreatedTime = DateTime.Now, IsValid = true, TokenId = TokenGenerator(), Email = user.Email };
+                Token token = new Token() { CreatedTime = DateTime.Now, IsValid = true, TokenId = TokenGenerator(), Email = user.UserFacebookId };
                 try
                 {
                     context.Save(token);
