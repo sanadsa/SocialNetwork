@@ -88,6 +88,7 @@ namespace Client_SocialMedia.Models
     {
         [Required]
         [EmailAddress]
+        [DataType(DataType.EmailAddress)]
         [Display(Name = "Email")]
         public string Email { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Client_SocialMedia.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,13 +31,7 @@ namespace Client_SocialMedia.Controllers
 
             string response = result.Content.ReadAsStringAsync().Result;
             var identity = JsonConvert.DeserializeObject<UserIdentity>(response);
-
-            var identityViewModel = new UserIdentityViewModel
-            {
-                Identity = identity
-            };
-
-            return View(identityViewModel);
+            return View(identity);
         }
 
         /// <summary>

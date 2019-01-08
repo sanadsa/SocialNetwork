@@ -40,7 +40,9 @@ namespace Client_SocialMedia.Controllers
             UserLogin userLogin = new UserLogin() { Username = loginViewModel.Username, Password = loginViewModel.Password };
             HttpResponseMessage response = await _clientHttp.PostAsJsonAsync("api/Login", userLogin);
             if (response.IsSuccessStatusCode)
-                return View(""); 
+                return View(""); //TODO should return the view with the user model.
+            else
+                return View(""); //TODO should return the view with the user model.
         }
 
         //
@@ -48,6 +50,7 @@ namespace Client_SocialMedia.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> LoginViaFacebook(string returnUrl)
         {
+            return View();
         }
     }
 }
