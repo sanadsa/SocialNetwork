@@ -61,8 +61,8 @@ namespace Client_SocialNetwork
             //   appSecret: "");
             var facebookOptions = new FacebookAuthenticationOptions()
             {
-                AppId = "",
-                AppSecret = "",
+                AppId = "302110027103118",
+                AppSecret = "8023d3896c8487f4642f2411a727b391",
                 BackchannelHttpHandler = new FacebookBackChannelHandler(),
                 UserInformationEndpoint = "https://graph.facebook.com/v3.2/me?fields=id,email"
             };
