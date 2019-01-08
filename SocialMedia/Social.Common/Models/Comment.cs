@@ -11,6 +11,7 @@ namespace Social.Common.Models
     /// </summary>
     public class Comment
     {
+        public int ID { get; set; }
         public string Text { get; set; }
         public byte[] Image { get; set; }
         public List<string> Tags { get; set; }

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2B01771E-CD87-4C51-B86F-AA5FD404DE85}</ProjectGuid>
+    <ProjectGuid>{6C6611C6-EF26-4CF4-AAB5-4F12FCC2D3FC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Social.Common</RootNamespace>
-    <AssemblyName>Social.Common</AssemblyName>
+    <RootNamespace>Social.BL</RootNamespace>
+    <AssemblyName>Social.BL</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,18 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums\ePostPrivacy.cs" />
-    <Compile Include="Interfaces\IFeedRepository.cs" />
-    <Compile Include="Interfaces\IPostManager.cs" />
-    <Compile Include="Interfaces\IPostRepository.cs" />
-    <Compile Include="Interfaces\IUserManager.cs" />
-    <Compile Include="Interfaces\IUserRepository.cs" />
-    <Compile Include="Models\Comment.cs" />
-    <Compile Include="Models\Feed.cs" />
-    <Compile Include="Models\Post.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="PostManager.cs" />
+    <Compile Include="UserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Social.Common\Social.Common.csproj">
+      <Project>{2B01771E-CD87-4C51-B86F-AA5FD404DE85}</Project>
+      <Name>Social.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
