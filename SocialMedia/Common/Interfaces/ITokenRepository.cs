@@ -9,8 +9,10 @@ namespace Common.Interfaces
 {
     public interface ITokenRepository
     {
-        string AddNewToken(AuthenticationUser user);
+        Token AddNewToken(AuthenticationUser user);
 
-        string ChangeUserToken(User user);
+        Token AddNewFacebookUserToken(FacebookUser user);
+
+        Token ChangeUserToken(User user);
     }
 }

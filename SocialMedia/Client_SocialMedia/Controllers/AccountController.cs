@@ -12,6 +12,9 @@ using Client_SocialMedia.Models;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Formatting;
+using Client_SocialMedia.Consts;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace Client_SocialMedia.Controllers
 {
@@ -22,9 +25,9 @@ namespace Client_SocialMedia.Controllers
         public AccountController()
         {
             _clientHttp = new HttpClient();
-            _clientHttp.BaseAddress = new Uri("http://localhost:61154/");
+            _clientHttp.BaseAddress = new Uri(ConstantFields.Authentication_BaseAddress);
             _clientHttp.DefaultRequestHeaders.Accept.Add(
-               new MediaTypeWithQualityHeaderValue("application/json"));
+               new MediaTypeWithQualityHeaderValue(ConstantFields.Headers_Type));
         }
 
         public ActionResult Index()
@@ -38,19 +41,20 @@ namespace Client_SocialMedia.Controllers
         public async Task<ActionResult> Login(LoginViewModel loginViewModel)
         {
             UserLogin userLogin = new UserLogin() { Username = loginViewModel.Username, Password = loginViewModel.Password };
-            HttpResponseMessage response = await _clientHttp.PostAsJsonAsync("api/Login", userLogin);
+            var userLoginJson = JsonConvert.SerializeObject(userLogin);
+            HttpResponseMessage response = await _clientHttp.PostAsJsonAsync(ConstantFields.Authentication_Login, userLoginJson);
             if (response.IsSuccessStatusCode)
                 return View(""); //TODO should return the view with the user model.
             else
                 return View(""); //TODO should return the view with the user model.
         }
 
-        //
-        // GET: /Account/ExternalLoginCallback
-        [AllowAnonymous]
-        public async Task<ActionResult> LoginViaFacebook(string returnUrl)
-        {
-            return View();
-        }
+        ////
+        //// GET: /Account/ExternalLoginCallback
+        //[AllowAnonymous]
+        //public async Task<ActionResult> LoginViaFacebook(string returnUrl)
+        //{
+        //    return View();
+        //}
     }
 }

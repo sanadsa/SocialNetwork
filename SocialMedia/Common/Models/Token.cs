@@ -8,17 +8,16 @@ using System.Threading.Tasks;
 
 namespace Common.Models
 {
-    [DynamoDBTable("TokensTable")]
+    [DynamoDBTable("TokenTable")]
     public class Token
     {
         [DynamoDBHashKey]
-        public string TokenId { get; set; }
+        public string Username { get; set; }
 
         [DynamoDBRangeKey]
-        public DateTime CreatedTime { get; set; }
+        public string CreatedTime { get; set; }
 
-        [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
+        public string TokenId { get; set; }
 
         public bool IsValid { get; set; }
     }

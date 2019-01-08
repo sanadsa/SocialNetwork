@@ -18,7 +18,7 @@ namespace Common.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        public string TokenId { get; set; }
+        public Token Token { get; set; }
 
         [DefaultValue(false)]
         public bool IsAvailable { get; set; }

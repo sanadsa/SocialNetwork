@@ -43,11 +43,11 @@ namespace Client_SocialMedia.Controllers
 
             string response = result.Content.ReadAsStringAsync().Result;
             var identity = JsonConvert.DeserializeObject<Models.UserIdentityModel>(response);
-            var viewModel = new UserIdentityViewModel
-            {
-                Identity = identity
-            };
-            return View(viewModel);
+            //var viewModel = new UserIdentityViewModel
+            //{
+            //    Identity = identity
+            //};
+            return null;//View(viewModel);
         }
 
         /// <summary>

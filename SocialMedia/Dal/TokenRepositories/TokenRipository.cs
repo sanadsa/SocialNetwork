@@ -38,15 +38,18 @@ namespace Dal.TokenRepositories
         /// </summary>
         /// <param name="user"> the user from the login </param>
         /// <returns> return the token </returns>
-        public string AddNewToken(AuthenticationUser user)
+        public Token AddNewToken(AuthenticationUser user)
         {
             using (var context = new DynamoDBContext(_contextConfig))
             {
-                Token token = new Token() { CreatedTime = DateTime.Now, IsValid = true, TokenId = TokenGenerator(), Email = user.Email };
+                Token token = new Token() { CreatedTime = DateTime.Now.ToString(),
+                                            IsValid = true,
+                                            TokenId = TokenGenerator(),
+                                            Username = user.Username };
                 try
                 {
                     context.Save(token);
-                    return token.TokenId;
+                    return token;
                 }
                 catch (Exception ex)
                 {
@@ -60,15 +63,15 @@ namespace Dal.TokenRepositories
         /// </summary>
         /// <param name="user"> the facebook user </param>
         /// <returns> the new token </returns>
-        public string AddNewFacebookUserToken(FacebookUser user)
+        public Token AddNewFacebookUserToken(FacebookUser user)
         {
             using (var context = new DynamoDBContext(_contextConfig))
             {
-                Token token = new Token() { CreatedTime = DateTime.Now, IsValid = true, TokenId = TokenGenerator(), Email = user.UserFacebookId };
+                Token token = new Token() { CreatedTime = DateTime.Now.ToString(), IsValid = true, TokenId = TokenGenerator(), Username = user.UserFacebookId };
                 try
                 {
                     context.Save(token);
-                    return token.TokenId;
+                    return token;
                 }
                 catch (Exception ex)
                 {
@@ -83,19 +86,23 @@ namespace Dal.TokenRepositories
         /// </summary>
         /// <param name="user"> The wanted user </param>
         /// <returns> the new token </returns>
-        public string ChangeUserToken(User user)
+        public Token ChangeUserToken(User user)
         {
-            DateTime time = DateTime.Now.AddMinutes(-15);
-            var token = _pocoDynamo.FromQuery<Token>(x => x.TokenId == user.TokenId && x.CreatedTime <= time)
-                                    .Exec()
-                                    .FirstOrDefault(x => x.Email == user.Email && x.IsValid == true);
-            if (token == null)
-                throw new UserNotFoundException("Not found the wanted user");
-            else
-                token.IsValid = false;
-            Token newToken = new Token() { CreatedTime = DateTime.Now, Email = user.Email, IsValid = true, TokenId = TokenGenerator() };
-            _pocoDynamo.PutItem<Token>(newToken);
-            return newToken.TokenId;
+            using (var context = new DynamoDBContext(_contextConfig))
+            {
+                var token = context.Load<Token>(user.Token.Username, user.Token.CreatedTime);
+                if (token == null)
+                    throw new UserNotFoundException("Not found the wanted user");
+                else
+                {
+                    token.IsValid = false;
+                    context.Delete(user.Token);
+                    context.Save(token);
+                }
+                Token newToken = new Token() { CreatedTime = DateTime.Now.ToString(), Username = user.Username, IsValid = true, TokenId = TokenGenerator() };
+                context.Save(newToken);
+                return newToken;
+            }
         }
 
         /// <summary>

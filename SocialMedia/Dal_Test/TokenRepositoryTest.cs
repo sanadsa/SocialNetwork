@@ -11,7 +11,7 @@ namespace Dal_Test
         [TestMethod]
         public void AddNewTokenTest()
         {
-            AuthenticationUser user = new AuthenticationUser() { Email = "qdjnd@mewmf.fkemf", IsAvilable = true, Password = "dwqd", Username = "qdw" };
+            AuthenticationUser user = new AuthenticationUser() { Email = "qdjnd@mewmf.fkemf", IsAvilable = true, Password = "1234", Username = "itamar1" };
             TokenRipository tr = new TokenRipository();
             tr.AddNewToken(user);
         }
@@ -19,7 +19,8 @@ namespace Dal_Test
         [TestMethod]
         public void ChangeUserToken_ShuoldGenerateNewTokenForTheSameUser()
         {
-            User user = new User() { Email = "qdjnd@mewmf.fkemf", IsAvailable = true, Password = "ddd", TokenId = "Gl8N2yTU5UCo3f7zW9lutQ==", Username = "ddd" };
+            Token token = new Token() { Username = "itamar1", CreatedTime = "1/8/2019 11:19:14 PM" };
+            User user = new User() { Email = "qdjnd@mewmf.fkemf", IsAvailable = true, Password = "ddd", Token = token, Username = "itamar1" };
             TokenRipository tr = new TokenRipository();
             tr.ChangeUserToken(user);
         }

@@ -9,7 +9,7 @@ namespace Dal_Test
     public class AuthenticationRepositoriesTest
     {
         [TestMethod]
-        public void AddUserToDatabase_ShouldReturnTheWantedUser()
+        public void AddUserToDatabase_ShouldAddedUser()
         {
             UserRepository AR = new UserRepository();
             AuthenticationUser user1 = new AuthenticationUser { Email = "1", Password = "1234", Username = "itamar1" };

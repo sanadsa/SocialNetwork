@@ -58,11 +58,8 @@ namespace Dal.UserRepositories
             {
                 try
                 {
-                    var userCheck = await context.LoadAsync<AuthenticationUser>(user.Email);
-                    if (userCheck != null)
-                        return userCheck.Email == user.Email ? true : false;
-                    else
-                        return false;
+                    var userCheck = await context.LoadAsync<AuthenticationUser>(user.Username);
+                    return userCheck != null ? true : false;
                 }
                 catch (Exception ex)
                 {
@@ -81,17 +78,17 @@ namespace Dal.UserRepositories
         {
             using (var context = new DynamoDBContext(_contextConfig))
             {
-                var userCheck = await context.LoadAsync<AuthenticationUser>(username    );
+                var userCheck = await context.LoadAsync<AuthenticationUser>(username);
                 if (userCheck != null)
                     if (userCheck.Password == password)
                     {
-                        string token = _tokenRipository.AddNewToken(userCheck);
+                        Token token = _tokenRipository.AddNewToken(userCheck);
                         return new User()
                         {
                             Email = userCheck.Email,
                             IsAvailable = true,
                             Password = userCheck.Password,
-                            TokenId = token,
+                            Token = token,
                             Username = userCheck.Username
                         };
                     }
@@ -113,12 +110,12 @@ namespace Dal.UserRepositories
             {
                 if (!CheckIfFacebookUserExist(facebookUser).Result)
                     context.Save(facebookUser);
-                string token = _tokenRipository.AddNewFacebookUserToken(facebookUser);
+                Token token = _tokenRipository.AddNewFacebookUserToken(facebookUser);
                 return new User()
                 {
                     Email = facebookUser.Email,
                     IsAvailable = true,
-                    TokenId = token,
+                    Token = token,
                     Username = facebookUser.Username
                 };
             }

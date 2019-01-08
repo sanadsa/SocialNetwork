@@ -2,6 +2,7 @@
 using Common.Environment_Services;
 using Common.Interfaces;
 using Common.Models;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -16,21 +17,24 @@ namespace AuthenticationServer.Controllers
     {
         private readonly ILoginService _loginService;
         private readonly IValidation _validation;
+        private JObject jObject;
+
 
         public LoginController(ILoginService loginService, IValidation validation)
         {
             _loginService = loginService;
             _validation = validation;
+            jObject = new JObject();
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("api/Login")]
-        public User Login([FromBody]object user)
+        public User Login([FromBody]string userLoginJson)
         {
             try
             {
-                //var othe = (UserLogin)user;
-                //return _loginService.Login(user.Email, user.Password);
+                var user = JsonConvert.DeserializeObject<UserLogin>(userLoginJson);
+                return _loginService.Login(user.Email, user.Password);
             }
             catch (Exception ex)
             {
@@ -41,11 +45,12 @@ namespace AuthenticationServer.Controllers
 
         [HttpPost]
         [Route("api/LoginViaFacebook")]
-        public User LoginViaFacebook(string facebookToken, string email, string username)
+        public User LoginViaFacebook([FromBody]string userLoginJson)
         {
             try
             {
-                return _loginService.LoginViaFacebook(facebookToken, email, username);
+                var user = JsonConvert.DeserializeObject<FacebookLogin>(userLoginJson);
+                return _loginService.LoginViaFacebook(user.FacebookToken, user.Email, user.Username);
             }
             catch (Exception ex)
             {
