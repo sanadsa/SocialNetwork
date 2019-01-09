@@ -29,12 +29,12 @@ namespace AuthenticationServer.Controllers
 
         [HttpPost]
         [Route("api/Login")]
-        public User Login([FromBody]string userLoginJson)
+        public string Login([FromBody]string userLoginJson)
         {
             try
             {
                 var user = JsonConvert.DeserializeObject<UserLogin>(userLoginJson);
-                return _loginService.Login(user.Email, user.Password);
+                return JsonConvert.SerializeObject(_loginService.Login(user.Username, user.Password));
             }
             catch (Exception ex)
             {

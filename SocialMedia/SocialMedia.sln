@@ -45,6 +45,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ConsoleTest", "ConsoleTest"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{A8743EBD-923B-4C7B-8E6B-32DA590719E7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSite_SocialNetwork", "WebSite_SocialNetwork\WebSite_SocialNetwork.csproj", "{83A22301-27B7-438D-8B3C-9E56EE359F66}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -115,6 +117,10 @@ Global
 		{A8743EBD-923B-4C7B-8E6B-32DA590719E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8743EBD-923B-4C7B-8E6B-32DA590719E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8743EBD-923B-4C7B-8E6B-32DA590719E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83A22301-27B7-438D-8B3C-9E56EE359F66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83A22301-27B7-438D-8B3C-9E56EE359F66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83A22301-27B7-438D-8B3C-9E56EE359F66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83A22301-27B7-438D-8B3C-9E56EE359F66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -136,6 +142,7 @@ Global
 		{288524D8-7BA2-4304-BA0B-AF001DE43894} = {2571AD25-41C7-4614-9408-C57B752A93B4}
 		{218C6AEF-2D37-4885-B698-788FEBEC51D7} = {2571AD25-41C7-4614-9408-C57B752A93B4}
 		{A8743EBD-923B-4C7B-8E6B-32DA590719E7} = {66E006B2-BE53-4280-958E-9D5E6E5EB44E}
+		{83A22301-27B7-438D-8B3C-9E56EE359F66} = {9DAA14D7-2B7A-4EA4-B4C3-3FC3B1B886ED}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0F9007C2-C92F-4371-AB30-E262C9B244A2}
