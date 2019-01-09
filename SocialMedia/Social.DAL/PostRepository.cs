@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace Social.DAL
 {
@@ -16,16 +18,25 @@ namespace Social.DAL
         // 🚏 -> 🚍 -> 🚏
         public PostRepository()
         {
-            driver = GraphDatabase.Driver("http://ec2-54-205-132-206.compute-1.amazonaws.com:7474/db/data", AuthTokens.Basic("neo4j", "itamar"));
+            driver = GraphDatabase.Driver("bolt://localhost:7687", AuthTokens.Basic("neo4j", "password"));
         }
                 
         public void AddPost(int userId, Post post)
         {
+            // string json = JsonConvert.SerializeObject(post);
+            var serializer = new JsonSerializer();
+            var stringWriter = new StringWriter();
+            using (var writer = new JsonTextWriter(stringWriter))
+            {
+                writer.QuoteName = false;
+                serializer.Serialize(writer, post);
+            }
+            var json = stringWriter.ToString();
             using (var session = driver.Session())
             {
                 var results = session.Run(
-                $"CREATE (p:Post {{\"{post}\"}})")
-                .Consume();
+                $@"CREATE (p:Post {json})");
+                
             }
         }
 
