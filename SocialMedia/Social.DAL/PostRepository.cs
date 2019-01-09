@@ -2,19 +2,15 @@
 using Social.Common.Enums;
 using Social.Common.Interfaces;
 using Social.Common.Models;
+using Social.Common.CommonActions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using System.IO;
 
 namespace Social.DAL
 {
     public class PostRepository : IPostRepository
     {
         static IDriver driver;
+        private CommonMethods common = new CommonMethods();
         // 🚏 -> 🚍 -> 🚏
         public PostRepository()
         {
@@ -23,20 +19,11 @@ namespace Social.DAL
                 
         public void AddPost(int userId, Post post)
         {
-            // string json = JsonConvert.SerializeObject(post);
-            var serializer = new JsonSerializer();
-            var stringWriter = new StringWriter();
-            using (var writer = new JsonTextWriter(stringWriter))
-            {
-                writer.QuoteName = false;
-                serializer.Serialize(writer, post);
-            }
-            var json = stringWriter.ToString();
+            var json = common.ObjectToJson(post);
             using (var session = driver.Session())
             {
                 var results = session.Run(
                 $@"CREATE (p:Post {json})");
-                
             }
         }
 

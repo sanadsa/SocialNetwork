@@ -10,11 +10,13 @@ namespace Social.Common.Interfaces
     public interface IUserRepository
     {
         void AddUser(User user);
-        void FollowUser(User user, User userToFollow);
-        void BlockUser(User user, User userToBlock);
+        void DeleteUser(int userId);
+        void Follow(int activeUserId, int userToFollow);
+        void UnFollow(int activeUserId, int userToUnFollow);
+        void Block(int activeUserId, int userToBlock);
+        void UnBlock(int activeUserId, int userToUnBlock);
         User GetUser(string userName);
         IEnumerable<User> GetBlockedUsers(User user);
-        void UnblockUser(User user, User blockedUser);
         IEnumerable<User> GetFollowing(User user);
         IEnumerable<User> GetFollowers(User user);
     }
