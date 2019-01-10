@@ -15,7 +15,7 @@ namespace Social.Common.Interfaces
         void UnFollow(int activeUserId, int userToUnFollow);
         void Block(int activeUserId, int userToBlock);
         void UnBlock(int activeUserId, int userToUnBlock);
-        User GetUser(string userName);
+        User GetUser(int userId);
         IEnumerable<User> GetBlockedUsers(User user);
         IEnumerable<User> GetFollowing(User user);
         IEnumerable<User> GetFollowers(User user);
