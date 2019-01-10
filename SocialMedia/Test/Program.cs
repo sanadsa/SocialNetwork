@@ -16,7 +16,7 @@ namespace Test
             Post post = new Post
             {
                 Comments = new List<Comment> { },
-                ID = 1,
+                PostId = 1,
                 Image = new byte[0],
                 Likes = 2,
                 Tags = new List<string> { "amazing", "wow" },

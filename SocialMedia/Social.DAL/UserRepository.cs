@@ -50,9 +50,12 @@ namespace Social.DAL
         /// </summary>
         public void DeleteUser(int userId)
         {
-            var query = $@"MATCH (user:User)
-                           WHERE user.UserId = {userId}
-                           DELETE user";
+            //var query = $@"MATCH (user:User)
+            //               WHERE user.UserId = {userId}
+            //               DELETE user";
+            var query = $@"OPTIONAL MATCH (user:User)<-[r]-()
+                           WHERE user.Username = {userId}
+                           DELETE r, user";
             _repo.RunQuery(driver, query);
         }
 
@@ -84,9 +87,21 @@ namespace Social.DAL
             throw new NotImplementedException();
         }
 
-        public User GetUser(string userName)
+        /// <summary>
+        /// get user from neo4j
+        /// </summary>
+        public User GetUser(int userId)
         {
-            throw new NotImplementedException();
+            var query = $@"MATCH (user:User)
+                             WHERE user.Id = {userId}
+                             RETURN user";
+            var result = _repo.RunQuery(driver, query);
+            foreach (var item in result)
+            {
+                
+            }
+            var user = result.GetEnumerator(); //.Single();
+            return (User) user;
         }
 
         /// <summary>

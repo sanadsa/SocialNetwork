@@ -20,13 +20,13 @@ namespace Social.DAL
         /// </summary>
         /// <param name="driver"></param>
         /// <param name="query"></param>
-        public void RunQuery(IDriver driver, string query)
+        public IStatementResult RunQuery(IDriver driver, string query)
         {
             try
             {
                 using (var session = driver.Session())
                 {
-                    var result = session.Run(query);
+                    return session.Run(query);
                 }
             }
             catch (Neo4jException ex)

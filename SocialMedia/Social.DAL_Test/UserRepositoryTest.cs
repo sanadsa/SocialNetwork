@@ -53,7 +53,14 @@ namespace Social.DAL_Test
         [TestMethod]
         public void Delete()
         {
-            u.DeleteUser(3);
+            u.DeleteUser(1);
         }
+
+        [TestMethod]
+        public void Get()
+        {
+            var user = u.GetUser(1);
+            System.Console.WriteLine(user.Username);
+        }        
     }
 }

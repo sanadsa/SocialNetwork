@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Social.Common.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,11 +12,12 @@ namespace Social.Common.Models
     /// </summary>
     public class Post
     {
-        public int ID { get; set; }
+        public int PostId { get; set; }
         public string Text { get; set; }
         public byte[] Image { get; set; }
         public List<string> Tags { get; set; }
         public int Likes { get; set; }
+        public ePostPrivacy Privacy { get; set; }
         public List<Comment> Comments { get; set; }
     }
 }
