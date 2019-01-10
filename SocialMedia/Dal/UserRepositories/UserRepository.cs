@@ -37,7 +37,8 @@ namespace Dal.UserRepositories
             {
                 try
                 {
-                    if (!CheckIfUserExist(user).Result)
+                    var userCheck = await CheckIfUserExist(user);
+                    if (!userCheck)
                     {
                         await context.SaveAsync(user);
                         return true;
