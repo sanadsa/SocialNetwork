@@ -18,11 +18,11 @@ namespace BL
             _userRepository = userRepository;
         }
 
-        public User Login(string email, string password)
+        public async Task<User> Login(string username, string password)
         {
             try
             {
-                return _userRepository.Login(email, password).Result;
+                return await _userRepository.Login(username, password);
             }
             catch (Exception ex)
             {

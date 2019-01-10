@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WebSite_SocialNetwork.Constants;
@@ -23,6 +24,7 @@ namespace WebSite_SocialNetwork.Controllers
             _client.DefaultRequestHeaders.Accept.Add(new
                 MediaTypeWithQualityHeaderValue(ConstantFields.Headers_Type));
         }
+
         // GET: Account
         public ActionResult Index()
         {
@@ -58,6 +60,7 @@ namespace WebSite_SocialNetwork.Controllers
 
         public ActionResult FacebookCallBack(string code)
         {
+
             var fb = new FacebookClient();
             dynamic result = fb.Post("oauth/access_token", new
             {
@@ -76,6 +79,11 @@ namespace WebSite_SocialNetwork.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        private void AddFacebookUserIdentity(string email, string username)
+        {
+
+        }
+
         public ActionResult Login(LoginViewModel loginViewModel)
         {
             var loginUser = JsonConvert.SerializeObject(new { Username = loginViewModel.Username, Password = loginViewModel.Password });
@@ -85,6 +93,21 @@ namespace WebSite_SocialNetwork.Controllers
                                         "Home",
                                         JsonConvert.DeserializeObject<User>(response.Content.ReadAsAsync<string>().Result));
             return RedirectToAction("Index","Home");
+        }
+
+        public ActionResult RegisterNewClient(RegisterUser registerUser)
+        {
+            var register = JsonConvert.SerializeObject(
+                new {
+                    Username = registerUser.Username,
+                    Password = registerUser.Password,
+                    Email = registerUser.Email,
+                    IsAvilable = registerUser.IsAvilable
+                });
+            var response = _client.PostAsJsonAsync(ConstantFields.Authentication_Register, register).Result;
+            if (response.IsSuccessStatusCode)
+                return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

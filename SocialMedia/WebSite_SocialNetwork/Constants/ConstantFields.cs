@@ -14,7 +14,13 @@ namespace WebSite_SocialNetwork.Constants
 
         /* Authentication Urls */
         public const string Authentication_BaseAddress = "http://localhost:61154/";
-        public const string Authentication_Login = "api/Login";
+        public const string Authentication_Login = "api/Login/Login";
+        public const string Authentication_LoginViaFacebook = "api/Login/LoginViaFacebook";
+        public const string Authentication_Register = "api/Register/RegisterNewUser";
+
+        /* Identity Service Urls */
+        public const string Identity_BaseAddress = "http://localhost:33452/";
+        public const string Identity_CreateUserIdentity = "api/Identity/CreateUserIdentity";
 
     }
 }

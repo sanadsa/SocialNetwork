@@ -8,6 +8,6 @@ namespace Common.Interfaces
 {
     public interface IRegisterService
     {
-        bool AddUser(string email, string username, string password);
+        Task<bool> AddUser(string email, string username, string password);
     }
 }

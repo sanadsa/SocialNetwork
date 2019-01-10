@@ -9,10 +9,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace AuthenticationServer.Controllers
 {
+    [RoutePrefix("api/Login")]
     public class LoginController : ApiController
     {
         private readonly ILoginService _loginService;
@@ -28,13 +30,13 @@ namespace AuthenticationServer.Controllers
         }
 
         [HttpPost]
-        [Route("api/Login")]
-        public string Login([FromBody]string userLoginJson)
+        [Route("Login")]
+        public async Task<string> Login([FromBody]string userLoginJson)
         {
             try
             {
                 var user = JsonConvert.DeserializeObject<UserLogin>(userLoginJson);
-                return JsonConvert.SerializeObject(_loginService.Login(user.Username, user.Password));
+                return JsonConvert.SerializeObject(await _loginService.Login(user.Username, user.Password));
             }
             catch (Exception ex)
             {
@@ -44,7 +46,7 @@ namespace AuthenticationServer.Controllers
         }
 
         [HttpPost]
-        [Route("api/LoginViaFacebook")]
+        [Route("LoginViaFacebook")]
         public User LoginViaFacebook([FromBody]string userLoginJson)
         {
             try

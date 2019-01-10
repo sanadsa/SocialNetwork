@@ -21,29 +21,23 @@ namespace BL
             _userRepository = userRepository;
         }
 
-        public bool AddUser(string email, string username, string password)
+        public async Task<bool> AddUser(string email, string username, string password)
         {
-            if (_validation.CheckNewUserFields(email, username, password))
+            AuthenticationUser newUser = new AuthenticationUser() { Email = email, Username = username, Password = password };
+            try
             {
-                AuthenticationUser newUser = new AuthenticationUser() { Email = email, Username = username, Password = password };
-                try
-                {
-                    _userRepository.AddUserToDatabase(newUser);
-                    return true;
-                }
-                catch (SaveToDatabaseException ex)
-                {
-                    LogService.WriteExceptionsToLogger(ex);
-                    return false;
-                }
-                catch (System.Exception ex)
-                {
-                    LogService.WriteExceptionsToLogger(ex);
-                    return false;
-                }
+                return await _userRepository.AddUserToDatabase(newUser);
             }
-            else
+            catch (SaveToDatabaseException ex)
+            {
+                LogService.WriteExceptionsToLogger(ex);
                 return false;
+            }
+            catch (System.Exception ex)
+            {
+                LogService.WriteExceptionsToLogger(ex);
+                return false;
+            }
         }
     }
 }

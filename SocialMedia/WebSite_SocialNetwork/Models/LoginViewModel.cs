@@ -10,7 +10,6 @@ namespace WebSite_SocialNetwork.Models
     {
         [Required]
         [Display(Name = "Username")]
-        [EmailAddress]
         public string Username { get; set; }
 
         [Required]

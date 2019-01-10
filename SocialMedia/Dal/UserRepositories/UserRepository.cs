@@ -31,14 +31,19 @@ namespace Dal.UserRepositories
         /// Add the AuthenticationUser after checking the user validatioon with class validation
         /// </summary>
         /// <param name="user"> The Added User </param>
-        public void AddUserToDatabase(AuthenticationUser user)
+        public async Task<bool> AddUserToDatabase(AuthenticationUser user)
         {
             using (var context = new DynamoDBContext(_contextConfig))
             {
                 try
                 {
                     if (!CheckIfUserExist(user).Result)
-                        context.Save(user);
+                    {
+                        await context.SaveAsync(user);
+                        return true;
+                    }
+                    else
+                        return false;
                 }
                 catch (Exception ex)
                 {

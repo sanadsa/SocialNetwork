@@ -9,7 +9,7 @@ namespace Common.Interfaces
 {
     public interface IUserRepository
     {
-        void AddUserToDatabase(AuthenticationUser user);
+        Task<bool> AddUserToDatabase(AuthenticationUser user);
 
         Task<User> Login(string email, string password);
 

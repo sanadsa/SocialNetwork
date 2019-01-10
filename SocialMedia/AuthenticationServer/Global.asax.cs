@@ -22,6 +22,7 @@ namespace AuthenticationServer
 
             // Register your types, for instance using the scoped lifestyle:
             container.Register<ILoginService, LoginService>(Lifestyle.Scoped);
+            container.Register<IRegisterService, RegisterService>(Lifestyle.Scoped);
 
             DependenciesRegistrations dependenciesRegistrations = new DependenciesRegistrations();
             dependenciesRegistrations.SetDependencies(container);

@@ -31,7 +31,7 @@ namespace Dal_Test
         public void Login_ShouldReturnTheWantedUser()
         {
             UserRepository AR = new UserRepository();
-            var user2 = AR.Login("itamar1", "1234");
+            var user2 = AR.Login("itamar1", "1234").Result;
         }
 
         [TestMethod]

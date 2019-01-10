@@ -17,7 +17,6 @@ namespace Dal.TokenRepositories
         private readonly DynamoDBContextConfig _contextConfig;
         private readonly AmazonDynamoDBClient _dbclient;
         private readonly AmazonDynamoDBConfig _dbConfig;
-        private readonly PocoDynamo _pocoDynamo;
 
         public TokenRipository()
         {
@@ -28,9 +27,6 @@ namespace Dal.TokenRepositories
             };
             _dbConfig = new AmazonDynamoDBConfig();
             _dbclient = new AmazonDynamoDBClient(_dbConfig);
-            _pocoDynamo = new PocoDynamo(_dbclient);
-            _pocoDynamo.RegisterTable<Token>();
-            _pocoDynamo.InitSchema();
         }
 
         /// <summary>
