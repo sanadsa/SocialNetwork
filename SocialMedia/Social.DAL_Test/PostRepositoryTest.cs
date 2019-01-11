@@ -17,10 +17,8 @@ namespace Social.DAL_Test
         {
             Post post = new Post
             {
-                Comments = new List<Comment> { },
                 PostId = 5,
                 Image = new byte[0],
-                Likes = 26,
                 Privacy = ePostPrivacy.Followers,
                 Tags = new List<string> { "amazing", "wow" },
                 Text = "another post"
@@ -34,11 +32,23 @@ namespace Social.DAL_Test
             Comment comment = new Comment()
             {
                 Image = new byte[0],
-                ID = 7,
+                CommentId = 7,
                 Tags = new List<string> { "am", "ww" },
                 Text = "itamar lakerda"
             };
             p.CommentPost(5, comment);
+        }
+
+        [TestMethod]
+        public void LikePost()
+        {
+            p.LikePost(1, 4);
+        }
+
+        [TestMethod]
+        public void ChangePostPrivacy()
+        {
+            p.ChangePostPrivacy(5, ePostPrivacy.Public);
         }
     }
 }

@@ -25,9 +25,9 @@ namespace Social.DAL
         public void AddUser(User user)
         {
             var json = _repo.ObjectToJson(user);
-            //var query = $@"CREATE (u:User {{UserId: {user.UserId}}}) " +
+            //var query = "CREATE (u:User{UserId:"+ user.UserId +"})" +
             //            "ON CREATE u " +
-            //            $"SET u = {json}";
+            //            "SET u = "+json+"";          
             var query = $@"CREATE (u:User {json})";
             _repo.RunQuery(driver, query);
         }
@@ -66,7 +66,7 @@ namespace Social.DAL
         {
             var query = "MATCH (following:User{UserId:" + activeUserId + "})," +
                 "(followed:User{UserId:" + userToFollow + "})" +
-                "CREATE (following)-[r:Following]->(followed)" +
+                "CREATE UNIQUE (following)-[r:Following]->(followed)" +
                 "RETURN type(r)";
             _repo.RunQuery(driver, query);
 

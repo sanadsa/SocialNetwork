@@ -16,8 +16,6 @@ namespace Social.Common.Models
         public string Text { get; set; }
         public byte[] Image { get; set; }
         public List<string> Tags { get; set; }
-        public int Likes { get; set; }
         public ePostPrivacy Privacy { get; set; }
-        public List<Comment> Comments { get; set; }
     }
 }

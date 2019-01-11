@@ -6,15 +6,15 @@ using System;
 
 namespace Social.DAL
 {
+    /// <summary>
+    /// class for post actions in neo4j db
+    /// </summary>
     public class PostRepository : IPostRepository
     {
         static IDriver driver;
         private Repository _repo = new Repository();
         // 🚏 -> 🚍 -> 🚏
-        public PostRepository()
-        {
-            driver = GraphDatabase.Driver("bolt://localhost:7687", AuthTokens.Basic("neo4j", "password"));
-        }
+        public PostRepository() => driver = GraphDatabase.Driver("bolt://localhost:7687", AuthTokens.Basic("neo4j", "password"));
 
         /// <summary>
         /// add post to neo4j and relate it to an existing user
@@ -45,20 +45,46 @@ namespace Social.DAL
         /// </summary>
         public void ChangePostPrivacy(int postId, ePostPrivacy privacy)
         {
-            throw new NotImplementedException();
+            var privacyEnumToInt = (int) privacy;
+            var privacyQuery = "MATCH (p:Post{PostId:"+postId+"})"+
+                               "SET p.Privacy = "+privacyEnumToInt+"";
+            _repo.RunQuery(driver, privacyQuery);
         }
 
+        /// <summary>
+        /// create a comment in neo4j and relate it to an existing post
+        /// </summary>
         public void CommentPost(int postId, Comment comment)
         {
-            var query = "MATCH (p:Post)" +
-                        $"WHERE p.PostId = {postId}" +
-                        $"SET p.Comments = {comment}";
+            var json = _repo.ObjectToJson(comment);
+            var query = $"CREATE (c:Comment {json})";
+
+            _repo.RunQuery(driver, query);
+            RelateCommentToPost(postId, comment.CommentId);
+        }
+
+        /// <summary>
+        /// relate a comment to an existing post in neo4j
+        /// </summary>
+        public void RelateCommentToPost(int postId, int commentId)
+        {
+            var query = "MATCH (p:Post{PostId:" + postId + "})," +
+                "(c:Comment{CommentId:" + commentId + "})" +
+                "CREATE (c)-[r:CommentOn]->(p)" +
+                "RETURN type(r)";
             _repo.RunQuery(driver, query);
         }
 
-        public void LikePost(int postId)
+        /// <summary>
+        /// user like a post, only if he didnt liked it already
+        /// </summary>
+        public void LikePost(int userId, int postId)
         {
-            throw new NotImplementedException();
-        }
+            var query = "MATCH (u:User{UserId:" + userId + "})," +
+                "(p:Post{PostId:" + postId + "})" +
+                "CREATE UNIQUE (u)-[r:Liked]->(p)" +
+                "RETURN type(r)";
+            _repo.RunQuery(driver, query);
+        }        
     }
 }

@@ -15,7 +15,7 @@ namespace Social.DAL_Test
         {
             User user = new User
             {
-                UserId = 4,
+                UserId = 5,
                 Username = "Jaames",
                 BlockedIds = new List<string>(),
                 Email = "safir@gmail.com",
