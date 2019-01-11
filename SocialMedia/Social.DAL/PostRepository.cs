@@ -77,6 +77,7 @@ namespace Social.DAL
 
         /// <summary>
         /// user like a post, only if he didnt liked it already
+        /// creates a relate between user and a post in neo4j
         /// </summary>
         public void LikePost(int userId, int postId)
         {

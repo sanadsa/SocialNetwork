@@ -10,44 +10,94 @@ namespace Social.BL
 {
     public class UserManager : IUserManager
     {
-        public void AddUser(string userName, string email, string token, List<string> followersIds, List<string> following, List<string> blockedIds)
+        private readonly IUserRepository _userRepo;
+
+        /// <summary>
+        /// ctor init the interface - implemented by a class in simple injector in app.config
+        /// </summary>
+        public UserManager(IUserRepository repository)
         {
-            throw new NotImplementedException();
+            _userRepo = repository;
         }
 
-        public void BlockUser(string userName, string userToBlock)
+        /// <summary>
+        /// add user bl - calls the repo
+        /// </summary>
+        public void AddUser(User user)
         {
-            throw new NotImplementedException();
+            _userRepo.AddUser(user);
         }
 
-        public void FollowUser(string userName, string userToFollow)
+        /// <summary>
+        /// block user bl - calls the repo
+        /// </summary>
+        public void BlockUser(int userId, int userToBlock)
         {
-            throw new NotImplementedException();
+            _userRepo.Block(userId, userToBlock);
         }
 
-        public IEnumerable<User> GetBlockedUsers(string userName)
+        /// <summary>
+        /// delete user bl - calls the repo
+        /// </summary>
+        public void DeleteUser(int userId)
         {
-            throw new NotImplementedException();
+            _userRepo.DeleteUser(userId);
         }
 
-        public IEnumerable<User> GetFollowers(string userName)
+        /// <summary>
+        /// follow user bl - calls the repo
+        /// </summary>
+        public void FollowUser(int userId, int userToFollow)
         {
-            throw new NotImplementedException();
+            _userRepo.Follow(userId, userToFollow);
         }
 
-        public IEnumerable<User> GetFollowing(string userName)
+        /// <summary>
+        /// get blocked users bl - calls the repo
+        /// </summary>
+        public IEnumerable<User> GetBlockedUsers(int userId)
         {
-            throw new NotImplementedException();
+            return _userRepo.GetBlockedUsers(userId);
         }
 
-        public User GetUser(string userName)
+        /// <summary>
+        /// get followers bl - calls the repo
+        /// </summary>
+        public IEnumerable<User> GetFollowers(int userId)
         {
-            throw new NotImplementedException();
+            return _userRepo.GetFollowers(userId);
         }
 
-        public void UnblockUser(string userName, string blockedUser)
+        /// <summary>
+        /// get following bl - calls the repo
+        /// </summary>
+        public IEnumerable<User> GetFollowing(int userId)
         {
-            throw new NotImplementedException();
+            return _userRepo.GetFollowing(userId);
+        }
+
+        /// <summary>
+        /// get user bl - calls the repo
+        /// </summary>
+        public User GetUser(int userId)
+        {
+            return _userRepo.GetUser(userId);
+        }
+
+        /// <summary>
+        /// unblock user bl - calls the repo
+        /// </summary>
+        public void UnBlock(int userId, int userToUnBlock)
+        {
+            _userRepo.UnBlock(userId, userToUnBlock);
+        }
+
+        /// <summary>
+        /// unfollow user bl - calls the repo
+        /// </summary>
+        public void UnFollow(int userId, int userToUnFollow)
+        {
+            _userRepo.UnFollow(userId, userToUnFollow);
         }
     }
 }

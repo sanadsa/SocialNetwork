@@ -14,10 +14,10 @@ namespace Social.BL
     /// </summary>
     public class PostManager : IPostManager
     {
-        private readonly IPostRepository _postManager;
+        private readonly IPostRepository _postRepo;
         public PostManager(IPostRepository manager)
         {
-            _postManager = manager;
+            _postRepo = manager;
         }
 
         /// <summary>
@@ -26,15 +26,7 @@ namespace Social.BL
         /// <param name="post"></param>
         public void AddPost(int userId, Post post)
         {
-            try
-            {
-                _postManager.AddPost(userId, post);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            _postRepo.AddPost(userId, post);
         }
 
         /// <summary>
@@ -44,15 +36,7 @@ namespace Social.BL
         /// <param name="privacy"></param>
         public void ChangePostPrivacy(int id, ePostPrivacy privacy)
         {
-            try
-            {
-                _postManager.ChangePostPrivacy(id, privacy);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            _postRepo.ChangePostPrivacy(id, privacy);
         }
 
         /// <summary>
@@ -60,31 +44,16 @@ namespace Social.BL
         /// </summary>
         public void CommentPost(int postId, Comment comment)
         {
-            try
-            {
-                _postManager.CommentPost(postId, comment);
-            }
-            catch (Exception)
-            {
+            _postRepo.CommentPost(postId, comment);
 
-                throw;
-            }
         }
 
         /// <summary>
-        /// increase like number by 1 to an existing post in the db - calls the repository to edit the db
+        /// add like relation from user to post - calls the repository to edit the db
         /// </summary>
-        public void LikePost(int id)
+        public void LikePost(int userId, int postId)
         {
-            try
-            {
-                _postManager.LikePost(id);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            _postRepo.LikePost(userId, postId);
         }
     }
 }

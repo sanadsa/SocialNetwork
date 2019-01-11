@@ -9,13 +9,15 @@ namespace Social.Common.Interfaces
 {
     public interface IUserManager
     {
-        void AddUser(string userName, string email, string token, List<string> followersIds, List<string> following, List<string> blockedIds);
-        void FollowUser(string userName, string userToFollow);
-        void BlockUser(string userName, string userToBlock);
-        User GetUser(string userName);
-        IEnumerable<User> GetBlockedUsers(string userName);
-        void UnblockUser(string userName, string blockedUser);
-        IEnumerable<User> GetFollowing(string userName);
-        IEnumerable<User> GetFollowers(string userName);
+        void AddUser(User user);
+        void DeleteUser(int userId);
+        void FollowUser(int userId, int userToFollow);
+        void UnFollow(int userId, int userToUnFollow);
+        void BlockUser(int userId, int userToBlock);
+        void UnBlock(int userId, int userToUnBlock);
+        User GetUser(int userId);
+        IEnumerable<User> GetBlockedUsers(int userId);
+        IEnumerable<User> GetFollowing(int userId);
+        IEnumerable<User> GetFollowers(int userId);
     }
 }

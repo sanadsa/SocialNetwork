@@ -72,17 +72,17 @@ namespace Social.DAL
 
         }
 
-        public IEnumerable<User> GetBlockedUsers(User user)
+        public IEnumerable<User> GetBlockedUsers(int userId)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<User> GetFollowers(User user)
+        public IEnumerable<User> GetFollowers(int userId)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<User> GetFollowing(User user)
+        public IEnumerable<User> GetFollowing(int userId)
         {
             throw new NotImplementedException();
         }
