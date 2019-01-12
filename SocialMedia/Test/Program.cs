@@ -1,5 +1,6 @@
 ﻿using Social.Common.Models;
 using Social.DAL;
+using Social.Service_Test;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +13,18 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            PostRepository p = new PostRepository();
-            Post post = new Post
-            {
-                Comments = new List<Comment> { },
-                PostId = 1,
-                Image = new byte[0],
-                Likes = 2,
-                Tags = new List<string> { "amazing", "wow" },
-                Text = "this is test text"
-            };
-            p.AddPost(1, post);
+            //PostRepository p = new PostRepository();
+            //Post post = new Post
+            //{
+            //    PostId = 1,
+            //    Image = new byte[0],
+            //    Tags = new List<string> { "amazing", "wow" },
+            //    Text = "this is test text"
+            //};
+            //p.AddPost(1, post);
+
+            UserServiceTest service = new UserServiceTest();
+            service.AddUser();
         }
     }
 }

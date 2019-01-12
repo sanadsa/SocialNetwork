@@ -54,6 +54,15 @@
     <Reference Include="Neo4j.Driver, Version=1.7.91.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Neo4j.Driver.1.7.0\lib\net452\Neo4j.Driver.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector, Version=4.4.3.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.4.4.3\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.WebApi, Version=4.4.3.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.Integration.WebApi.4.4.3\lib\net45\SimpleInjector.Integration.WebApi.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -97,9 +106,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http.Formatting">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.4\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -168,9 +174,21 @@
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Social.BL\Social.BL.csproj">
+      <Project>{6C6611C6-EF26-4CF4-AAB5-4F12FCC2D3FC}</Project>
+      <Name>Social.BL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Social.Common\Social.Common.csproj">
       <Project>{2B01771E-CD87-4C51-B86F-AA5FD404DE85}</Project>
       <Name>Social.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Social.DAL\Social.DAL.csproj">
+      <Project>{288524D8-7BA2-4304-BA0B-AF001DE43894}</Project>
+      <Name>Social.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SocialBL\SocialBL.csproj">
+      <Project>{74D1ABCD-F6F7-4130-A46F-10F32AC90577}</Project>
+      <Name>SocialBL</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
