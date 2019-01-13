@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace AuthenticationServer.Models
+namespace WebSite_SocialNetwork.Models
 {
-    public class FacebookLogin
+    public class FacebookUser
     {
         public string FacebookUserId { get; set; }
 
-        public string Email { get; set; }
-
         public string Username { get; set; }
+
+        public string Email { get; set; }
     }
 }

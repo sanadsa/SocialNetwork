@@ -52,7 +52,7 @@ namespace AuthenticationServer.Controllers
             try
             {
                 var user = JsonConvert.DeserializeObject<FacebookLogin>(userLoginJson);
-                return _loginService.LoginViaFacebook(user.FacebookToken, user.Email, user.Username);
+                return _loginService.LoginViaFacebook(user.FacebookUserId, user.Email, user.Username);
             }
             catch (Exception ex)
             {
