@@ -40,7 +40,7 @@ namespace WebSite_SocialNetwork.Controllers
         public ActionResult Facebook()
         {
             var fb = new FacebookClient();
-            var loginUrl = fb.GetLoginUrl( new
+            var loginUrl = fb.GetLoginUrl(new
             {
                 client_id = "302110027103118",
                 client_secret = "8023d3896c8487f4642f2411a727b391",
@@ -51,6 +51,11 @@ namespace WebSite_SocialNetwork.Controllers
             return Redirect(loginUrl.AbsoluteUri);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
         public ActionResult FacebookCallBack(string code)
         {
             var fb = new FacebookClient();
@@ -70,16 +75,52 @@ namespace WebSite_SocialNetwork.Controllers
             string lastName = me.last_name;
             string userId = me.id;
             FacebookUser facebookUser = new FacebookUser() { Email = email, FacebookUserId = userId, Username = firstName + " " + lastName };
-            string JsonUser = JsonConvert.SerializeObject(facebookUser);
+            var JsonUser = JsonConvert.SerializeObject(facebookUser);
             var response = _client.PostAsJsonAsync<string>(ConstantFields.Authentication_LoginViaFacebook, JsonUser).Result;
-            var user = JsonConvert.DeserializeObject<User>(response.Content.ReadAsAsync<string>().Result);
+            var user = response.Content.ReadAsAsync<User>().Result;
             if (response.IsSuccessStatusCode)
             {
-                ViewBag.Username = user.Username;
+                OnLoginProcess(user);
                 return RedirectToAction("Wall", "Account", user);
             }
             else
                 return RedirectToAction("Index", "Home");
+        }
+
+        /// <summary>
+        /// This method gets a user after login success and checks if the identity is exist.
+        /// if the identity no exist it will create new one.
+        /// </summary>
+        /// <param name="user"></param>
+        private void OnLoginProcess(User user)
+        {
+            var response1 = _client.PostAsJsonAsync(ConstantFields.Identity_CheckIfUserExist, user.Email).Result;
+            if (response1.IsSuccessStatusCode)
+            {
+                var checkUser = response1.Content.ReadAsAsync<bool>().Result;
+                if (checkUser == true)
+                    SetUserCookie(user);
+            }
+            else
+            {
+                UserIdentity userIdentity = new UserIdentity() { Email = user.Email };
+                var userIdentityJson = JsonConvert.SerializeObject(userIdentity);
+                var response2 = _client.PostAsJsonAsync(ConstantFields.Identity_CreateUserIdentity, userIdentityJson).Result;
+                if (!response2.IsSuccessStatusCode)
+                    throw new Exception("A problem during saving to the identity database");
+                SetUserCookie(user);
+            }
+        }
+
+        /// <summary>
+        /// Gets the login user and insert to he's cookie the username.
+        /// </summary>
+        /// <param name="user"></param>
+        private void SetUserCookie(User user)
+        {
+            HttpCookie cookie = new HttpCookie("UserCookie");
+            cookie.Expires = DateTime.Now.AddMinutes(30);
+            cookie.Values["User name"] = user.Username;
         }
 
         public ActionResult Wall(User user)
@@ -99,7 +140,7 @@ namespace WebSite_SocialNetwork.Controllers
                 ViewBag.Username = user.Username;
                 return RedirectToAction("Wall", "Account", user);
             }
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult LogOff()
@@ -110,7 +151,8 @@ namespace WebSite_SocialNetwork.Controllers
         public ActionResult RegisterNewClient(RegisterUser registerUser)
         {
             var register = JsonConvert.SerializeObject(
-                new {
+                new
+                {
                     Username = registerUser.Username,
                     Password = registerUser.Password,
                     Email = registerUser.Email,

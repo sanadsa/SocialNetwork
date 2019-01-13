@@ -39,6 +39,16 @@ namespace Identity.DAL
         }
 
         /// <summary>
+        /// Check the user existency
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public bool CheckUserExistency(string email)
+        {
+            return _dynamoService.CheckUserExistency<UserIdentity>(email);
+        }
+
+        /// <summary>
         /// ModifyUserIdentity  tries to load an existing UserIdentity, modifies and saves it back. If the Item doesn’t exist, it raises an exception
         /// </summary>
         /// <param name="user"></param>

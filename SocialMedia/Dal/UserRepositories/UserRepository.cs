@@ -110,11 +110,12 @@ namespace Dal.UserRepositories
         /// <param name="email"> This is the facebook user email that i get from facebook </param>
         /// <param name="username"> This is the facebook user username that i get from facebook </param>
         /// <returns> returns the user </returns>
-        public User LoginViaFacebook(string facebookToken, FacebookUser facebookUser)
+        public async Task<User> LoginViaFacebook(string facebookToken, FacebookUser facebookUser)
         {
             using (var context = new DynamoDBContext(_contextConfig))
             {
-                if (!CheckIfFacebookUserExist(facebookUser).Result)
+                var userCheck = await CheckIfFacebookUserExist(facebookUser);
+                if (!userCheck)
                     context.Save(facebookUser);
                 Token token = _tokenRipository.AddNewFacebookUserToken(facebookUser);
                 return new User()
@@ -139,7 +140,10 @@ namespace Dal.UserRepositories
                 try
                 {
                     var userCheck = await context.LoadAsync<FacebookUser>(facebookUser.UserFacebookId);
-                    return userCheck.UserFacebookId == facebookUser.UserFacebookId ? true : false;
+                    if (userCheck != null)
+                        return userCheck.UserFacebookId == facebookUser.UserFacebookId ? true : false;
+                    else
+                        return false;
                 }
                 catch (Exception ex)
                 {

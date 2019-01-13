@@ -13,5 +13,6 @@ namespace Identity.Common.Interfaces
         void UpdateUser(UserIdentity identity);
         void DeleteUser(UserIdentity identity);
         UserIdentity GetUser(string email);
+        bool CheckIfUserExist(string email);
     }
 }

@@ -11,7 +11,8 @@ namespace WebSite_SocialNetwork.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.IsLogin = false;
+            HttpCookie cookie = new HttpCookie("UserCookie");
+            cookie.Values["User name"] = "";
             return View();
         }
 

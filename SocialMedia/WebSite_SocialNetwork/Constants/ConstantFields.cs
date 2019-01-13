@@ -21,6 +21,8 @@ namespace WebSite_SocialNetwork.Constants
         /* Identity Service Urls */
         public const string Identity_BaseAddress = "http://localhost:33452/";
         public const string Identity_CreateUserIdentity = "api/Identity/CreateUserIdentity";
-
+        public const string Identity_CheckIfUserExist = "api/Identity/CheckIfUserExist";
+        public const string Identity_UpdateUserIdentity = "api/Identity/UpdateUserIdentity";
+        public const string Identity_GetUserIdentity = "api/Identity/GetUserIdentity";
     }
 }

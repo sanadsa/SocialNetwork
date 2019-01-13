@@ -11,7 +11,7 @@ namespace Common.Interfaces
     {
         Task<User> Login(string username, string password);
 
-        User LoginViaFacebook(string token, string email, string username);
+        Task<User> LoginViaFacebook(string token, string email, string username);
 
         bool Logout(string token);
     }
