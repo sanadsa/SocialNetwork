@@ -36,12 +36,6 @@ namespace WebSite_SocialNetwork.Controllers
                 MediaTypeWithQualityHeaderValue(ConstantFields.Headers_Type));
         }
 
-        // GET: Account
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         [AllowAnonymous]
         public ActionResult Facebook()
         {
@@ -76,40 +70,34 @@ namespace WebSite_SocialNetwork.Controllers
             string lastName = me.last_name;
             string userId = me.id;
             FacebookUser facebookUser = new FacebookUser() { Email = email, FacebookUserId = userId, Username = firstName + " " + lastName };
-            var result = _client.PostAsJsonAsync<FacebookUser>(ConstantFields.Authentication_LoginViaFacebook, facebookUser);
-            if (result.Result.IsSuccessStatusCode)
+            string JsonUser = JsonConvert.SerializeObject(facebookUser);
+            var response = _client.PostAsJsonAsync<string>(ConstantFields.Authentication_LoginViaFacebook, JsonUser).Result;
+            var user = JsonConvert.DeserializeObject<User>(response.Content.ReadAsAsync<string>().Result);
+            if (response.IsSuccessStatusCode)
             {
-                ViewBag.IsLogin = true;
-                ViewBag.Username = facebookUser.Username;
+                ViewBag.Username = user.Username;
                 return RedirectToAction("Wall", "Account", user);
             }
             else
-            {
-                ViewBag.IsLogin = true;
-            }
+                return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult Wall()
+        public ActionResult Wall(User user)
         {
+            ViewBag.IsLogin = true;
+            ViewBag.Username = user.Username;
             return View();
-        }
-
-
-        private void AddFacebookUserIdentity(string email, string username, string userId)
-        {
-            
         }
 
         public ActionResult Login(LoginViewModel loginViewModel)
         {
             var loginUser = JsonConvert.SerializeObject(new { Username = loginViewModel.Username, Password = loginViewModel.Password });
             var response = _client.PostAsJsonAsync(ConstantFields.Authentication_Login, loginUser).Result;
+            var user = JsonConvert.DeserializeObject<User>(response.Content.ReadAsAsync<string>().Result);
             if (response.IsSuccessStatusCode)
             {
-                ViewBag.IsLogin = true;
-                return RedirectToAction("Index",
-                                        "Home",
-                                        JsonConvert.DeserializeObject<User>(response.Content.ReadAsAsync<string>().Result));
+                ViewBag.Username = user.Username;
+                return RedirectToAction("Wall", "Account", user);
             }
             return RedirectToAction("Index","Home");
         }
