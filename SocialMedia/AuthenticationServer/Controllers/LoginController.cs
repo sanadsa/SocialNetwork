@@ -31,12 +31,12 @@ namespace AuthenticationServer.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public async Task<string> Login([FromBody]string userLoginJson)
+        public async Task<User> Login([FromBody]string userLoginJson)
         {
             try
             {
                 var user = JsonConvert.DeserializeObject<UserLogin>(userLoginJson);
-                return JsonConvert.SerializeObject(await _loginService.Login(user.Username, user.Password));
+                return await _loginService.Login(user.Username, user.Password);
             }
             catch (Exception ex)
             {
@@ -47,12 +47,12 @@ namespace AuthenticationServer.Controllers
 
         [HttpPost]
         [Route("LoginViaFacebook")]
-        public User LoginViaFacebook([FromBody]string userLoginJson)
+        public async Task<User> LoginViaFacebook([FromBody]string userLoginJson)
         {
             try
             {
                 var user = JsonConvert.DeserializeObject<FacebookLogin>(userLoginJson);
-                return _loginService.LoginViaFacebook(user.FacebookUserId, user.Email, user.Username);
+                return await _loginService.LoginViaFacebook(user.FacebookUserId, user.Email, user.Username);
             }
             catch (Exception ex)
             {

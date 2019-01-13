@@ -31,7 +31,7 @@ namespace BL
             }
         }
 
-        public User LoginViaFacebook(string userFacebookId, string email, string username)
+        public async Task<User> LoginViaFacebook(string userFacebookId, string email, string username)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace BL
                     Username = username,
                     UserFacebookId = userFacebookId
                 };
-                return _userRepository.LoginViaFacebook(userFacebookId, facebookUser);
+                return await _userRepository.LoginViaFacebook(userFacebookId, facebookUser);
             }
             catch (Exception ex)
             {

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebSite_SocialNetwork.Models
 {
-    public class Identity
+    public class UserIdentity
     {
         public string Email { get; set; }
 
@@ -18,10 +18,5 @@ namespace WebSite_SocialNetwork.Models
         public string Address { get; set; }
 
         public string WorkAddress { get; set; }
-
-        public override string ToString()
-        {
-            return "Email: " + Email + " FisrtNAme: " + FirstName + " Age: " + Age;
-        }
     }
 }

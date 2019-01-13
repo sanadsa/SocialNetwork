@@ -17,13 +17,26 @@ namespace Identity.Common.DynamoDB
         public DynamoService()
         {
             DynamoClient = new AmazonDynamoDBClient();
-
             DbContext = new DynamoDBContext(DynamoClient, new DynamoDBContextConfig
             {
                 //Setting the Consistent property to true ensures that you'll always get the latest 
                 ConsistentRead = true,
                 SkipVersionCheck = true
             });
+        }
+
+        /// <summary>
+        /// Check the user existency
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public bool CheckUserExistency<T>(string email) where T : class
+        {
+            var user = DbContext.Load<T>(email);
+            if (user != null)
+                return true;
+            else
+                return false;
         }
 
         /// <summary>
