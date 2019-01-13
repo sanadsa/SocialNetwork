@@ -14,6 +14,8 @@ namespace SocialBL
     /// </summary>
     public class PostManager : IPostManager
     {
+        AmazonS3Uploader _s3Uploader;
+
         private readonly IPostRepository _postRepo;
         public PostManager(IPostRepository manager)
         {

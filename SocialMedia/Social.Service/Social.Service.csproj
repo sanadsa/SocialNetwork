@@ -176,10 +176,6 @@
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Social.BL\Social.BL.csproj">
-      <Project>{6C6611C6-EF26-4CF4-AAB5-4F12FCC2D3FC}</Project>
-      <Name>Social.BL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Social.Common\Social.Common.csproj">
       <Project>{2B01771E-CD87-4C51-B86F-AA5FD404DE85}</Project>
       <Name>Social.Common</Name>
