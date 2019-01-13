@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{288524D8-7BA2-4304-BA0B-AF001DE43894}</ProjectGuid>
+    <ProjectGuid>{74D1ABCD-F6F7-4130-A46F-10F32AC90577}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Social.DAL</RootNamespace>
-    <AssemblyName>Social.DAL</AssemblyName>
+    <RootNamespace>SocialBL</RootNamespace>
+    <AssemblyName>SocialBL</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,15 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Json, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c6752e45808247c2, processorArchitecture=MSIL">
-      <HintPath>..\packages\JSON.1.0.1\lib\net40\Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Neo4j.Driver, Version=1.7.91.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Neo4j.Driver.1.7.0\lib\net452\Neo4j.Driver.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,20 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FeedRepository.cs" />
-    <Compile Include="PostRepository.cs" />
+    <Compile Include="PostManager.cs" />
+    <Compile Include="UserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository.cs" />
-    <Compile Include="UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Social.Common\Social.Common.csproj">
       <Project>{2B01771E-CD87-4C51-B86F-AA5FD404DE85}</Project>
       <Name>Social.Common</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\Social.DAL\Social.DAL.csproj">
+      <Project>{288524D8-7BA2-4304-BA0B-AF001DE43894}</Project>
+      <Name>Social.DAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -11,8 +11,8 @@ namespace Social.Common.Interfaces
     public interface IPostManager
     {
         void AddPost(int userId, Post post);
-        void LikePost(int id);
+        void LikePost(int userId, int postId);
         void CommentPost(int postId, Comment comment);
-        void ChangePostPrivacy(int id, ePostPrivacy privacy);
+        void ChangePostPrivacy(int postId, ePostPrivacy privacy);
     }
 }

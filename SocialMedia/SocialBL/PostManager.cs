@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Social.BL
+namespace SocialBL
 {
     /// <summary>
     /// class that manage the post actions (post, like, comment, privacy)

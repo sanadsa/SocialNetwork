@@ -1,21 +1,26 @@
 ﻿using Social.Common.Interfaces;
 using Social.Common.Models;
+using Social.DAL;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Social.BL
+namespace SocialBL
 {
     public class UserManager : IUserManager
     {
+        //private readonly IUserRepository _userRepo;
+        ///// <summary>
+        ///// ctor init the interface - implemented by a class in simple injector in app.config
+        ///// </summary>
+        //public UserManager(IUserRepository repository)
+        //{
+        //    _userRepo = repository;
+        //}
 
-        private readonly IUserRepository _userRepo;
-        /// <summary>
-        /// ctor init the interface - implemented by a class in simple injector in app.config
-        /// </summary>
-        public UserManager(IUserRepository repository)
-        {
-            _userRepo = repository;
-        }
-
+        private UserRepository _userRepo = new UserRepository();
 
         /// <summary>
         /// add user bl - calls the repo
