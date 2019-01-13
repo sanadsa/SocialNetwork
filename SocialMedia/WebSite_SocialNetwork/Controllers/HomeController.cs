@@ -11,6 +11,7 @@ namespace WebSite_SocialNetwork.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.IsLogin = false;
             return View();
         }
 
