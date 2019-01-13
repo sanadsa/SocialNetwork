@@ -60,7 +60,6 @@ namespace WebSite_SocialNetwork.Controllers
 
         public ActionResult FacebookCallBack(string code)
         {
-
             var fb = new FacebookClient();
             dynamic result = fb.Post("oauth/access_token", new
             {
@@ -76,12 +75,15 @@ namespace WebSite_SocialNetwork.Controllers
             string email = me.email;
             string firstName = me.first_name;
             string lastName = me.last_name;
+            string userId = me.id;
+
+            var result = _client.PostAsJsonAsync<FacebookUser>(ConstantFields.Authentication_LoginViaFacebook,);
             return RedirectToAction("Index", "Home");
         }
 
-        private void AddFacebookUserIdentity(string email, string username)
+        private void AddFacebookUserIdentity(string email, string username, string userId)
         {
-
+            
         }
 
         public ActionResult Login(LoginViewModel loginViewModel)

@@ -38,6 +38,6 @@ namespace BL
                 LogService.WriteExceptionsToLogger(ex);
                 return false;
             }
-        }
+            }
     }
 }
