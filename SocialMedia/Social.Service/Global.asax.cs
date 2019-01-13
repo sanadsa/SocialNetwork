@@ -20,6 +20,7 @@ namespace Social.Service
             container.Register<IUserManager, UserManager>(Lifestyle.Scoped);
             container.Register<IPostManager, PostManager>(Lifestyle.Scoped);
             container.Register<IPostRepository, PostRepository>(Lifestyle.Scoped);
+            container.Register<IFeedRepository, FeedRepository>(Lifestyle.Scoped);
 
             // This is an extension method from the integration package.
             container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
