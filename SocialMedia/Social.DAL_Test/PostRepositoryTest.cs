@@ -17,13 +17,13 @@ namespace Social.DAL_Test
         {
             Post post = new Post
             {
-                PostId = 5,
+                PostId = 8,
                 Image = new byte[0],
-                Privacy = ePostPrivacy.Followers,
-                Tags = new List<string> { "amazing", "wow" },
-                Text = "another post"
+                Privacy = ePostPrivacy.Public,
+                Tags = new List<string> { "@omer", "@shahaf" },
+                Text = "lakerda"
             };
-            p.AddPost(5, post);
+            p.AddPost(1, post);
         }
 
         [TestMethod]
@@ -42,13 +42,27 @@ namespace Social.DAL_Test
         [TestMethod]
         public void LikePost()
         {
-            p.LikePost(1, 4);
+            p.LikePost(4, 5);
+        }
+
+        [TestMethod]
+        public void GetLikes()
+        {
+            var likes = p.GetNumberOfLikes(5);
+            Assert.AreEqual(2, likes);
         }
 
         [TestMethod]
         public void ChangePostPrivacy()
         {
             p.ChangePostPrivacy(5, ePostPrivacy.Public);
+        }
+
+        [TestMethod]
+        public void GetPosts()
+        {
+            FeedRepository feed = new FeedRepository();
+            feed.GetFeed(1);
         }
     }
 }

@@ -9,6 +9,6 @@ namespace Social.Common.Interfaces
 {
     public interface IFeedRepository
     {
-        Feed GetFeed(int feedId);
+        IEnumerable<Post> GetFeed(int userId);
     }
 }

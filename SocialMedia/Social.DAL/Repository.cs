@@ -54,6 +54,15 @@ namespace Social.DAL
             return stringWriter.ToString();
         }
 
-       
+        public List<T> StatementToList<T>(IEnumerable<IRecord> records) where T : new()
+        {
+            var list = new List<T>();
+            foreach (IRecord record in records)
+            {
+                var props = JsonConvert.SerializeObject(record[0].As<INode>().Properties);
+                list.Add(JsonConvert.DeserializeObject<T>(props));
+            }
+            return list;
+        }
     }
 }

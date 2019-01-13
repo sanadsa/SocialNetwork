@@ -87,5 +87,18 @@ namespace Social.DAL
                 "RETURN type(r)";
             _repo.RunQuery(driver, query);
         }        
+
+        /// <summary>
+        /// get likes of a post
+        /// </summary>
+        public int GetNumberOfLikes(int postId)
+        {
+            var query = $"MATCH (u:User)-[:Liked]->(p:Post) " +
+                           $"WHERE p.PostId={postId} " +
+                           $"RETURN u";
+            var result = _repo.RunQuery(driver, query);
+            var likes = _repo.StatementToList<User>(result);
+            return likes.Count;
+        }
     }
 }

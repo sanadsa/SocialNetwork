@@ -12,6 +12,7 @@ namespace Social.Common.Interfaces
     {
         void AddPost(int userId, Post post);
         void LikePost(int userId, int postId);
+        int GetNumberOfLikes(int postId);
         void CommentPost(int postId, Comment comment);
         void ChangePostPrivacy(int postId, ePostPrivacy privacy);
         void RelatePostToUser(int userId, int postId);

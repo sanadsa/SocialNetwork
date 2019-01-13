@@ -1,4 +1,5 @@
 ﻿using Neo4j.Driver.V1;
+using Newtonsoft.Json;
 using Social.Common.Interfaces;
 using Social.Common.Models;
 using System;
@@ -19,11 +20,34 @@ namespace Social.DAL
         /// <summary>
         /// get feed from db
         /// </summary>
-        public Feed GetFeed(int feedId)
+        public IEnumerable<Post> GetFeed(int userId)
         {
-            var query = "";
+            var query = $"Match (u:User)-[:Following]->(u2:User) " +
+                           $"Where u.UserId={userId} " +
+                           $"Match (u2)-[:Posted]->(p:Post)" +
+                           $"Return p";
             var result = _repo.RunQuery(driver, query);
-            return (Feed)result.GetEnumerator();
+            var posts = _repo.StatementToList<Post>(result);
+           
+            var myPosts = GetMyPosts(userId);
+            posts.AddRange(myPosts);
+            
+            return posts;
+        }
+
+        /// <summary>
+        /// get all my posts
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public IEnumerable<Post> GetMyPosts(int userId)
+        {
+            var query = $"Match (u:User)-[:Posted]->(p:Post) " +
+                        $"Where u.UserId={userId} " +
+                        $"Return p";
+            var result = _repo.RunQuery(driver, query);
+            var posts = _repo.StatementToList<Post>(result);
+            return posts;
         }
     }
 }
