@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Social.Common.Enums;
 using Social.Common.Models;
 using Social.DAL;
+using SocialBL;
 
 namespace Social.DAL_Test
 {
@@ -63,6 +64,14 @@ namespace Social.DAL_Test
         {
             FeedRepository feed = new FeedRepository();
             feed.GetFeed(1);
+        }
+
+        [TestMethod]
+        public void AddToS3()
+        {
+            AmazonS3Uploader s = new AmazonS3Uploader();
+
+            s.UploadFile();
         }
     }
 }

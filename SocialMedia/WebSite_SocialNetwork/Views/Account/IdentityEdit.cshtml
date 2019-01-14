@@ -1,0 +1,34 @@
+﻿@model WebSite_SocialNetwork.Models.UserIdentity
+@{
+    ViewBag.Title = "Identity";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>User Info</h2>
+
+@using (@Html.BeginForm("Edit", "Identity", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName)
+        @Html.TextBoxFor(m => m.Identity.FirstName, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Identity.LastName)
+        @Html.TextBoxFor(m => m.Identity.LastName, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Identity.Age)
+        @Html.TextBoxFor(m => m.Identity.Age, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Identity.Address)
+        @Html.TextBoxFor(m => m.Identity.Address, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Identity.WorkAddress)
+        @Html.TextBoxFor(m => m.Identity.WorkAddress, new { @class = "form-control" })
+    </div>
+    @Html.HiddenFor(m => m.Identity.Email)
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+

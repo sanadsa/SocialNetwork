@@ -6,13 +6,13 @@ namespace SocialBL
 {
     public class AmazonS3Uploader
     {
-        private string bucketName = "your-amazon-s3-bucket";
-        private string keyName = "the-name-of-your-file";
-        private string filePath = "C:\\Users\\yourUserName\\Desktop\\myImageToUpload.jpg";
+        private string bucketName = "myselabucket";
+        private string keyName = "s2Test.txt";
+        private string filePath = "D:\\Documents\\Sela\\Project 2 - Social\\s2Test.txt";
 
         public void UploadFile()
         {
-            var client = new AmazonS3Client(Amazon.RegionEndpoint.USEast1);
+            var client = new AmazonS3Client(Amazon.RegionEndpoint.EUCentral1);
 
             try
             {

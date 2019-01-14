@@ -64,6 +64,10 @@
       <Project>{288524D8-7BA2-4304-BA0B-AF001DE43894}</Project>
       <Name>Social.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SocialBL\SocialBL.csproj">
+      <Project>{74D1ABCD-F6F7-4130-A46F-10F32AC90577}</Project>
+      <Name>SocialBL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
