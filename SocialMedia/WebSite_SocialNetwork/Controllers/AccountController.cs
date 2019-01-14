@@ -134,7 +134,7 @@ namespace WebSite_SocialNetwork.Controllers
         {
             var loginUser = JsonConvert.SerializeObject(new { Username = loginViewModel.Username, Password = loginViewModel.Password });
             var response = _client.PostAsJsonAsync(ConstantFields.Authentication_Login, loginUser).Result;
-            var user = JsonConvert.DeserializeObject<User>(response.Content.ReadAsAsync<string>().Result);
+            var user = response.Content.ReadAsAsync<User>().Result;
             if (response.IsSuccessStatusCode)
             {
                 ViewBag.Username = user.Username;

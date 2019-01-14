@@ -157,6 +157,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\FacebookUser.cs" />
+    <Compile Include="Models\Post.cs" />
     <Compile Include="Models\UserIdentity.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RegisterUser.cs" />
@@ -206,6 +207,8 @@
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Account\Wall.cshtml" />
     <Content Include="Views\Shared\_Post.cshtml" />
+    <Content Include="Views\Shared\_IdentityPartial.cshtml" />
+    <Content Include="Views\Shared\_PostPartial.cshtml" />
     <Content Include="Views\Account\IdentityEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
