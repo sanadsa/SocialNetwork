@@ -143,6 +143,11 @@ namespace WebSite_SocialNetwork.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        private UserIdentity SetUserIdentity(string email)
+        {
+
+        }
+
         public ActionResult LogOff()
         {
             return View();
@@ -162,6 +167,16 @@ namespace WebSite_SocialNetwork.Controllers
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("Index", "Home");
             return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult GetIdentityPartial(UserIdentity userIdentity)
+        {
+            return PartialView("_IdentityPartial", userIdentity);
+        }
+
+        public ActionResult GetPostPartial(Post post)
+        {
+            return PartialView("_PostPartial", post);
         }
     }
 }
