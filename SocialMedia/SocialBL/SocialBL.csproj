@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AmazonS3Uploader.cs" />
+    <Compile Include="FeedManager.cs" />
     <Compile Include="PostManager.cs" />
     <Compile Include="UserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

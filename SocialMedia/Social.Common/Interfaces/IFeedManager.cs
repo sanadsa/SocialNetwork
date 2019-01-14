@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Social.Common.Interfaces
 {
-    public interface IFeedRepository
+    public interface IFeedManager
     {
         IEnumerable<Post> GetFeed(int userId);
         IEnumerable<Post> GetMyPosts(int userId);

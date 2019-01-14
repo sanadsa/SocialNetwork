@@ -10,15 +10,15 @@ namespace Social.Service.Controllers
     [RoutePrefix("api/Feed")]
     public class FeedController : ApiController
     {
-        private readonly IFeedRepository _feedDal;
+        private readonly IFeedManager _feedBl;
 
-        public FeedController(IFeedRepository repo)
+        public FeedController(IFeedManager repo)
         {
-            _feedDal = repo;
+            _feedBl = repo;
         }
 
         /// <summary>
-        /// Add user to neo4j db using http call from the client
+        /// get feed to neo4j db using http call from the client
         /// </summary>
         [HttpGet]
         [Route("GetFeed")]
@@ -26,9 +26,36 @@ namespace Social.Service.Controllers
         {
             try
             {
-                _feedDal.GetFeed(userId);
+                _feedBl.GetFeed(userId);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "feed updated successfully");
+            }
+            catch (Neo4jException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+        }
+
+        /// <summary>
+        /// get my posts to neo4j db using http call from the client
+        /// </summary>
+        [HttpGet]
+        [Route("GetMyPosts")]
+        public HttpResponseMessage GetMyPosts(int userId)
+        {
+            try
+            {
+                _feedBl.GetMyPosts(userId);
+
+                return Request.CreateResponse(HttpStatusCode.OK, "get posts successfully");
             }
             catch (Neo4jException e)
             {

@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Enums\ePostPrivacy.cs" />
     <Compile Include="Exceptions\Neo4jException.cs" />
+    <Compile Include="Interfaces\IFeedManager.cs" />
     <Compile Include="Interfaces\IFeedRepository.cs" />
     <Compile Include="Interfaces\IPostManager.cs" />
     <Compile Include="Interfaces\IPostRepository.cs" />

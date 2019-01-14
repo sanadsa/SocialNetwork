@@ -9,14 +9,18 @@ namespace SocialBL
         private string bucketName = "myselabucket";
         private string keyName = "s2Test.txt";
         private string filePath = "D:\\Documents\\Sela\\Project 2 - Social\\s2Test.txt";
+        IAmazonS3 client;
+
+        public AmazonS3Uploader()
+        {
+            client = new AmazonS3Client(Amazon.RegionEndpoint.EUCentral1);
+        }
 
         public void UploadFile()
         {
-            var client = new AmazonS3Client(Amazon.RegionEndpoint.EUCentral1);
-
             try
             {
-                PutObjectRequest putRequest = new PutObjectRequest
+                var putRequest = new PutObjectRequest
                 {
                     BucketName = bucketName,
                     Key = keyName,
