@@ -21,5 +21,9 @@ namespace WebSite_SocialNetwork.Models
 
         [DefaultValue(false)]
         public bool IsAvailable { get; set; }
+
+        public UserIdentity Identity { get; set; }
+
+        public ICollection<Post> Posts { get; set; }
     }
 }
