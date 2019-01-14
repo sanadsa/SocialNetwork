@@ -14,7 +14,7 @@ namespace Social.Common.Models
     {
         public int PostId { get; set; }
         public string Text { get; set; }
-        public byte[] Image { get; set; }
+        public string ImageUrl { get; set; }
         public List<string> Tags { get; set; }
         public ePostPrivacy Privacy { get; set; }
     }

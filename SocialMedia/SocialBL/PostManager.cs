@@ -15,11 +15,11 @@ namespace SocialBL
     public class PostManager : IPostManager
     {
         AmazonS3Uploader _s3Uploader;
-
         private readonly IPostRepository _postRepo;
         public PostManager(IPostRepository manager)
         {
             _postRepo = manager;
+            _s3Uploader = new AmazonS3Uploader();
         }
 
         /// <summary>
@@ -28,7 +28,23 @@ namespace SocialBL
         /// <param name="post"></param>
         public void AddPost(int userId, Post post)
         {
-            _postRepo.AddPost(userId, post);
+            string guid = Guid.NewGuid().ToString();
+            string imageUrl;
+            try
+            {
+                if (post.ImageUrl == null)
+                {
+                    imageUrl = _s3Uploader.UploadFile(post.ImageUrl, guid);
+                }
+
+                _postRepo.AddPost(userId, post);
+
+            }
+            catch (Exception)
+            {
+                // log
+                
+            }
         }
 
         /// <summary>
