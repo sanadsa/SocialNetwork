@@ -20,16 +20,16 @@ namespace Social.DAL
         /// <summary>
         /// get feed from db
         /// </summary>
-        public IEnumerable<Post> GetFeed(int userId)
+        public IEnumerable<Post> GetFeed(string token)
         {
             var query = $"Match (u:User)-[:Following]->(u2:User) " +
-                           $"Where u.UserId={userId} " +
+                           $"Where u.Token={token} " +
                            $"Match (u2)-[:Posted]->(p:Post)" +
                            $"Return p";
             var result = _repo.RunQuery(driver, query);
             var posts = _repo.StatementToList<Post>(result);
            
-            var myPosts = GetMyPosts(userId);
+            var myPosts = GetMyPosts(token);
             posts.AddRange(myPosts);
             
             return posts;
@@ -38,12 +38,12 @@ namespace Social.DAL
         /// <summary>
         /// get all my posts
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="token"></param>
         /// <returns></returns>
-        public IEnumerable<Post> GetMyPosts(int userId)
+        public IEnumerable<Post> GetMyPosts(string token)
         {
             var query = $"Match (u:User)-[:Posted]->(p:Post) " +
-                        $"Where u.UserId={userId} " +
+                        $"Where u.Token={token} " +
                         $"Return p";
             var result = _repo.RunQuery(driver, query);
             var posts = _repo.StatementToList<Post>(result);

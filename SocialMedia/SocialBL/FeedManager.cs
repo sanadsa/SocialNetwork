@@ -16,14 +16,14 @@ namespace SocialBL
             _feedRepo = manager;
         }
 
-        public IEnumerable<Post> GetFeed(int userId)
+        public IEnumerable<Post> GetFeed(string token)
         {
-            return _feedRepo.GetFeed(userId);
+            return _feedRepo.GetFeed(token);
         }
 
-        public IEnumerable<Post> GetMyPosts(int userId)
+        public IEnumerable<Post> GetMyPosts(string token)
         {
-            return _feedRepo.GetMyPosts(userId);
+            return _feedRepo.GetMyPosts(token);
         }
     }
 }

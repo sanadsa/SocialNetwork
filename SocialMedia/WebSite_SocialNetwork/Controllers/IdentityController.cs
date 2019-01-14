@@ -59,5 +59,14 @@ namespace WebSite_SocialNetwork.Controllers
                 return View();
             }
         }
+
+        public UserIdentity GetUserIdentity(string email)
+        {
+            var response = _client.PostAsJsonAsync(ConstantFields.Identity_GetUserIdentity, email).Result;
+            if (response.IsSuccessStatusCode)
+                return response.Content.ReadAsAsync<UserIdentity>().Result;
+            else
+                return null;            
+        }
     }
 }

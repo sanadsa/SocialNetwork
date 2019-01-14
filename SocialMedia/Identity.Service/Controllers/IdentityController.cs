@@ -89,9 +89,9 @@ namespace Identity.Service.Controllers
         }
 
         /// <summary>
-        /// get useridentity
+        /// get useridentity    
         /// </summary>
-        [HttpGet]
+        [HttpPost]
         [Route("GetUserIdentity")]
         public HttpResponseMessage GetUserIdentity([FromBody]string email)
         {

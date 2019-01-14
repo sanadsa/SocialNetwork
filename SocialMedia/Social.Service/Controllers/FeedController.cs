@@ -22,11 +22,11 @@ namespace Social.Service.Controllers
         /// </summary>
         [HttpGet]
         [Route("GetFeed")]
-        public HttpResponseMessage GetFeed(int userId)
+        public HttpResponseMessage GetFeed(string token)
         {
             try
             {
-                _feedBl.GetFeed(userId);
+                _feedBl.GetFeed(token);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "feed updated successfully");
             }
@@ -49,13 +49,13 @@ namespace Social.Service.Controllers
         /// </summary>
         [HttpGet]
         [Route("GetMyPosts")]
-        public HttpResponseMessage GetMyPosts(int userId)
+        public HttpResponseMessage GetMyPosts([FromBody]string token)
         {
             try
             {
-                _feedBl.GetMyPosts(userId);
+                var posts = _feedBl.GetMyPosts(token);
 
-                return Request.CreateResponse(HttpStatusCode.OK, "get posts successfully");
+                return Request.CreateResponse(HttpStatusCode.OK, posts);
             }
             catch (Neo4jException e)
             {

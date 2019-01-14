@@ -63,7 +63,7 @@ namespace Social.DAL_Test
         public void GetPosts()
         {
             FeedRepository feed = new FeedRepository();
-            feed.GetFeed(1);
+            //feed.GetFeed(1);
         }
 
         [TestMethod]

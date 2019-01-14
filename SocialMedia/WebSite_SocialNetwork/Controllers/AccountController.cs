@@ -81,6 +81,8 @@ namespace WebSite_SocialNetwork.Controllers
             if (response.IsSuccessStatusCode)
             {
                 OnLoginProcess(user);
+                user.Identity = SetUserIdentity(user.Email);
+                user.Posts = GetPosts(user.Token.TokenId);
                 return RedirectToAction("Wall", "Account", user);
             }
             else
@@ -137,16 +139,16 @@ namespace WebSite_SocialNetwork.Controllers
             var user = response.Content.ReadAsAsync<User>().Result;
             if (response.IsSuccessStatusCode)
             {
-                ViewBag.Username = user.Username;
+                user.Identity = SetUserIdentity(user.Email);
+                user.Posts = GetPosts(user.Token.TokenId);
                 return RedirectToAction("Wall", "Account", user);
             }
             return RedirectToAction("Index", "Home");
         }
 
-        private UserIdentity SetUserIdentity(string email)
-        {
+        private UserIdentity SetUserIdentity(string email) => new IdentityController().GetUserIdentity(email);
 
-        }
+        private ICollection<Post> GetPosts(string token) => new SocialController().GetMyPosts(token);
 
         public ActionResult LogOff()
         {
