@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Configuration;
+using System.IO;
+using System.Text.RegularExpressions;
 using Amazon.S3;
 using Amazon.S3.Model;
 
@@ -6,9 +9,10 @@ namespace SocialBL
 {
     public class AmazonS3Uploader
     {
+        private string keyName = "Boxing.jpg";
+        private string filePath = @"C:\Users\Sanad\Pictures\Boxing.jpg";
         private string bucketName = "myselabucket";
-        private string keyName = "s2Test.txt";
-        private string filePath = "D:\\Documents\\Sela\\Project 2 - Social\\s2Test.txt";
+        static readonly string bucketUrl = ConfigurationManager.AppSettings["s3Key"];
         IAmazonS3 client;
 
         public AmazonS3Uploader()
@@ -16,19 +20,28 @@ namespace SocialBL
             client = new AmazonS3Client(Amazon.RegionEndpoint.EUCentral1);
         }
 
-        public void UploadFile()
+        public string UploadFile()
         {
             try
             {
-                var putRequest = new PutObjectRequest
+                //string format = Regex.Match(image, @"^data:image\/([a-zA-Z]+);").Groups[1].Value;
+                //string result = Regex.Replace(image, @"^data:image\/[a-zA-Z]+;base64,", String.Empty);
+                //byte[] bytes = Convert.FromBase64String(result);
+                //string key = guid + "." + format;
+                byte[] imageData = File.ReadAllBytes(filePath);
+                using (client)
                 {
-                    BucketName = bucketName,
-                    Key = keyName,
-                    FilePath = filePath,
-                    ContentType = "text/plain"
-                };
+                    var putRequest = new PutObjectRequest();
+                    putRequest.BucketName = bucketName;
+                    putRequest.Key = keyName;
 
-                PutObjectResponse response = client.PutObject(putRequest);
+                    using (var ms = new MemoryStream(imageData))
+                    {
+                        putRequest.InputStream = ms;
+                        var response = client.PutObject(putRequest);
+                    }
+                }
+                return "f";
             }
             catch (AmazonS3Exception amazonS3Exception)
             {
@@ -43,6 +56,10 @@ namespace SocialBL
                 {
                     throw new Exception("Error occurred: " + amazonS3Exception.Message);
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error while uploading image to aws s3 " + ex.Message);
             }
         }
     }
