@@ -153,6 +153,7 @@
     <Compile Include="Constants\ConstantFields.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IdentityController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -209,7 +210,7 @@
     <Content Include="Views\Shared\_Post.cshtml" />
     <Content Include="Views\Shared\_IdentityPartial.cshtml" />
     <Content Include="Views\Shared\_PostPartial.cshtml" />
-    <Content Include="Views\Account\IdentityEdit.cshtml" />
+    <Content Include="Views\Identity\IdentityEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
