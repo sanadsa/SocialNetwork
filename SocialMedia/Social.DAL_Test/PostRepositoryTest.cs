@@ -19,7 +19,7 @@ namespace Social.DAL_Test
             Post post = new Post
             {
                 PostId = 8,
-                Image = new byte[0],
+                ImageUrl = "url:-)",
                 Privacy = ePostPrivacy.Public,
                 Tags = new List<string> { "@omer", "@shahaf" },
                 Text = "lakerda"
@@ -70,8 +70,10 @@ namespace Social.DAL_Test
         public void AddToS3()
         {
             AmazonS3Uploader s = new AmazonS3Uploader();
-
-            s.UploadFile();
+            string postId = Guid.NewGuid().ToString();
+            string path = @"C:\Users\Sanad\Pictures\box.jpg";
+            var url = s.UploadFile(path, postId);
+            var cd = "";
         }
     }
 }

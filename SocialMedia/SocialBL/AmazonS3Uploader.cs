@@ -10,25 +10,25 @@ namespace SocialBL
     public class AmazonS3Uploader
     {
         private string keyName = "Boxing.jpg";
-        private string filePath = @"C:\Users\Sanad\Pictures\Boxing.jpg";
         private string bucketName = "myselabucket";
-        static readonly string bucketUrl = ConfigurationManager.AppSettings["s3Key"];
+        readonly string bucketUrl;
         IAmazonS3 client;
 
         public AmazonS3Uploader()
         {
             client = new AmazonS3Client(Amazon.RegionEndpoint.EUCentral1);
+            bucketUrl = ConfigurationManager.AppSettings["s3Key"];
         }
 
-        public string UploadFile()
+        public string UploadFile(string imagePath, string guid)
         {
             try
             {
-                //string format = Regex.Match(image, @"^data:image\/([a-zA-Z]+);").Groups[1].Value;
-                //string result = Regex.Replace(image, @"^data:image\/[a-zA-Z]+;base64,", String.Empty);
-                //byte[] bytes = Convert.FromBase64String(result);
-                //string key = guid + "." + format;
-                byte[] imageData = File.ReadAllBytes(filePath);
+                string format = Regex.Match(imagePath, @"^data:image\/([a-zA-Z]+);").Groups[1].Value;
+                // string result = Regex.Replace(imagePath, @"^data:image\/[a-zA-Z]+;base64,", String.Empty);
+                // byte[] bytes = Convert.FromBase64String(result);
+                string key = guid + "." + format;
+                byte[] imageData = File.ReadAllBytes(imagePath);
                 using (client)
                 {
                     var putRequest = new PutObjectRequest();
@@ -41,7 +41,7 @@ namespace SocialBL
                         var response = client.PutObject(putRequest);
                     }
                 }
-                return "f";
+                return bucketUrl + key;
             }
             catch (AmazonS3Exception amazonS3Exception)
             {
