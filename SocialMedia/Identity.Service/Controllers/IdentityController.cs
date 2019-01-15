@@ -97,8 +97,17 @@ namespace Identity.Service.Controllers
         {
             try
             {
-                var user = bl.GetUser(email);
-                return Request.CreateResponse(HttpStatusCode.OK, user);
+                if (IsUserExist(email))
+                {
+                    var user = bl.GetUser(email);
+                    return Request.CreateResponse(HttpStatusCode.OK, user);
+                }
+                else
+                {
+                    UserIdentity userIdentity = new UserIdentity() { Email = email };
+                    CreateUserIdentity(userIdentity);
+                    return Request.CreateResponse(HttpStatusCode.OK, userIdentity);
+                }
             }
             catch (KeyNotFoundException e)
             {
@@ -108,6 +117,37 @@ namespace Identity.Service.Controllers
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
             }
+        }
+
+        /// <summary>
+        /// Gets an userIdentity only with the email address and add it to the database.
+        /// </summary>
+        /// <param name="userIdentityJson"></param>
+        public void CreateUserIdentity(UserIdentity userIdentityJson)
+        {
+            try
+            {
+                bl.AddUser(userIdentityJson);
+            }
+            catch (HttpResponseException e)
+            {
+                Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+            catch (Exception e)
+            {
+                Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+
+        }
+
+        /// <summary>
+        /// Checks whether userIdentity exist in the database.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public bool IsUserExist(string email)
+        {
+            return bl.CheckIfUserExist(email);
         }
     }
 }
