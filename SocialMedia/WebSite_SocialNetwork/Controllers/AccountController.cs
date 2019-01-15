@@ -16,6 +16,7 @@ namespace WebSite_SocialNetwork.Controllers
     public class AccountController : Controller
     {
         private HttpClient _client;
+        private HttpClient _clientIdentity;
         private IdentityController _identityController;
         private Uri RedirectUri
         {
@@ -35,6 +36,10 @@ namespace WebSite_SocialNetwork.Controllers
             _client = new HttpClient();
             _client.BaseAddress = new Uri(ConstantFields.Authentication_BaseAddress);
             _client.DefaultRequestHeaders.Accept.Add(new
+                MediaTypeWithQualityHeaderValue(ConstantFields.Headers_Type));
+            _clientIdentity = new HttpClient();
+            _clientIdentity.BaseAddress = new Uri(ConstantFields.Identity_BaseAddress);
+            _clientIdentity.DefaultRequestHeaders.Accept.Add(new
                 MediaTypeWithQualityHeaderValue(ConstantFields.Headers_Type));
         }
 
@@ -174,9 +179,22 @@ namespace WebSite_SocialNetwork.Controllers
                     Email = registerUser.Email,
                     IsAvilable = registerUser.IsAvilable
                 });
-            var response = _client.PostAsJsonAsync(ConstantFields.Authentication_Register, register).Result;
-            if (response.IsSuccessStatusCode)
-                return RedirectToAction("Index", "Home");
+            var identity = JsonConvert.SerializeObject(
+                new
+                {
+                    Email = registerUser.Email,
+                    FirstName = "",
+                    LastName = "",
+                    Age = 0,
+                    Address = "",
+                    WorkAddress = ""
+                });
+            var registerResponse = _client.PostAsJsonAsync(ConstantFields.Authentication_Register, register).Result;
+            var identityRepsonse = _clientIdentity.PostAsJsonAsync(ConstantFields.Identity_CreateUserIdentity, identity).Result;
+            if (!identityRepsonse.IsSuccessStatusCode || !registerResponse.IsSuccessStatusCode)
+            {
+                throw new Exception("Error while register new user");
+            }
             return RedirectToAction("Index", "Home");
         }
 
