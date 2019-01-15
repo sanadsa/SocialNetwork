@@ -16,6 +16,7 @@ namespace WebSite_SocialNetwork.Controllers
     public class AccountController : Controller
     {
         private HttpClient _client;
+        private IdentityController _identityController;
         private Uri RedirectUri
         {
             get
@@ -30,6 +31,7 @@ namespace WebSite_SocialNetwork.Controllers
 
         public AccountController()
         {
+            _identityController = new IdentityController();
             _client = new HttpClient();
             _client.BaseAddress = new Uri(ConstantFields.Authentication_BaseAddress);
             _client.DefaultRequestHeaders.Accept.Add(new
@@ -125,24 +127,31 @@ namespace WebSite_SocialNetwork.Controllers
             cookie.Values["User name"] = user.Username;
         }
 
-        public ActionResult Wall(User user)
+        public ActionResult Wall(User userWall)
         {
-            ViewBag.IsLogin = true;
-            ViewBag.Username = user.Username;
-            return View();
-        }
-
-        public ActionResult Login(LoginViewModel loginViewModel)
-        {
-            var loginUser = JsonConvert.SerializeObject(new { Username = loginViewModel.Username, Password = loginViewModel.Password });
+            var loginUser = JsonConvert.SerializeObject(new { Username = userWall.Username, Password = userWall.Password });
             var response = _client.PostAsJsonAsync(ConstantFields.Authentication_Login, loginUser).Result;
             var user = response.Content.ReadAsAsync<User>().Result;
             if (response.IsSuccessStatusCode)
             {
                 user.Identity = SetUserIdentity(user.Email);
                 user.Posts = GetPosts(user.Token.TokenId);
-                return RedirectToAction("Wall", "Account", user);
+                ViewBag.IsLogin = true;
+                ViewBag.Username = user.Username;
+                return View(user);
             }
+            else
+                return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult Login(LoginViewModel loginViewModel)
+        {
+            var loginUser = JsonConvert.SerializeObject(new { Username = loginViewModel.Username, Password = loginViewModel.Password });
+            var response = _client.PostAsJsonAsync(ConstantFields.Authentication_Login, loginUser).Result;
+            var user = response.Content.ReadAsAsync<User>().Result;
+            if (response.IsSuccessStatusCode)
+                return RedirectToAction("Wall", "Account", user);
             return RedirectToAction("Index", "Home");
         }
 
