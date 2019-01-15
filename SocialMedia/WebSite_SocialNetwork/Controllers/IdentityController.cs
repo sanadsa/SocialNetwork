@@ -47,7 +47,7 @@ namespace WebSite_SocialNetwork.Controllers
             try
             {
                 string json = JsonConvert.SerializeObject(user);
-                var result = _client.PostAsync($"api/Identity/UpdateUserIdentity?userIdentity={user}", new StringContent(json, System.Text.Encoding.UTF8, "application/json")).Result;
+                var result = _client.PostAsync($"api/Identity/UpdateUserIdentity?userIdentity={user}", new StringContent(json, System.Text.Encoding.UTF8, ConstantFields.Headers_Type)).Result;
                 if (!result.IsSuccessStatusCode)
                 {
                     throw new Exception(result.Content.ReadAsStringAsync().Result);

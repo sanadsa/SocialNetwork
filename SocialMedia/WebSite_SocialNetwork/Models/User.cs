@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -25,5 +26,22 @@ namespace WebSite_SocialNetwork.Models
         public UserIdentity Identity { get; set; }
 
         public ICollection<Post> Posts { get; set; }
+
+        public string UserAsJson
+        {
+            get
+            {
+                return JsonConvert.SerializeObject(new
+                {
+                    Username = this.Username,
+                    Email = this.Email,
+                    Password = this.Password,
+                    Token = this.Token,
+                    IsAvailable = this.IsAvailable,
+                    Identity = this.Identity,
+                    Posts = this.Posts
+                });
+            }
+        }
     }
 }

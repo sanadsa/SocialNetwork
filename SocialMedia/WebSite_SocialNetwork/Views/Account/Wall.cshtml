@@ -28,7 +28,7 @@
                 </div>
             }
             <h5>Photo of me:</h5>
-            <div class="fakeimg">Fake Image</div>
+            <img src="~/App_Data/Images/WhatsApp Image 2019-01-15 at 11.06.32.jpeg" width="50" height="30" />
             <hr class="d-sm-none">
         </div>
         <button class="btn">
@@ -38,15 +38,15 @@
         </button>
         @if (Model.Posts != null)
         {
-            foreach (var post in Model.Posts)
+            foreach (var p in Model.Posts)
             {
                 <div class="col-sm-8">
                     <div>
-                        <h2>TITLE HEADING</h2>
-                        <h5>Title description, Sep 2, 2017</h5>
-                        <div class="fakeimg">Fake Image</div>
-                        <p>Some text..</p>
-                        <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                        <h2>@p.Username</h2>
+                        <h5>@p.PostDate</h5>
+                        <img src="~/App_Data/Images/Free-Download-Pink-Floyd-Wallpapers-HD.jpg" width="100" height="75" />
+                        <p>@p.Text</p>
+                        <p>@p.Tags</p>
                     </div>
                 </div>
             }

@@ -37,6 +37,7 @@
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
@@ -63,6 +64,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{ED2315D4-A9F1-4E65-8DE8-5F25445045EE}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Identity.Common\Identity.Common.csproj">
+      <Project>{3DD6C1C7-CC6A-4AC5-B752-49A68892B2EF}</Project>
+      <Name>Identity.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Social.Common\Social.Common.csproj">
       <Project>{2B01771E-CD87-4C51-B86F-AA5FD404DE85}</Project>
       <Name>Social.Common</Name>
