@@ -39,6 +39,7 @@ namespace Social.DAL
         public void Block(int activeUserId, int userToBlock)
         {
             UnFollow(activeUserId, userToBlock);
+            UnFollow(userToBlock, activeUserId);
             string query = "MATCH (blocking:User{UserId:" + activeUserId + "})," +
                 "(blocked:User{UserId:" + userToBlock + "})" +
                 "CREATE (blocking)-[r:Blocked]->(blocked)" +
