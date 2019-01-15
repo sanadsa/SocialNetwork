@@ -41,8 +41,6 @@ namespace Identity.DAL
         /// <summary>
         /// Check the user existency
         /// </summary>
-        /// <param name="email"></param>
-        /// <returns></returns>
         public bool CheckUserExistency(string email)
         {
             return _dynamoService.CheckUserExistency<UserIdentity>(email);

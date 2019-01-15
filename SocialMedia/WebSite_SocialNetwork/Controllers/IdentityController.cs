@@ -25,34 +25,28 @@ namespace WebSite_SocialNetwork.Controllers
         /// <summary>
         /// Get identity info by email
         /// </summary>
-        public ActionResult IdentityEdit(string email)
+        [HttpGet]
+        public ActionResult IdentityEdit(string jsonUser)
         {
-            var result = _client.GetAsync($"api/Identity/GetUserIdentity?email={email}").Result;
-            if (!result.IsSuccessStatusCode)
-            {
-                throw new Exception(result.Content.ReadAsStringAsync().Result);
-            }
-
-            string response = result.Content.ReadAsStringAsync().Result;
-            var identity = JsonConvert.DeserializeObject<UserIdentity>(response);
-            return View(identity);
+            var user = JsonConvert.DeserializeObject<User>(jsonUser);
+            return View(user);
         }
 
         /// <summary>
         /// edit identity details
         /// </summary>
         [HttpPost]
-        public ActionResult Edit(UserIdentity user)
+        public ActionResult Edit(User user)
         {
             try
             {
-                string json = JsonConvert.SerializeObject(user);
+                string json = JsonConvert.SerializeObject(user.Identity);
                 var result = _client.PostAsync($"api/Identity/UpdateUserIdentity?userIdentity={user}", new StringContent(json, System.Text.Encoding.UTF8, "application/json")).Result;
                 if (!result.IsSuccessStatusCode)
                 {
                     throw new Exception(result.Content.ReadAsStringAsync().Result);
                 }
-                return RedirectToAction("Wall", "Account", routeValues: new { user = user });
+                return RedirectToAction("Wall", "Account", user);
             }
             catch
             {
@@ -66,7 +60,7 @@ namespace WebSite_SocialNetwork.Controllers
             if (response.IsSuccessStatusCode)
                 return response.Content.ReadAsAsync<UserIdentity>().Result;
             else
-                return null;            
+                return null;
         }
     }
 }

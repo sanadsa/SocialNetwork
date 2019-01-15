@@ -26,6 +26,9 @@ namespace Identity.BL
             userLibrary.AddUserIdentity(user);
         }
 
+        /// <summary>
+        /// check if user exists in db
+        /// </summary>
         public bool CheckIfUserExist(string email)
         {
             return userLibrary.CheckUserExistency(email);
