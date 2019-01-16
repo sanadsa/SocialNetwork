@@ -132,9 +132,10 @@ namespace WebSite_SocialNetwork.Controllers
             cookie.Values["User name"] = user.Username;
         }
 
-        public ActionResult Wall(string userJson)
+        public ActionResult Wall()
         {
-            var loginUser = JsonConvert.DeserializeObject<User>(TempData[ConstantFields.CurrentUser].ToString());
+            var loginUser = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
+            loginUser.Identity = SetUserIdentity(loginUser.Email);
             ViewBag.Username = loginUser.Username;
             return View(loginUser);
         }
@@ -156,12 +157,12 @@ namespace WebSite_SocialNetwork.Controllers
                 if (user.Posts == null)
                 {
                     user.Posts = new List<Post>();
-                    TempData[ConstantFields.CurrentUser] = user.UserAsJson;
+                    Session[ConstantFields.CurrentUser] = user.UserAsJson;
                     return RedirectToAction("Wall", "Account");
                 }
                 else
                 {
-                    TempData[ConstantFields.CurrentUser] = user.UserAsJson;
+                    Session[ConstantFields.CurrentUser] = user.UserAsJson;
                     return RedirectToAction("Wall", "Account");
                 }
             }
