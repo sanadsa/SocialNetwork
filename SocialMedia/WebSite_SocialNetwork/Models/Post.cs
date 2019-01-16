@@ -8,6 +8,10 @@ namespace WebSite_SocialNetwork.Models
 {
     public class Post
     {
+        public Post()
+        {
+
+        }
         public int PostId { get; set; }
 
         public int Username { get; set; }

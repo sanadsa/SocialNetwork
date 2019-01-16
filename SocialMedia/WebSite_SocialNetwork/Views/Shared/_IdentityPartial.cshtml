@@ -1,26 +1,27 @@
-﻿@model WebSite_SocialNetwork.Models.UserIdentity
+﻿@model WebSite_SocialNetwork.Models.User
 
 <div class="col-sm-4">
     <h2>@ViewBag.Username</h2>
     <div>
-        <label for="age">Age</label>
-        <p>@Model.Age</p>
+        <label>Full Name</label>
+        <p>@Model.Identity.FirstName @Model.Identity.LastName</p>
     </div>
     <div>
-        <label for="address">Address</label>
-        <p class="help">@Model.Address</p>
+        <label>Age</label>
+        <p>@Model.Identity.Age</p>
     </div>
     <div>
-        <label for="work">Work Address</label>
-        <p>@Model.WorkAddress</p>
+        <label>Address</label>
+        <p class="help">@Model.Identity.Address</p>
     </div>
-    <h5>Photo of me:</h5>
-    <div class="fakeimg">Fake Image</div>
+    <div>
+        <label>Work Address</label>
+        <p>@Model.Identity.WorkAddress</p>
+    </div>
+    @*Photo Here*@
+    @using (Html.BeginForm("IdentityEdit", "Identity", Model, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        <input type="submit" value="Edit Identity" class="buttonT" />
+    }
     <hr class="d-sm-none">
 </div>
-
-<button class="btn">
-    @Html.ActionLink("Edit", "IdentityEdit", "Identity",
-    routeValues: new {email = Model.Email},
-    htmlAttributes: null)
-</button>

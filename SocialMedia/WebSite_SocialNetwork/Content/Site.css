@@ -22,3 +22,39 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.index {
+    border: 3px solid gold;
+    text-align: center;
+    display: block;
+}
+
+body {
+    background: url(../images/06.jpg) no-repeat;
+    background-size: cover;
+    min-height: 100%;
+}
+
+html {
+    min-height: 100%;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.buttonT {
+    background-color: darkgoldenrod;
+    color: white;
+    padding: 9px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.navbar {
+    display: none;
+    background-color: gold;
+}
+

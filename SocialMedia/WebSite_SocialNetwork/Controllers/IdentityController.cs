@@ -25,32 +25,42 @@ namespace WebSite_SocialNetwork.Controllers
         /// <summary>
         /// Get identity info by email
         /// </summary>
-        [HttpGet]
-        public ActionResult IdentityEdit(string jsonUser)
+        [HttpPost]
+        public ActionResult IdentityEdit(User user)
         {
-            var user = JsonConvert.DeserializeObject<User>(jsonUser);
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            Session["user"] = user;
+            user.Identity = GetUserIdentity(user.Email);
             return View(user);
         }
+
+        private ICollection<Post> GetPosts(string token) => new SocialController().GetMyPosts(token);
 
         /// <summary>
         /// edit identity details
         /// </summary>
         [HttpPost]
-        public ActionResult Edit(User user)
+        public ActionResult Edit(UserIdentity identity)
         {
             try
             {
-                string json = JsonConvert.SerializeObject(user.Identity);
-                var result = _client.PostAsync($"api/Identity/UpdateUserIdentity?userIdentity={user}", new StringContent(json, System.Text.Encoding.UTF8, "application/json")).Result;
+                User user = (User)Session["user"];
+                string json = JsonConvert.SerializeObject(identity);
+                var result = _client.PostAsync($"api/Identity/UpdateUserIdentity?userIdentity={identity}", new StringContent(json, System.Text.Encoding.UTF8, "application/json")).Result;
                 if (!result.IsSuccessStatusCode)
                 {
                     throw new Exception(result.Content.ReadAsStringAsync().Result);
                 }
+                
                 return RedirectToAction("Wall", "Account", user);
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index", "Home");
             }
         }
 
