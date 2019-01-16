@@ -180,7 +180,7 @@ namespace WebSite_SocialNetwork.Controllers
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("Wall", "Account");
             else
-                
+                return RedirectToAction("");
         }
 
         public ActionResult GetIdentityPartial(UserIdentity userIdentity) => PartialView("_IdentityPartial", userIdentity);
@@ -193,6 +193,6 @@ namespace WebSite_SocialNetwork.Controllers
 
         public ActionResult LogOff() => View();
 
-        public ActionResult AddNewPost() => View();
+        public ActionResult AddNewPost() => View("AddNewPost");
     }
 }
