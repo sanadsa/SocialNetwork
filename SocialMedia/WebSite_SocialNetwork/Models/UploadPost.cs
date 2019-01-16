@@ -8,7 +8,7 @@ using WebSite_SocialNetwork.Enums;
 
 namespace WebSite_SocialNetwork.Models
 {
-    public class Post
+    public class UploadPost
     {
         public int UserId { get; set; }
 
@@ -20,7 +20,9 @@ namespace WebSite_SocialNetwork.Models
 
         public string Text { get; set; }
 
-        public byte[] Image { get; set; }
+        [DataType(DataType.ImageUrl)]
+        [Display(Name = "Picture")]
+        public HttpPostedFileBase Image { get; set; }
 
         public List<string> Tags { get; set; }
 

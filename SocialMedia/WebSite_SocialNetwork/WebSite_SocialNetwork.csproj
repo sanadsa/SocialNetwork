@@ -161,6 +161,7 @@
     </Compile>
     <Compile Include="Models\FacebookUser.cs" />
     <Compile Include="Models\Post.cs" />
+    <Compile Include="Models\UploadPost.cs" />
     <Compile Include="Models\UserIdentity.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RegisterUser.cs" />

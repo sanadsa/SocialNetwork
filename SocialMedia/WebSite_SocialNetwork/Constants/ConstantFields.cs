@@ -11,6 +11,16 @@ namespace WebSite_SocialNetwork.Constants
 
         /* Pages names */
         public const string LoginView = "LoginView";
+        public const string PostView = "AddPostView";
+        public const string WallView = "Wall";
+        public const string IndexView = "Index";
+        public const string ErrorView = "Error";
+
+        /* Controller Names */
+        public const string Account = "Account";
+        public const string Home = "Home";
+        public const string Identity = "Identity";
+        public const string Social = "Social";
 
         /* Authentication Urls */
         public const string Authentication_BaseAddress = "http://localhost:61154/";

@@ -111,7 +111,7 @@ namespace WebSite_SocialNetwork.Controllers
             var loginUser = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
             loginUser.Identity = SetUserIdentity(loginUser.Email);
             ViewBag.Username = loginUser.Username;
-            return View(loginUser);
+            return View(ConstantFields.WallView, loginUser);
         }
 
         [HttpPost]
@@ -132,16 +132,16 @@ namespace WebSite_SocialNetwork.Controllers
                 {
                     user.Posts = new List<Post>();
                     Session[ConstantFields.CurrentUser] = user.UserAsJson;
-                    return RedirectToAction("Wall", "Account");
+                    return RedirectToAction(ConstantFields.WallView, "Account");
                 }
                 else
                 {
                     Session[ConstantFields.CurrentUser] = user.UserAsJson;
-                    return RedirectToAction("Wall", "Account");
+                    return RedirectToAction(ConstantFields.WallView, "Account");
                 }
             }
             else
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction(ConstantFields.IndexView, "Home");
         }
 
         public ActionResult RegisterNewClient(RegisterUser registerUser)
@@ -174,13 +174,13 @@ namespace WebSite_SocialNetwork.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddNewPost(Post post)
+        public ActionResult AddNewPost(UploadPost post)
         {
             var response = _client.PostAsJsonAsync(ConstantFields.Social_AddNewPost, post.PostAsJson).Result;
             if (response.IsSuccessStatusCode)
-                return RedirectToAction("Wall", "Account");
+                return RedirectToAction(ConstantFields.WallView, "Account");
             else
-                return RedirectToAction("Error", "Home", "Error adding new post");
+                return RedirectToAction(ConstantFields.ErrorView, "Home", "Error adding new post");
         }
 
         public ActionResult GetIdentityPartial(UserIdentity userIdentity) => PartialView("_IdentityPartial", userIdentity);
@@ -193,6 +193,6 @@ namespace WebSite_SocialNetwork.Controllers
 
         public ActionResult LogOff() => View();
 
-        public ActionResult AddNewPost() => View("AddNewPost");
+        public ActionResult AddNewPost() => View(ConstantFields.PostView);
     }
 }
