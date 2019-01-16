@@ -1,0 +1,22 @@
+﻿@model WebSite_SocialNetwork.Models.Profile
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Identity.FirstName @Model.Identity.LastName</h2>
+
+<h2>@ViewBag.Username</h2>
+<div>
+    <label>Age</label>
+    <p>@Model.Identity.Age</p>
+</div>
+<div>
+    <label>Address</label>
+    <p class="help">@Model.Identity.Address</p>
+</div>
+<div>
+    <label>Work Address</label>
+    <p>@Model.Identity.WorkAddress</p>
+</div>
+

@@ -11,6 +11,7 @@ namespace WebSite_SocialNetwork.Constants
 
         /* Pages names */
         public const string LoginView = "LoginView";
+        public const string ProfileView = "Profile";
         public const string PostView = "AddPostView";
         public const string WallView = "Wall";
         public const string IndexView = "Index";
@@ -42,6 +43,6 @@ namespace WebSite_SocialNetwork.Constants
 
         /* TempData Keys */
         public const string CurrentUser = "CurrentUser";
-
+        public const string ProfileUser = "ProfileUser";
     }
 }
