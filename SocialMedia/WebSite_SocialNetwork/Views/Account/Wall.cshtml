@@ -7,29 +7,30 @@
 <div class="container" style="margin-top:30px">
     <div class="row">
         <div class="col-sm-4">
-            ln
-            <h2>@ViewBag.Username</h2>
-            <div>
-                <label for="age">Age</label>
-                <p>@Model.Identity.Age</p>
+            <div class="jumbotron side">
+                <h2>@ViewBag.Username</h2>
+                <div>
+                    <label for="age">Age</label>
+                    <p>@Model.Identity.Age</p>
+                </div>
+                @if (Model.Identity.Address != null)
+                {
+                    <div>
+                        <label for="address">Address</label>
+                        <p class="help">@Model.Identity.Address</p>
+                    </div>
+                }
+                @if (Model.Identity.WorkAddress != null)
+                {
+                    <div>
+                        <label for="work">Work Address</label>
+                        <p>@Model.Identity.WorkAddress</p>
+                    </div>
+                }
+                <h5>Photo of me:</h5>
+                <img src="~/App_Data/Images/WhatsApp Image 2019-01-15 at 11.06.32.jpeg" style="height:200px;" />
+                <hr class="d-sm-none">
             </div>
-            @if (Model.Identity.Address != null)
-            {
-                <div>
-                    <label for="address">Address</label>
-                    <p class="help">@Model.Identity.Address</p>
-                </div>
-            }
-            @if (Model.Identity.WorkAddress != null)
-            {
-                <div>
-                    <label for="work">Work Address</label>
-                    <p>@Model.Identity.WorkAddress</p>
-                </div>
-            }
-            <h5>Photo of me:</h5>
-            <img src="~/App_Data/Images/WhatsApp Image 2019-01-15 at 11.06.32.jpeg" width="50" height="30" />
-            <hr class="d-sm-none">
         </div>
         <button class="btn">
             @Html.ActionLink("Edit", "IdentityEdit", "Identity",

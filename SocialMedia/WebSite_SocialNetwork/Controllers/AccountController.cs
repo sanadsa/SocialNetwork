@@ -90,7 +90,7 @@ namespace WebSite_SocialNetwork.Controllers
                 OnLoginProcess(user);
                 user.Identity = SetUserIdentity(user.Email);
                 user.Posts = GetPosts(user.Token.TokenId);
-                return RedirectToAction("Wall", "Account", user);
+                return RedirectToAction("Wall", "Account", user.UserAsJson);
             }
             else
                 return RedirectToAction("Index", "Home");
@@ -132,32 +132,41 @@ namespace WebSite_SocialNetwork.Controllers
             cookie.Values["User name"] = user.Username;
         }
 
-        public ActionResult Wall(User userWall)
+        public ActionResult Wall(string userJson)
         {
-            var loginUser = JsonConvert.SerializeObject(new { Username = userWall.Username, Password = userWall.Password });
+            var loginUser = JsonConvert.DeserializeObject<User>(TempData[ConstantFields.CurrentUser].ToString());
+            ViewBag.Username = loginUser.Username;
+            return View(loginUser);
+        }
+
+        [HttpPost]
+        public ActionResult Login(LoginViewModel loginViewModel)
+        {
+            var loginUser = JsonConvert.SerializeObject(new
+            {
+                Username = loginViewModel.Username,
+                Password = loginViewModel.Password
+            });
             var response = _client.PostAsJsonAsync(ConstantFields.Authentication_Login, loginUser).Result;
             var user = response.Content.ReadAsAsync<User>().Result;
             if (response.IsSuccessStatusCode)
             {
                 user.Identity = SetUserIdentity(user.Email);
                 user.Posts = GetPosts(user.Token.TokenId);
-                ViewBag.IsLogin = true;
-                ViewBag.Username = user.Username;
-                return View(user);
+                if (user.Posts == null)
+                {
+                    user.Posts = new List<Post>();
+                    TempData[ConstantFields.CurrentUser] = user.UserAsJson;
+                    return RedirectToAction("Wall", "Account");
+                }
+                else
+                {
+                    TempData[ConstantFields.CurrentUser] = user.UserAsJson;
+                    return RedirectToAction("Wall", "Account");
+                }
             }
             else
                 return RedirectToAction("Index", "Home");
-        }
-
-        [HttpPost]
-        public ActionResult Login(LoginViewModel loginViewModel)
-        {
-            var loginUser = JsonConvert.SerializeObject(new { Username = loginViewModel.Username, Password = loginViewModel.Password });
-            var response = _client.PostAsJsonAsync(ConstantFields.Authentication_Login, loginUser).Result;
-            var user = response.Content.ReadAsAsync<User>().Result;
-            if (response.IsSuccessStatusCode)
-                return RedirectToAction("Wall", "Account", user);
-            return RedirectToAction("Index", "Home");
         }
 
         private UserIdentity SetUserIdentity(string email) => new IdentityController().GetUserIdentity(email);

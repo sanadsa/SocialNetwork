@@ -28,5 +28,9 @@ namespace WebSite_SocialNetwork.Constants
         /* Social Service Urls */
         public const string Social_BaseAddress = "http://localhost:33452/";
         public const string Social_GetMyPosts = "api/Feed/GetMyPosts";
+
+        /* TempData Keys */
+        public const string CurrentUser = "CurrentUser";
+
     }
 }

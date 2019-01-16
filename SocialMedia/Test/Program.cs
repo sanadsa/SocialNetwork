@@ -19,18 +19,6 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            //PostRepository p = new PostRepository();
-            //Post post = new Post
-            //{
-            //    PostId = 1,
-            //    Image = new byte[0],
-            //    Tags = new List<string> { "amazing", "wow" },
-            //    Text = "this is test text"
-            //};
-            //p.AddPost(1, post);
-
-            //UserServiceTest service = new UserServiceTest();
-            //service.AddUser();
             User user = new User()
             {
                 Username = "itamar",
@@ -70,7 +58,7 @@ namespace Test
             get
             {
                 return JsonConvert.SerializeObject(new
-                {
+                {  
                     Username = this.Username,
                     Email = this.Email,
                     Password = this.Password,
