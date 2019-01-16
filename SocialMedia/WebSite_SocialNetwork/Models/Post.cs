@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +9,8 @@ namespace WebSite_SocialNetwork.Models
 {
     public class Post
     {
-        public Post()
-        {
+        public int UserId { get; set; }
 
-        }
         public int PostId { get; set; }
 
         public int Username { get; set; }
@@ -25,5 +24,23 @@ namespace WebSite_SocialNetwork.Models
         public List<string> Tags { get; set; }
 
         public ePostPrivacy Privacy { get; set; }
+
+        public string PostAsJson
+        {
+            get
+            {
+                return JsonConvert.SerializeObject(new
+                {
+                    UserId = this.UserId,
+                    PostId = this.PostId,
+                    Username = this.Username,
+                    PostDate = this.PostDate,
+                    Text = this.Text,
+                    Image = this.Image,
+                    Tags = this.Tags,
+                    Privacy = this.Privacy
+                });
+            }
+        }
     }
 }

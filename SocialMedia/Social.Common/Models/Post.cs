@@ -12,6 +12,7 @@ namespace Social.Common.Models
     /// </summary>
     public class Post
     {
+        public int UserId { get; set; }
         public int PostId { get; set; }
         public string Text { get; set; }
         public string ImageUrl { get; set; }

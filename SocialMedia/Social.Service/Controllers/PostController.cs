@@ -1,4 +1,5 @@
 ﻿using Neo4j.Driver.V1;
+using Newtonsoft.Json;
 using Social.Common.Interfaces;
 using Social.Common.Models;
 using System;
@@ -8,6 +9,7 @@ using System.Web.Http;
 
 namespace Social.Service.Controllers
 {
+    [RoutePrefix("api/Post")]
     public class PostController : ApiController
     {
         private readonly IPostManager _postBl;
@@ -21,12 +23,12 @@ namespace Social.Service.Controllers
         /// </summary>
         [HttpPost]
         [Route("CreatePost")]
-        public HttpResponseMessage CreatePost(int userId, Post post)
+        public HttpResponseMessage CreatePost([FromBody]string postJson)
         {
             try
             {
-                _postBl.AddPost(userId, post);
-
+                var post = JsonConvert.DeserializeObject<Post>(postJson);
+                _postBl.AddPost(post);
                 return Request.CreateResponse(HttpStatusCode.OK, "post added successfully");
             }
             catch (Neo4jException e)

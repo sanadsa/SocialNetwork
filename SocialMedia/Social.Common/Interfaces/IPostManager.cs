@@ -10,7 +10,7 @@ namespace Social.Common.Interfaces
 {
     public interface IPostManager
     {
-        void AddPost(int userId, Post post);
+        void AddPost(Post post);
         void LikePost(int userId, int postId);
         void CommentPost(int postId, Comment comment);
         void ChangePostPrivacy(int postId, ePostPrivacy privacy);

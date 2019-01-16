@@ -25,14 +25,10 @@ namespace WebSite_SocialNetwork.Controllers
         {
             return View();
         }
-      
-        public ActionResult About()
+        
+        public ActionResult Error(string message)
         {
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
+            ViewBag.ErrorMessage = message;
             return View();
         }
     }

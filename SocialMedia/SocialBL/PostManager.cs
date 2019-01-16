@@ -26,7 +26,7 @@ namespace SocialBL
         /// add post to neo4j db and relate it to the user
         /// </summary>
         /// <param name="post"></param>
-        public void AddPost(int userId, Post post)
+        public void AddPost(Post post)
         {
             string guid = Guid.NewGuid().ToString();
             string imageUrl;
@@ -37,7 +37,7 @@ namespace SocialBL
                     imageUrl = _s3Uploader.UploadFile(post.ImageUrl, guid);
                 }
 
-                _postRepo.AddPost(userId, post);
+                _postRepo.AddPost(post.UserId, post);
 
             }
             catch (Exception)

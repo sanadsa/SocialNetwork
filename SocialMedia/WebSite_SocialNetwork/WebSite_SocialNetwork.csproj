@@ -216,6 +216,8 @@
     <Content Include="Views\Shared\_PostPartial.cshtml" />
     <Content Include="Views\Identity\IdentityEdit.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
+    <Content Include="Views\Account\AddPostView.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Social\" />

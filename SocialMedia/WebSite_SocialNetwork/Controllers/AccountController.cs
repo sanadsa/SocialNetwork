@@ -87,38 +87,12 @@ namespace WebSite_SocialNetwork.Controllers
             var user = response.Content.ReadAsAsync<User>().Result;
             if (response.IsSuccessStatusCode)
             {
-                OnLoginProcess(user);
                 user.Identity = SetUserIdentity(user.Email);
                 user.Posts = GetPosts(user.Token.TokenId);
                 return RedirectToAction("Wall", "Account", user.UserAsJson);
             }
             else
                 return RedirectToAction("Index", "Home");
-        }
-
-        /// <summary>
-        /// This method gets a user after login success and checks if the identity is exist.
-        /// if the identity no exist it will create new one.
-        /// </summary>
-        /// <param name="user"></param>
-        private void OnLoginProcess(User user)
-        {
-            var response1 = _client.PostAsJsonAsync(ConstantFields.Identity_CheckIfUserExist, user.Email).Result;
-            if (response1.IsSuccessStatusCode)
-            {
-                var checkUser = response1.Content.ReadAsAsync<bool>().Result;
-                if (checkUser == true)
-                    SetUserCookie(user);
-            }
-            else
-            {
-                UserIdentity userIdentity = new UserIdentity() { Email = user.Email };
-                var userIdentityJson = JsonConvert.SerializeObject(userIdentity);
-                var response2 = _client.PostAsJsonAsync(ConstantFields.Identity_CreateUserIdentity, userIdentityJson).Result;
-                if (!response2.IsSuccessStatusCode)
-                    throw new Exception("A problem during saving to the identity database");
-                SetUserCookie(user);
-            }
         }
 
         /// <summary>
@@ -169,15 +143,6 @@ namespace WebSite_SocialNetwork.Controllers
                 return RedirectToAction("Index", "Home");
         }
 
-        private UserIdentity SetUserIdentity(string email) => new IdentityController().GetUserIdentity(email);
-
-        private ICollection<Post> GetPosts(string token) => new SocialController().GetMyPosts(token);
-
-        public ActionResult LogOff()
-        {
-            return View();
-        }
-
         public ActionResult RegisterNewClient(RegisterUser registerUser)
         {
             var register = JsonConvert.SerializeObject(
@@ -207,14 +172,26 @@ namespace WebSite_SocialNetwork.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult GetIdentityPartial(UserIdentity userIdentity)
+        [HttpPost]
+        public ActionResult AddNewPost(Post post)
         {
-            return PartialView("_IdentityPartial", userIdentity);
+            var response = _client.PostAsJsonAsync(ConstantFields.Social_AddNewPost, post.PostAsJson).Result;
+            if (response.IsSuccessStatusCode)
+                return RedirectToAction("Wall", "Account");
+            else
+                
         }
 
-        public ActionResult GetPostPartial(Post post)
-        {
-            return PartialView("_PostPartial", post);
-        }
+        public ActionResult GetIdentityPartial(UserIdentity userIdentity) => PartialView("_IdentityPartial", userIdentity);
+
+        public ActionResult GetPostPartial(Post post) => PartialView("_PostPartial", post);
+        
+        private UserIdentity SetUserIdentity(string email) => new IdentityController().GetUserIdentity(email);
+
+        private ICollection<Post> GetPosts(string token) => new SocialController().GetMyPosts(token);
+
+        public ActionResult LogOff() => View();
+
+        public ActionResult AddNewPost() => View();
     }
 }
