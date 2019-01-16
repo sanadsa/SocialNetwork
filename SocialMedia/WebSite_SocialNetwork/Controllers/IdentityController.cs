@@ -48,15 +48,13 @@ namespace WebSite_SocialNetwork.Controllers
         {
             try
             {
-                User user = (User)Session["user"];
                 string json = JsonConvert.SerializeObject(identity);
                 var result = _client.PostAsync($"api/Identity/UpdateUserIdentity?userIdentity={identity}", new StringContent(json, System.Text.Encoding.UTF8, "application/json")).Result;
                 if (!result.IsSuccessStatusCode)
                 {
                     throw new Exception(result.Content.ReadAsStringAsync().Result);
                 }
-                
-                return RedirectToAction("Wall", "Account", user);
+                return RedirectToAction("Wall", "Account");
             }
             catch
             {
