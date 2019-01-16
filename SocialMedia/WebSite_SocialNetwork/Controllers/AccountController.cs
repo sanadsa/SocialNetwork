@@ -180,7 +180,7 @@ namespace WebSite_SocialNetwork.Controllers
             if (response.IsSuccessStatusCode)
                 return RedirectToAction("Wall", "Account");
             else
-                return RedirectToAction("");
+                return RedirectToAction("Error", "Home", "Error adding new post");
         }
 
         public ActionResult GetIdentityPartial(UserIdentity userIdentity) => PartialView("_IdentityPartial", userIdentity);
