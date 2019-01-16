@@ -215,6 +215,7 @@
     <Content Include="Views\Shared\_IdentityPartial.cshtml" />
     <Content Include="Views\Shared\_PostPartial.cshtml" />
     <Content Include="Views\Identity\IdentityEdit.cshtml" />
+    <Content Include="Views\Shared\_NavBar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Social\" />

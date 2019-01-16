@@ -8,6 +8,10 @@ namespace WebSite_SocialNetwork.Models
 {
     public class UserIdentity
     {
+        public UserIdentity()
+        {
+
+        }
         public string Email { get; set; }
 
         [DefaultValue(" ")]
