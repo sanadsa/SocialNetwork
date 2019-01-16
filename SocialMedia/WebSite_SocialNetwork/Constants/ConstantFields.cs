@@ -11,6 +11,7 @@ namespace WebSite_SocialNetwork.Constants
 
         /* Pages names */
         public const string LoginView = "LoginView";
+        public const string ProfileView = "Profile";
 
         /* Authentication Urls */
         public const string Authentication_BaseAddress = "http://localhost:61154/";
@@ -32,6 +33,6 @@ namespace WebSite_SocialNetwork.Constants
 
         /* TempData Keys */
         public const string CurrentUser = "CurrentUser";
-
+        public const string ProfileUser = "ProfileUser";
     }
 }
