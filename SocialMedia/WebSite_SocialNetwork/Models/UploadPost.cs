@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -10,23 +11,26 @@ namespace WebSite_SocialNetwork.Models
 {
     public class UploadPost
     {
+        public string Username { get; set; }
+
         public int UserId { get; set; }
 
         public int PostId { get; set; }
 
-        public int Username { get; set; }
+        public DateTime PostDate { get { return PostDate; } set { PostDate = DateTime.Now; } }
 
-        public DateTime PostDate { get; set; }
-
+        [DataType(DataType.MultilineText)]
+        [Display(Name = "Content")]
         public string Text { get; set; }
 
         [DataType(DataType.ImageUrl)]
         [Display(Name = "Picture")]
         public HttpPostedFileBase Image { get; set; }
 
+        [Display(Name = "Tag Your Frinds")]
         public List<string> Tags { get; set; }
 
-        public ePostPrivacy Privacy { get; set; }
+        public EPostPrivacy Privacy { get; set; }
 
         public string PostAsJson
         {

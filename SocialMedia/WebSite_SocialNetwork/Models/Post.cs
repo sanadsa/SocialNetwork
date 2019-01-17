@@ -20,11 +20,11 @@ namespace WebSite_SocialNetwork.Models
 
         public string Text { get; set; }
 
-        public byte[] Image { get; set; }
+        public string ImageUrl { get; set; }
 
         public List<string> Tags { get; set; }
 
-        public ePostPrivacy Privacy { get; set; }
+        public EPostPrivacy Privacy { get; set; }
 
         public string PostAsJson
         {
@@ -37,7 +37,7 @@ namespace WebSite_SocialNetwork.Models
                     Username = this.Username,
                     PostDate = this.PostDate,
                     Text = this.Text,
-                    Image = this.Image,
+                    Image = this.ImageUrl,
                     Tags = this.Tags,
                     Privacy = this.Privacy
                 });

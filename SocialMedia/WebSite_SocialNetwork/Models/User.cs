@@ -10,10 +10,6 @@ namespace WebSite_SocialNetwork.Models
 {
     public class User
     {
-        public User()
-        {
-
-        }
         public string Username { get; set; }
 
         [DataType(DataType.EmailAddress)]

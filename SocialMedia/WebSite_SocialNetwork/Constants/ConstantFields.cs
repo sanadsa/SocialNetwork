@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using WebSite_SocialNetwork.Models;
 
 namespace WebSite_SocialNetwork.Constants
 {
@@ -35,6 +36,7 @@ namespace WebSite_SocialNetwork.Constants
         public const string Identity_CheckIfUserExist = "api/Identity/CheckIfUserExist";
         public const string Identity_UpdateUserIdentity = "api/Identity/UpdateUserIdentity";
         public const string Identity_GetUserIdentity = "api/Identity/GetUserIdentity";
+        public static string UpdateUserIdentity(UserIdentity identity) => $"api/Identity/UpdateUserIdentity?userIdentity={identity}";
 
         /* Social Service Urls */
         public const string Social_BaseAddress = "http://localhost:33452/";
@@ -44,5 +46,18 @@ namespace WebSite_SocialNetwork.Constants
         /* TempData Keys */
         public const string CurrentUser = "CurrentUser";
         public const string ProfileUser = "ProfileUser";
+
+        /* Cookie Names */
+        public const string UserCookie = "UserCookie";
+        public const string UserCookie_username = "User name";
+
+        /* Facebook Login */
+        public const string Facebook_AppId = "302110027103118";
+        public const string Facebook_AppSecret = "8023d3896c8487f4642f2411a727b391";
+        public const string Facebook_AccessTokenPath = "oauth/access_token";
+        public const string Facebook_AccessTokenSession = "AccessToken";
+        public const string Facebook_GetFieldsUrl = "me?fields=link,first_name,last_name,email,id";
+        public const string Facebook_ResponseType = "code";
+        public const string Facebook_Scope = "email";
     }
 }

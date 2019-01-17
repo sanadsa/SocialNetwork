@@ -30,7 +30,7 @@ namespace WebSite_SocialNetwork.Controllers
         {
             if (user == null)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction(ConstantFields.IndexView, ConstantFields.Home);
             }
 
             Session["user"] = user;
@@ -49,16 +49,16 @@ namespace WebSite_SocialNetwork.Controllers
             try
             {
                 string json = JsonConvert.SerializeObject(identity);
-                var result = _client.PostAsync($"api/Identity/UpdateUserIdentity?userIdentity={identity}", new StringContent(json, System.Text.Encoding.UTF8, "application/json")).Result;
+                var result = _client.PostAsync(ConstantFields.UpdateUserIdentity(identity), new StringContent(json, System.Text.Encoding.UTF8, "application/json")).Result;
                 if (!result.IsSuccessStatusCode)
                 {
                     throw new Exception(result.Content.ReadAsStringAsync().Result);
                 }
-                return RedirectToAction("Wall", "Account");
+                return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
             }
             catch
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction(ConstantFields.IndexView, ConstantFields.Home);
             }
         }
 

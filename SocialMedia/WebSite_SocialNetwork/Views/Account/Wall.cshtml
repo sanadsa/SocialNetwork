@@ -16,13 +16,11 @@
         foreach (var p in Model.Posts)
         {
 
-            if (p.Image != null)
+            if (p.ImageUrl != null)
             {
-                var base64 = Convert.ToBase64String(p.Image);
-                var imgSrc = String.Format($"data:image/gif;base64,{p.Image}");
                 <div class="col-lg-4 col-sm-6 portfolio-item">
                     <div class="card h-100">
-                        <a href="#"><img class="card-img-top" src="@imgSrc" hight="100" width="50" alt=""></a>
+                        <a href="#"><img class="card-img-top" src="@p.ImageUrl" hight="100" width="50" alt=""></a>
                         <div class="card-body">
                             <h4 class="card-title">
                                 <a href="#">@p.Username</a>

@@ -7,10 +7,6 @@ namespace WebSite_SocialNetwork.Models
 {
     public class Token
     {
-        public Token()
-        {
-
-        }
         public string Username { get; set; }
 
         public string CreatedTime { get; set; }

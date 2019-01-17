@@ -49,11 +49,11 @@ namespace WebSite_SocialNetwork.Controllers
             var fb = new FacebookClient();
             var loginUrl = fb.GetLoginUrl(new
             {
-                client_id = "302110027103118",
-                client_secret = "8023d3896c8487f4642f2411a727b391",
+                client_id = ConstantFields.Facebook_AppId,
+                client_secret = ConstantFields.Facebook_AppSecret,
                 redirect_uri = RedirectUri.AbsoluteUri,
-                response_type = "code",
-                scope = "email"
+                response_type = ConstantFields.Facebook_ResponseType,
+                scope = ConstantFields.Facebook_Scope
             });
             return Redirect(loginUrl.AbsoluteUri);
         }
@@ -66,17 +66,17 @@ namespace WebSite_SocialNetwork.Controllers
         public ActionResult FacebookCallBack(string code)
         {
             var fb = new FacebookClient();
-            dynamic facebookResult = fb.Post("oauth/access_token", new
+            dynamic facebookResult = fb.Post(ConstantFields.Facebook_AccessTokenPath, new
             {
-                client_id = "302110027103118",
-                client_secret = "8023d3896c8487f4642f2411a727b391",
+                client_id = ConstantFields.Facebook_AppId,
+                client_secret = ConstantFields.Facebook_AppSecret,
                 redirect_uri = RedirectUri.AbsoluteUri,
                 code = code
             });
             var accessToken = facebookResult.access_token;
-            Session["AccessToken"] = accessToken;
+            Session[ConstantFields.Facebook_AccessTokenSession] = accessToken;
             fb.AccessToken = accessToken;
-            dynamic me = fb.Get("me?fields=link,first_name,last_name,email,id");
+            dynamic me = fb.Get(ConstantFields.Facebook_GetFieldsUrl);
             string email = me.email;
             string firstName = me.first_name;
             string lastName = me.last_name;
@@ -89,10 +89,10 @@ namespace WebSite_SocialNetwork.Controllers
             {
                 user.Identity = SetUserIdentity(user.Email);
                 user.Posts = GetPosts(user.Token.TokenId);
-                return RedirectToAction("Wall", "Account", user.UserAsJson);
+                return RedirectToAction(ConstantFields.WallView, ConstantFields.Account, user.UserAsJson);
             }
             else
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction(ConstantFields.IndexView, ConstantFields.Home);
         }
 
         /// <summary>
@@ -101,9 +101,9 @@ namespace WebSite_SocialNetwork.Controllers
         /// <param name="user"></param>
         private void SetUserCookie(User user)
         {
-            HttpCookie cookie = new HttpCookie("UserCookie");
+            HttpCookie cookie = new HttpCookie(ConstantFields.UserCookie);
             cookie.Expires = DateTime.Now.AddMinutes(30);
-            cookie.Values["User name"] = user.Username;
+            cookie.Values[ConstantFields.UserCookie_username] = user.Username;
         }
 
         public ActionResult Wall()
@@ -132,16 +132,16 @@ namespace WebSite_SocialNetwork.Controllers
                 {
                     user.Posts = new List<Post>();
                     Session[ConstantFields.CurrentUser] = user.UserAsJson;
-                    return RedirectToAction(ConstantFields.WallView, "Account");
+                    return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
                 }
                 else
                 {
                     Session[ConstantFields.CurrentUser] = user.UserAsJson;
-                    return RedirectToAction(ConstantFields.WallView, "Account");
+                    return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
                 }
             }
             else
-                return RedirectToAction(ConstantFields.IndexView, "Home");
+                return RedirectToAction(ConstantFields.IndexView, ConstantFields.Home);
         }
 
         public ActionResult RegisterNewClient(RegisterUser registerUser)
@@ -160,17 +160,15 @@ namespace WebSite_SocialNetwork.Controllers
                     Email = registerUser.Email,
                     FirstName = "",
                     LastName = "",
-                    Age = 0,
+                    Age = 0,    
                     Address = "",
                     WorkAddress = ""
                 });
             var registerResponse = _client.PostAsJsonAsync(ConstantFields.Authentication_Register, register).Result;
             var identityRepsonse = _clientIdentity.PostAsJsonAsync(ConstantFields.Identity_CreateUserIdentity, identity).Result;
             if (!identityRepsonse.IsSuccessStatusCode || !registerResponse.IsSuccessStatusCode)
-            {
                 throw new Exception("Error while register new user");
-            }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(ConstantFields.IndexView, ConstantFields.Home);
         }
 
         [HttpPost]
@@ -178,9 +176,24 @@ namespace WebSite_SocialNetwork.Controllers
         {
             var response = _client.PostAsJsonAsync(ConstantFields.Social_AddNewPost, post.PostAsJson).Result;
             if (response.IsSuccessStatusCode)
-                return RedirectToAction(ConstantFields.WallView, "Account");
+                return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
             else
-                return RedirectToAction(ConstantFields.ErrorView, "Home", "Error adding new post");
+                return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, "Error adding new post");
+        }
+
+        public ActionResult AddNewPost()
+        {
+            if (Session[ConstantFields.CurrentUser] != null)
+            {
+                var user = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
+                List<string> Folowings = new List<string>() { "njcsakc", "kbfjaba" }; //TODO: connect to action that gives me all the folowings user names.
+                ViewBag.Folowings = new SelectList(Folowings);
+                return View(ConstantFields.PostView);
+            }
+            else
+            {
+                return View(ConstantFields.PostView);
+            }
         }
 
         public ActionResult GetIdentityPartial(UserIdentity userIdentity) => PartialView("_IdentityPartial", userIdentity);
@@ -193,6 +206,5 @@ namespace WebSite_SocialNetwork.Controllers
 
         public ActionResult LogOff() => View();
 
-        public ActionResult AddNewPost() => View(ConstantFields.PostView);
     }
 }
