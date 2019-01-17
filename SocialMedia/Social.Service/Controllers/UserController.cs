@@ -111,7 +111,7 @@ namespace Social.Service.Controllers
             {
                 _userBl.BlockUser(userId, userToBlock);
 
-                return Request.CreateResponse(HttpStatusCode.OK, "user "+userId+" blocked");
+                return Request.CreateResponse(HttpStatusCode.OK, "user " + userId + " blocked");
             }
             catch (Neo4jException e)
             {
@@ -194,6 +194,88 @@ namespace Social.Service.Controllers
                 _userBl.UnFollow(userId, userToUnFollow);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "user " + userToUnFollow + " has been unfollowed");
+            }
+            catch (Neo4jException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+        }
+
+        /// <summary>
+        /// get users that i follow
+        /// </summary>
+        [HttpPost]
+        [Route("GetFollowing")]
+        public HttpResponseMessage GetFollowing([FromBody]string userEmail)
+        {
+            try
+            {
+                var following = _userBl.GetFollowing(userEmail);
+
+                return Request.CreateResponse(HttpStatusCode.OK, following);
+            }
+            catch (Neo4jException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+        }
+
+        /// <summary>
+        /// get users that following me
+        /// </summary>
+        [HttpPost]
+        [Route("GetFollowers")]
+        public HttpResponseMessage GetFollowers([FromBody]string userEmail)
+        {
+            try
+            {
+                var followers = _userBl.GetFollowers(userEmail);
+
+                return Request.CreateResponse(HttpStatusCode.OK, followers);
+            }
+            catch (Neo4jException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// get blocked user
+        /// </summary>
+        [HttpPost]
+        [Route("GetBlocked")]
+        public HttpResponseMessage GetBlocked([FromBody]string userEmail)
+        {
+            try
+            {
+                var blocked = _userBl.GetBlockedUsers(userEmail);
+
+                return Request.CreateResponse(HttpStatusCode.OK, blocked);
             }
             catch (Neo4jException e)
             {

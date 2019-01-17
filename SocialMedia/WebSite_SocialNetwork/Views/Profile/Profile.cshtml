@@ -4,19 +4,64 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@Model.Identity.FirstName @Model.Identity.LastName</h2>
+<div>
 
-<h2>@ViewBag.Username</h2>
-<div>
-    <label>Age</label>
-    <p>@Model.Identity.Age</p>
-</div>
-<div>
-    <label>Address</label>
-    <p class="help">@Model.Identity.Address</p>
-</div>
-<div>
-    <label>Work Address</label>
-    <p>@Model.Identity.WorkAddress</p>
-</div>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <h2>@Model.Identity.FirstName @Model.Identity.LastName</h2>
+        <li role="presentation" class="active"><a href="#identity" aria-controls="identity" role="tab" data-toggle="tab">Identity</a></li>
+        <li role="presentation"><a href="#following" aria-controls="following" role="tab" data-toggle="tab">Following</a></li>
+        <li role="presentation"><a href="#followers" aria-controls="followers" role="tab" data-toggle="tab">Followers</a></li>
+        <li role="presentation"><a href="#blocked" aria-controls="blocked" role="tab" data-toggle="tab">Blocked</a></li>
+    </ul>
 
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="identity">
+            <h2>@ViewBag.Username</h2>
+            <div>
+                <label>Age</label>
+                <p>@Model.Identity.Age</p>
+            </div>
+            <div>
+                <label>Address</label>
+                <p>@Model.Identity.Address</p>
+            </div>
+            <div>
+                <label>Work Address</label>
+                <p>@Model.Identity.WorkAddress</p>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="following">
+            @if (Model.Following == null)
+            {
+                <h2>you are not following anyone!</h2>
+            }
+            @foreach (var user in Model.Following)
+            {
+                <h1>user.Username</h1>
+            }
+        </div>
+        <div role="tabpanel" class="tab-pane" id="followers">
+            @if (Model.Followers == null)
+            {
+                <h2>No Followers</h2>
+            }
+            @foreach (var user in Model.Followers)
+            {
+                <h1>user.Username</h1>
+            }
+        </div>
+        <div role="tabpanel" class="tab-pane" id="blocked">
+            @if (Model.Following == null)
+            {
+                <h2>No Blocked Users</h2>
+            }
+            @foreach (var user in Model.Blocking)
+            {
+                <h1>user.Username</h1>
+            }
+        </div>
+    </div>
+
+</div>
