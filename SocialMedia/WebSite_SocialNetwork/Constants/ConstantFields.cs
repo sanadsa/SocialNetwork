@@ -23,6 +23,7 @@ namespace WebSite_SocialNetwork.Constants
         public const string Home = "Home";
         public const string Identity = "Identity";
         public const string Social = "Social";
+        public const string Profile = "Profile";
 
         /* Authentication Urls */
         public const string Authentication_BaseAddress = "http://localhost:61154/";
@@ -42,6 +43,7 @@ namespace WebSite_SocialNetwork.Constants
         public const string Social_BaseAddress = "http://localhost:13608/";
         public const string Social_GetMyPosts = "api/Feed/GetMyPosts";
         public const string Social_AddNewPost = "api/Post/CreatePost";
+        public const string Social_AddNewUser = "api/User/CreateUser";
         public const string Social_GetFollowing = "api/User/GetFollowing";
         public const string Social_GetFollowers = "api/User/GetFollowers";
         public const string Social_GetBlocked = "api/User/GetBlocked";

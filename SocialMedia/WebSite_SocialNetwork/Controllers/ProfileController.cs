@@ -21,7 +21,6 @@ namespace WebSite_SocialNetwork.Controllers
 
         public ActionResult GetProfile()
         {
-            // var profileUser = JsonConvert.DeserializeObject<Profile>(Session[ConstantFields.ProfileUser].ToString());
             var profileUser = new Profile();
             var user = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
             profileUser.Identity = GetUserIdentity(user.Email);
@@ -30,6 +29,17 @@ namespace WebSite_SocialNetwork.Controllers
             profileUser.Blocking = GetBlocked(user.Email);
             ViewBag.Username = profileUser.Username;
             return View(ConstantFields.ProfileView, profileUser);
+        }
+
+        public ActionResult GoToProfile(string email)
+        {
+            var profileUser = new Profile();        
+            profileUser.Identity = GetUserIdentity(email);
+            profileUser.Followers = GetFollowers(email);
+            profileUser.Following = GetFollowing(email);
+            profileUser.Blocking = GetBlocked(email);
+            ViewBag.Username = profileUser.Username;
+            return RedirectToAction(ConstantFields.ProfileView, ConstantFields.Profile);
         }
 
         private List<ProfileUser> GetBlocked(string email)
