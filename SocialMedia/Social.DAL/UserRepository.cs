@@ -79,11 +79,11 @@ namespace Social.DAL
         /// <summary>
         /// get blocked users
         /// </summary>
-        /// <param name="userId">user to check his blocked list</param>
-        public IEnumerable<User> GetBlockedUsers(int userId)
+        /// <param name="userEmail">user to check his blocked list</param>
+        public IEnumerable<User> GetBlockedUsers(string userEmail)
         {
             string query = $"MATCH (u:User)-[:Blocked]->(bu:User)" +
-                           $"WHERE u.UserId = {userId} " +
+                           $"WHERE u.Email = \"{userEmail}\" " +
                            $"RETURN bu";
             var result = _repo.RunQuery(driver, query);
             var blocked = new List<User>();
@@ -98,10 +98,10 @@ namespace Social.DAL
         /// <summary>
         /// get followers of the user
         /// </summary>
-        public IEnumerable<User> GetFollowers(int userId)
+        public IEnumerable<User> GetFollowers(string userEmail)
         {
             string query = $"MATCH (u:User)<-[:Following]-(fu:User)" +
-                           $"WHERE u.UserId = {userId} " +
+                           $"WHERE u.Email = \"{userEmail}\" " +
                            $"RETURN fu";
             var result = _repo.RunQuery(driver, query);
             var followers = new List<User>();
@@ -116,10 +116,10 @@ namespace Social.DAL
         /// <summary>
         /// get users the the user follow (following)
         /// </summary>
-        public IEnumerable<User> GetFollowing(int userId)
+        public IEnumerable<User> GetFollowing(string userEmail)
         {
             string query = $"MATCH (u:User)-[:Following]->(fu:User)" +
-                           $"WHERE u.UserId = {userId} " +
+                           $"WHERE u.Email = \"{userEmail}\" " +
                            $"RETURN fu";
             var result = _repo.RunQuery(driver, query);
             var following = new List<User>();

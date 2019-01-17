@@ -162,6 +162,7 @@
     </Compile>
     <Compile Include="Models\FacebookUser.cs" />
     <Compile Include="Models\Post.cs" />
+    <Compile Include="Models\ProfileUser.cs" />
     <Compile Include="Models\UploadPost.cs" />
     <Compile Include="Models\Profile.cs" />
     <Compile Include="Models\UserIdentity.cs" />

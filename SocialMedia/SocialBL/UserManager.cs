@@ -57,25 +57,25 @@ namespace SocialBL
         /// <summary>
         /// get blocked users bl - calls the repo
         /// </summary>
-        public IEnumerable<User> GetBlockedUsers(int userId)
+        public IEnumerable<User> GetBlockedUsers(string userToken)
         {
-            return _userRepo.GetBlockedUsers(userId);
+            return _userRepo.GetBlockedUsers(userToken);
         }
 
         /// <summary>
         /// get followers bl - calls the repo
         /// </summary>
-        public IEnumerable<User> GetFollowers(int userId)
+        public IEnumerable<User> GetFollowers(string userToken)
         {
-            return _userRepo.GetFollowers(userId);
+            return _userRepo.GetFollowers(userToken);
         }
 
         /// <summary>
         /// get following bl - calls the repo
         /// </summary>
-        public IEnumerable<User> GetFollowing(int userId)
+        public IEnumerable<User> GetFollowing(string userToken)
         {
-            return _userRepo.GetFollowing(userId);
+            return _userRepo.GetFollowing(userToken);
         }
 
         /// <summary>

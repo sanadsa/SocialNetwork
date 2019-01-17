@@ -11,9 +11,9 @@ namespace WebSite_SocialNetwork.Models
         public UserIdentity Identity { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
-        public int FollowingCount { get; set; }
-        public int FollowersCount { get; set; }
-        public int BlockingCount { get; set; }
+        public List<ProfileUser> Following { get; set; }
+        public List<ProfileUser> Followers { get; set; }
+        public List<ProfileUser> Blocking { get; set; }
         public string ProfileAsJson
         {
             get
@@ -23,9 +23,9 @@ namespace WebSite_SocialNetwork.Models
                     Identity = this.Identity,
                     Username = this.Username,
                     Email = this.Email,
-                    Following = this.FollowingCount,
-                    Followers = this.FollowersCount,
-                    Blocking = this.BlockingCount,
+                    Following = this.Following,
+                    Followers = this.Followers,
+                    Blocking = this.Blocking,
                 });
             }
         }

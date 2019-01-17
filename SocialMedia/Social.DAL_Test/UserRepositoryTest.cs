@@ -15,12 +15,9 @@ namespace Social.DAL_Test
         {
             User user = new User
             {
-                UserId = 4,
-                Username = "Sanad",
-                BlockedIds = new List<string>(),
-                Email = "ss@g.com",
-                FollowersIds = new List<string>(),
-                Following = new List<string>(),
+                UserId = 11,
+                Username = "d",
+                Email = "d@d",
                 Token = "tt"
             };
             u.AddUser(user);
@@ -29,7 +26,7 @@ namespace Social.DAL_Test
         [TestMethod]
         public void Follow()
         {
-            u.Follow(1, 3);
+            u.Follow(2, 11);
         }
 
         [TestMethod]
@@ -66,19 +63,19 @@ namespace Social.DAL_Test
         [TestMethod]
         public void GetFollowing()
         {
-            var following = u.GetFollowing(1);
+            var following = u.GetFollowing("tt");
         }
 
         [TestMethod]
         public void GetFollowers()
         {
-            var followers = u.GetFollowers(3);
+            var followers = u.GetFollowers("tt");
         }
 
         [TestMethod]
         public void GetBlocked()
         {
-            var blocked = u.GetBlockedUsers(1);
+            var blocked = u.GetBlockedUsers("tt");
         }
     }
 }

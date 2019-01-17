@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Mvc;
@@ -13,18 +14,49 @@ namespace WebSite_SocialNetwork.Controllers
         HttpClient _client = new HttpClient();
         public ProfileController()
         {
-            _client.BaseAddress = new Uri(ConstantFields.Identity_BaseAddress);
+            _client.BaseAddress = new Uri(ConstantFields.Social_BaseAddress);
             _client.DefaultRequestHeaders.Accept.Add(new
                 MediaTypeWithQualityHeaderValue(ConstantFields.Headers_Type));
-        }        
+        }
 
         public ActionResult GetProfile()
         {
             // var profileUser = JsonConvert.DeserializeObject<Profile>(Session[ConstantFields.ProfileUser].ToString());
             var profileUser = new Profile();
-            profileUser.Identity = GetUserIdentity(profileUser.Email);
+            var user = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
+            profileUser.Identity = GetUserIdentity(user.Email);
+            profileUser.Followers = GetFollowers(user.Email);
+            profileUser.Following = GetFollowing(user.Email);
+            profileUser.Blocking = GetBlocked(user.Email);
             ViewBag.Username = profileUser.Username;
             return View(ConstantFields.ProfileView, profileUser);
+        }
+
+        private List<ProfileUser> GetBlocked(string email)
+        {
+            var response = _client.PostAsJsonAsync(ConstantFields.Social_GetBlocked, email).Result;
+            if (response.IsSuccessStatusCode)
+                return response.Content.ReadAsAsync<List<ProfileUser>>().Result;
+            else
+                return null;
+        }
+
+        private List<ProfileUser> GetFollowing(string email)
+        {
+            var response = _client.PostAsJsonAsync(ConstantFields.Social_GetFollowing, email).Result;
+            if (response.IsSuccessStatusCode)
+                return response.Content.ReadAsAsync<List<ProfileUser>>().Result;
+            else
+                return null;
+        }
+
+        private List<ProfileUser> GetFollowers(string email)
+        {
+            var response = _client.PostAsJsonAsync(ConstantFields.Social_GetFollowers, email).Result;
+            if (response.IsSuccessStatusCode)
+                return response.Content.ReadAsAsync<List<ProfileUser>>().Result;
+            else
+                return null;
         }
 
         private UserIdentity GetUserIdentity(string email) => new IdentityController().GetUserIdentity(email);

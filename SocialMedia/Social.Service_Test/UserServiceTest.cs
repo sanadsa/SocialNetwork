@@ -28,10 +28,7 @@ namespace Social.Service_Test
             {
                 UserId = 88,
                 Username = "nitzan",
-                BlockedIds = new List<string>(),
                 Email = "n@gmail.com",
-                FollowersIds = new List<string>(),
-                Following = new List<string>(),
                 Token = "t543tg"
             };
             string json = JsonConvert.SerializeObject(user);
