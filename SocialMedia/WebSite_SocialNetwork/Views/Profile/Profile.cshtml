@@ -37,9 +37,12 @@
             {
                 <h2>you are not following anyone!</h2>
             }
-            @foreach (var user in Model.Following)
+            else
             {
-                <h1>user.Username</h1>
+                foreach (var user in Model.Following)
+                {
+                    <h1>user.Username</h1>
+                }
             }
         </div>
         <div role="tabpanel" class="tab-pane" id="followers">
@@ -47,9 +50,12 @@
             {
                 <h2>No Followers</h2>
             }
-            @foreach (var user in Model.Followers)
+            else
             {
-                <h1>user.Username</h1>
+                foreach (var user in Model.Followers)
+                {
+                    <h1>user.Username</h1>
+                }
             }
         </div>
         <div role="tabpanel" class="tab-pane" id="blocked">
@@ -57,9 +63,12 @@
             {
                 <h2>No Blocked Users</h2>
             }
-            @foreach (var user in Model.Blocking)
+            else
             {
-                <h1>user.Username</h1>
+                foreach (var user in Model.Blocking)
+                {
+                    <h1>user.Username</h1>
+                }
             }
         </div>
     </div>
