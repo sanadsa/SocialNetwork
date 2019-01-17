@@ -41,13 +41,13 @@
                 foreach (var user in Model.Following)
                 {
                 <div>
-                    @using (Html.BeginForm("GoToProfile", "Profile", new { email = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    @using (Html.BeginForm("GetProfile", "Profile", new { email = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
                         <input type="submit" value="@user.Username" />
                     }
                     @using (Html.BeginForm("Unfollow", "Profile", new { user = Model.Email, userToUnFollow = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
-                        <input type="submit" value="@user.Username" />
+                        <input type="submit" value="UnFollow" />
                     }
                 </div>
                 }
@@ -63,7 +63,7 @@
                 foreach (var user in Model.Followers)
                 {
                 <div>
-                    @using (Html.BeginForm("GoToProfile", "Profile", new { email = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    @using (Html.BeginForm("GetProfile", "Profile", new { email = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
                         <input type="submit" value="@user.Username" />
                     }
@@ -82,7 +82,7 @@
                 foreach (var user in Model.Blocking)
                 {
                 <div>
-                    @using (Html.BeginForm("GoToProfile", "Profile", new { email = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    @using (Html.BeginForm("GetProfile", "Profile", new { email = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
                         <input type="submit" value="@user.Username" />
                     }

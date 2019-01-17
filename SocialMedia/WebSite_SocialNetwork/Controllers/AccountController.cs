@@ -190,7 +190,7 @@ namespace WebSite_SocialNetwork.Controllers
                 });
             var socialResponse = _clientSocial.PostAsJsonAsync(ConstantFields.Social_AddNewUser, social).Result;
             if (!socialResponse.IsSuccessStatusCode)
-                throw new Exception("Error while register new social user");
+                RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, "Error while register new social user");            
         }
 
         [HttpPost]

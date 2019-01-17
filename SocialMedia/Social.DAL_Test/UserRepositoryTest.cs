@@ -15,9 +15,9 @@ namespace Social.DAL_Test
         {
             User user = new User
             {
-                UserId = 11,
-                Username = "d",
-                Email = "d@d",
+                UserId = 22,
+                Username = "san",
+                Email = "s@f",
                 Token = "tt"
             };
             u.AddUser(user);
@@ -26,7 +26,7 @@ namespace Social.DAL_Test
         [TestMethod]
         public void Follow()
         {
-            u.Follow(2, 11);
+            u.Follow(22, 11);
         }
 
         [TestMethod]

@@ -19,27 +19,33 @@ namespace WebSite_SocialNetwork.Controllers
                 MediaTypeWithQualityHeaderValue(ConstantFields.Headers_Type));
         }
 
-        public ActionResult GetProfile()
+        public ActionResult GetProfile(string email)
         {
-            var profileUser = new Profile();
-            var user = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
-            profileUser.Identity = GetUserIdentity(user.Email);
-            profileUser.Followers = GetFollowers(user.Email);
-            profileUser.Following = GetFollowing(user.Email);
-            profileUser.Blocking = GetBlocked(user.Email);
-            ViewBag.Username = profileUser.Username;
-            return View(ConstantFields.ProfileView, profileUser);
+            try
+            {
+                var profileUser = new Profile();
+                profileUser.Identity = GetUserIdentity(email);
+                profileUser.Email = email;
+                profileUser.Followers = GetFollowers(email);
+                profileUser.Following = GetFollowing(email);
+                profileUser.Blocking = GetBlocked(email);
+                ViewBag.Username = profileUser.Username;
+                return View(ConstantFields.ProfileView, profileUser);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, "Error getting profile");
+            }
         }
 
-        public ActionResult GoToProfile(string email)
+        public ActionResult UnFollow(string email, string emailToUnfollow)
         {
-            var profileUser = new Profile();        
-            profileUser.Identity = GetUserIdentity(email);
-            profileUser.Followers = GetFollowers(email);
-            profileUser.Following = GetFollowing(email);
-            profileUser.Blocking = GetBlocked(email);
-            ViewBag.Username = profileUser.Username;
-            return RedirectToAction(ConstantFields.ProfileView, ConstantFields.Profile);
+            return View();
+        }
+
+        public ActionResult UnBlock(string email, string emailToUnblock)
+        {
+            return View();
         }
 
         private List<ProfileUser> GetBlocked(string email)
