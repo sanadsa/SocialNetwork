@@ -1,8 +1,10 @@
 ﻿@model WebSite_SocialNetwork.Models.Profile
 @{
-    ViewBag.Title = "Profile";
+    ViewBag.Title = "OtherProfile";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<h2>OtherProfile</h2>
 
 <div>
     <!-- Nav tabs -->
@@ -12,10 +14,33 @@
         {
             <input type="submit" value="Back To Feed" class="buttonT" />
         }
+        <div style="float:left;">
+            @using (Html.BeginForm("Unfollow", "Profile", new { emailToUnfollow = Model.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                <input type="submit" value="Unfollow" class="buttonProfile" />
+            }
+        </div>
+        <div style="float:left;">
+            @using (Html.BeginForm("Follow", "Profile", new { emailToFollow = Model.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                <input type="submit" value="Follow" class="buttonProfile" />
+            }
+        </div>
+        <div style="float:left;">
+            @using (Html.BeginForm("Block", "Profile", new { emailToBlock = Model.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                <input type="submit" value="Block" class="buttonProfile" />
+            }
+        </div>
+        <div>
+            @using (Html.BeginForm("Block", "Profile", new { emailToUnblock = Model.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                <input type="submit" value="Unblock" class="buttonProfile" />
+            }
+        </div>
         <li role="presentation" class="active"><a href="#identity" aria-controls="identity" role="tab" data-toggle="tab">Identity</a></li>
         <li role="presentation"><a href="#following" aria-controls="following" role="tab" data-toggle="tab">Following</a></li>
         <li role="presentation"><a href="#followers" aria-controls="followers" role="tab" data-toggle="tab">Followers</a></li>
-        <li role="presentation"><a href="#blocked" aria-controls="blocked" role="tab" data-toggle="tab">Blocked</a></li>
     </ul>
 
     <!-- Tab panes -->
@@ -46,11 +71,11 @@
                 {
                     <div class="container">
                         <div class="row">
-                            @using (Html.BeginForm("GetOtherProfile", "Profile", new { email = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            @using (Html.BeginForm("GetProfile", "Profile", new { email = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                             {
                                 <input type="submit" value="@user.Username" class="buttonProfile" />
                             }
-                            @using (Html.BeginForm("Unfollow", "Profile", new { emailToUnfollow = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            @using (Html.BeginForm("Unfollow", "Profile", new { user = Model.Email, userToUnFollow = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                             {
                                 <input type="submit" value="UnFollow" />
                             }
@@ -70,37 +95,13 @@
                 {
                     <div class="container">
                         <div class="row">
-                            @using (Html.BeginForm("GetOtherProfile", "Profile", new { email = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            @using (Html.BeginForm("GetProfile", "Profile", new { email = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                             {
                                 <input type="submit" value="@user.Username" />
                             }
                         </div>
                     </div>
 
-                }
-            }
-        </div>
-        <div role="tabpanel" class="tab-pane" id="blocked">
-            @if (Model.Following == null)
-            {
-                <h2>No Blocked Users</h2>
-            }
-            else
-            {
-                foreach (var user in Model.Blocking)
-                {
-                    <div class="container">
-                        <div class="row">
-                            @using (Html.BeginForm("GetOtherProfile", "Profile", new { email = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                            {
-                                <input type="submit" value="@user.Username" />
-                            }
-                            @using (Html.BeginForm("Unblock", "Profile", new { emailToUnblock = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                            {
-                                <input type="submit" value="@user.Username" />
-                            }
-                        </div>
-                    </div>
                 }
             }
         </div>

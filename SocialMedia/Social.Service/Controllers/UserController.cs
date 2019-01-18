@@ -107,13 +107,13 @@ namespace Social.Service.Controllers
         /// </summary>
         [HttpPost]
         [Route("BlockUser")]
-        public HttpResponseMessage BlockUser(int userId, int userToBlock)
+        public HttpResponseMessage BlockUser(string email, string emailToBlock)
         {
             try
             {
-                _userBl.BlockUser(userId, userToBlock);
+                _userBl.BlockUser(email, emailToBlock);
 
-                return Request.CreateResponse(HttpStatusCode.OK, "user " + userId + " blocked");
+                return Request.CreateResponse(HttpStatusCode.OK, "user " + email + " blocked");
             }
             catch (Neo4jException e)
             {
@@ -133,15 +133,15 @@ namespace Social.Service.Controllers
         /// <summary>
         /// follow user from neo4j db using http call from the client
         /// </summary>
-        [HttpPost]
+        [HttpGet]
         [Route("FollowUser")]
-        public HttpResponseMessage FollowUser(int userId, int userToFollow)
+        public HttpResponseMessage FollowUser(string email, string emailToFollow)
         {
             try
             {
-                _userBl.FollowUser(userId, userToFollow);
+                _userBl.FollowUser(email, emailToFollow);
 
-                return Request.CreateResponse(HttpStatusCode.OK, "user " + userToFollow + " has been followed");
+                return Request.CreateResponse(HttpStatusCode.OK, "user " + emailToFollow + " has been followed");
             }
             catch (Neo4jException e)
             {
@@ -162,13 +162,13 @@ namespace Social.Service.Controllers
         /// </summary>
         [HttpPost]
         [Route("UnBlock")]
-        public HttpResponseMessage UnBlock(int userId, int userToUnBlock)
+        public HttpResponseMessage UnBlock(string email, string emailToUnBlock)
         {
             try
             {
-                _userBl.UnBlock(userId, userToUnBlock);
+                _userBl.UnBlock(email, emailToUnBlock);
 
-                return Request.CreateResponse(HttpStatusCode.OK, "user " + userToUnBlock + " has been unblocked");
+                return Request.CreateResponse(HttpStatusCode.OK, "user " + emailToUnBlock + " has been unblocked");
             }
             catch (Neo4jException e)
             {
@@ -189,13 +189,13 @@ namespace Social.Service.Controllers
         /// </summary>
         [HttpPost]
         [Route("UnFollowUser")]
-        public HttpResponseMessage UnFollowUser(int userId, int userToUnFollow)
+        public HttpResponseMessage UnFollowUser(string email, string emailToUnFollow)
         {
             try
             {
-                _userBl.UnFollow(userId, userToUnFollow);
+                _userBl.UnFollow(email, emailToUnFollow);
 
-                return Request.CreateResponse(HttpStatusCode.OK, "user " + userToUnFollow + " has been unfollowed");
+                return Request.CreateResponse(HttpStatusCode.OK, "user " + emailToUnFollow + " has been unfollowed");
             }
             catch (Neo4jException e)
             {

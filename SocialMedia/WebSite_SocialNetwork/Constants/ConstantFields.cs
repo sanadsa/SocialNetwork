@@ -13,6 +13,7 @@ namespace WebSite_SocialNetwork.Constants
         /* Pages names */
         public const string LoginView = "LoginView";
         public const string ProfileView = "Profile";
+        public const string OtherProfileView = "OtherProfile";
         public const string PostView = "AddPostView";
         public const string WallView = "Wall";
         public const string IndexView = "Index";

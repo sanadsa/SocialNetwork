@@ -19,6 +19,11 @@ namespace WebSite_SocialNetwork.Controllers
                 MediaTypeWithQualityHeaderValue(ConstantFields.Headers_Type));
         }
 
+        public ActionResult ActiveFeed()
+        {
+            return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
+        }
+
         public ActionResult GetProfile(string email)
         {
             try
@@ -38,14 +43,63 @@ namespace WebSite_SocialNetwork.Controllers
             }
         }
 
-        public ActionResult UnFollow(string email, string emailToUnfollow)
+        public ActionResult GetOtherProfile(string email)
         {
-            return View();
+            try
+            {
+                var profileUser = new Profile();
+                profileUser.Identity = GetUserIdentity(email);
+                profileUser.Email = email;
+                profileUser.Followers = GetFollowers(email);
+                profileUser.Following = GetFollowing(email);
+                profileUser.Blocking = GetBlocked(email);
+                ViewBag.Username = profileUser.Username;
+                return View(ConstantFields.OtherProfileView, profileUser);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, "Error getting profile");
+            }
         }
 
-        public ActionResult UnBlock(string email, string emailToUnblock)
+        public void Unfollow(string emailToUnfollow)
         {
-            return View();
+            var user = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
+            var result = _client.GetAsync($"api/User/UnFollowUser?email={user.Email}&emailToUnFollow={emailToUnfollow}").Result;
+            if (!result.IsSuccessStatusCode)
+            {
+                RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, "Error in follow");
+            }
+        }
+
+        public void Follow(string emailToFollow)
+        {
+            var user = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
+            var result = _client.GetAsync($"api/User/FollowUser?email={user.Email}&emailToFollow={emailToFollow}").Result;
+            if (!result.IsSuccessStatusCode)
+            {
+                RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, "Error in follow");
+            }
+        }
+
+        public void Block(string emailToBlock)
+        {
+            var user = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
+            var result = _client.GetAsync($"api/User/BlockUser?email={user.Email}&emailToBlock={emailToBlock}").Result;
+            if (!result.IsSuccessStatusCode)
+            {
+                RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, "Error in follow");
+            }
+        }
+
+        public void Unblock(string emailToUnblock)
+        {
+            var user = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
+            var result = _client.GetAsync($"api/User/BlockUser?email={user.Email}&emailToUnBlock={emailToUnblock}").Result;
+            if (!result.IsSuccessStatusCode)
+            {
+                RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, "Error in follow");
+            }
         }
 
         private List<ProfileUser> GetBlocked(string email)

@@ -33,9 +33,9 @@ namespace SocialBL
         /// <summary>
         /// block user bl - calls the repo
         /// </summary>
-        public void BlockUser(int userId, int userToBlock)
+        public void BlockUser(string email, string emailToBlock)
         {
-            _userRepo.Block(userId, userToBlock);
+            _userRepo.Block(email, emailToBlock);
         }
 
         /// <summary>
@@ -49,9 +49,9 @@ namespace SocialBL
         /// <summary>
         /// follow user bl - calls the repo
         /// </summary>
-        public void FollowUser(int userId, int userToFollow)
+        public void FollowUser(string email, string emailToFollow)
         {
-            _userRepo.Follow(userId, userToFollow);
+            _userRepo.Follow(email, emailToFollow);
         }
 
         /// <summary>
@@ -89,17 +89,17 @@ namespace SocialBL
         /// <summary>
         /// unblock user bl - calls the repo
         /// </summary>
-        public void UnBlock(int userId, int userToUnBlock)
+        public void UnBlock(string email, string emailToUnBlock)
         {
-            _userRepo.UnBlock(userId, userToUnBlock);
+            _userRepo.UnBlock(email, emailToUnBlock);
         }
 
         /// <summary>
         /// unfollow user bl - calls the repo
         /// </summary>
-        public void UnFollow(int userId, int userToUnFollow)
+        public void UnFollow(string email, string emailToUnFollow)
         {
-            _userRepo.UnFollow(userId, userToUnFollow);
+            _userRepo.UnFollow(email, emailToUnFollow);
         }
     }
 }

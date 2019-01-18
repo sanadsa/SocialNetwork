@@ -40,5 +40,18 @@ namespace Social.Service_Test
 
             string response = result.Content.ReadAsStringAsync().Result;
         }
+
+        [TestMethod]
+        [HttpGet]
+        public void FollowUser()
+        {            
+            var result = _client.GetAsync($"api/User/FollowUser?email=\"d@d\"&emailToFollow=\"s@j\"").Result;
+            if (!result.IsSuccessStatusCode)
+            {
+                throw new Exception(result.Content.ReadAsStringAsync().Result);
+            }
+
+            string response = result.Content.ReadAsStringAsync().Result;
+        }
     }
 }

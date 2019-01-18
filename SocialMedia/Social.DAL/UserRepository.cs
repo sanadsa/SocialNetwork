@@ -36,12 +36,12 @@ namespace Social.DAL
         /// <summary>
         /// block user
         /// </summary>
-        public void Block(int activeUserId, int userToBlock)
+        public void Block(string activeEmail, string userToBlock)
         {
-            UnFollow(activeUserId, userToBlock);
-            UnFollow(userToBlock, activeUserId);
-            string query = "MATCH (blocking:User{UserId:" + activeUserId + "})," +
-                "(blocked:User{UserId:" + userToBlock + "})" +
+            UnFollow(activeEmail, userToBlock);
+            UnFollow(userToBlock, activeEmail);
+            string query = "MATCH (blocking:User{Email:\"" + activeEmail + "\"})," +
+                "(blocked:User{Email:\"" + userToBlock + "\"})" +
                 "CREATE (blocking)-[r:Blocked]->(blocked)" +
                 "RETURN type(r)";
             _repo.RunQuery(driver, query);
@@ -64,16 +64,14 @@ namespace Social.DAL
         /// <summary>
         /// follow user 
         /// </summary>
-        public void Follow(int activeUserId, int userToFollow)
+        public void Follow(string activeUserEmail, string userToFollow)
         {
-            var query = "MATCH (following:User{UserId:" + activeUserId + "})," +
-                "(followed:User{UserId:" + userToFollow + "})" +
+            var query = "MATCH (following:User{Email:\"" + activeUserEmail + "\"})," +
+                "(followed:User{Email:\"" + userToFollow + "\"})" +
                 "CREATE UNIQUE (following)-[r:Following]->(followed)" +
                 "RETURN type(r)";
-
             
             _repo.RunQuery(driver, query).Consume();
-
         }
 
         /// <summary>
@@ -153,11 +151,11 @@ namespace Social.DAL
         /// <summary>
         /// unblock user
         /// </summary>
-        public void UnBlock(int activeUserId, int userToUnBlock)
+        public void UnBlock(string activeUserEmail, string userToUnBlock)
         {
-            UnFollow(activeUserId, userToUnBlock);
-            string query = "MATCH (:User{UserId:" + activeUserId + "})-[r:Blocked]->" +
-                "(:User{UserId:" + userToUnBlock + "})" +
+            UnFollow(activeUserEmail, userToUnBlock);
+            string query = "MATCH (:User{Email:\"" + activeUserEmail + "\"})-[r:Blocked]->" +
+                "(:User{Email:\"" + userToUnBlock + "\"})" +
                 "DELETE r";
             _repo.RunQuery(driver, query);
         }
@@ -165,10 +163,10 @@ namespace Social.DAL
         /// <summary>
         /// unfollow user
         /// </summary>
-        public void UnFollow(int activeUserId, int userToUnFollow)
+        public void UnFollow(string activeUserEmail, string userToUnFollow)
         {
-            var query = "MATCH (:User{UserId:" + activeUserId + "})-[r:Following]->" +
-                "(:User{UserId:" + userToUnFollow + "})" +
+            var query = "MATCH (:User{Email:\"" + activeUserEmail + "\"})-[r:Following]->" +
+                "(:User{Email:\"" + userToUnFollow + "\"})" +
                 "DELETE r";
             _repo.RunQuery(driver, query);
         }

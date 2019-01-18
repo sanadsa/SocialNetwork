@@ -11,10 +11,10 @@ namespace Social.Common.Interfaces
     {
         void AddUser(User user);
         void DeleteUser(int userId);
-        void FollowUser(int userId, int userToFollow);
-        void UnFollow(int userId, int userToUnFollow);
-        void BlockUser(int userId, int userToBlock);
-        void UnBlock(int userId, int userToUnBlock);
+        void FollowUser(string email, string emailToFollow);
+        void UnFollow(string email, string emailToUnFollow);
+        void BlockUser(string email, string emailToBlock);
+        void UnBlock(string email, string emailToUnBlock);
         User GetUser(int userId);
         IEnumerable<User> GetBlockedUsers(string userEmail);
         IEnumerable<User> GetFollowing(string userEmail);

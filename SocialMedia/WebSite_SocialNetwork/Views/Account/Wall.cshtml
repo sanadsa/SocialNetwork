@@ -9,6 +9,7 @@
     {
         <input type="submit" value="View Profile" class="buttonT" />
     }
+    @Html.Partial("_Search")
     @Html.Partial("_IdentityPartial")
     @Html.ActionLink("Create new Post", "AddNewPost", "Account")
     @if (Model.Posts != null)
