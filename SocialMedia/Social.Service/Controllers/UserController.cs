@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Net;
 using System.Net.Http;
 using Social.Common.Models;
+using Newtonsoft.Json;
 
 namespace Social.Service.Controllers
 {
@@ -25,10 +26,11 @@ namespace Social.Service.Controllers
         /// </summary>
         [HttpPost]
         [Route("CreateUser")]
-        public HttpResponseMessage CreateUser(User user)
+        public HttpResponseMessage CreateUser([FromBody]string userJson)
         {
             try
             {
+                var user = JsonConvert.DeserializeObject<User>(userJson);
                 _userBl.AddUser(user);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "User added successfully");

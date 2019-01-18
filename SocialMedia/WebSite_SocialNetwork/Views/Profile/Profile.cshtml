@@ -5,7 +5,6 @@
 }
 
 <div>
-
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
         <h2>@Model.Identity.FirstName @Model.Identity.LastName</h2>
@@ -41,7 +40,16 @@
             {
                 foreach (var user in Model.Following)
                 {
-                    <h1>user.Username</h1>
+                <div>
+                    @using (Html.BeginForm("GetProfile", "Profile", new { email = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        <input type="submit" value="@user.Username" />
+                    }
+                    @using (Html.BeginForm("Unfollow", "Profile", new { user = Model.Email, userToUnFollow = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        <input type="submit" value="UnFollow" />
+                    }
+                </div>
                 }
             }
         </div>
@@ -54,7 +62,13 @@
             {
                 foreach (var user in Model.Followers)
                 {
-                    <h1>user.Username</h1>
+                <div>
+                    @using (Html.BeginForm("GetProfile", "Profile", new { email = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        <input type="submit" value="@user.Username" />
+                    }
+                </div>
+
                 }
             }
         </div>
@@ -67,10 +81,18 @@
             {
                 foreach (var user in Model.Blocking)
                 {
-                    <h1>user.Username</h1>
+                <div>
+                    @using (Html.BeginForm("GetProfile", "Profile", new { email = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        <input type="submit" value="@user.Username" />
+                    }
+                    @using (Html.BeginForm("UnBlock", "Profile", new { user = Model.Email, userToUnBlock = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        <input type="submit" value="@user.Username" />
+                    }
+                </div>
                 }
             }
         </div>
     </div>
-
 </div>

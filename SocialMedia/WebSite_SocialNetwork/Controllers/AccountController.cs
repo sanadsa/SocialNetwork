@@ -17,6 +17,7 @@ namespace WebSite_SocialNetwork.Controllers
     {
         private HttpClient _client;
         private HttpClient _clientIdentity;
+        private HttpClient _clientSocial;
         private IdentityController _identityController;
         private Uri RedirectUri
         {
@@ -40,6 +41,11 @@ namespace WebSite_SocialNetwork.Controllers
             _clientIdentity = new HttpClient();
             _clientIdentity.BaseAddress = new Uri(ConstantFields.Identity_BaseAddress);
             _clientIdentity.DefaultRequestHeaders.Accept.Add(new
+                MediaTypeWithQualityHeaderValue(ConstantFields.Headers_Type));
+
+            _clientSocial = new HttpClient();
+            _clientSocial.BaseAddress = new Uri(ConstantFields.Social_BaseAddress);
+            _clientSocial.DefaultRequestHeaders.Accept.Add(new
                 MediaTypeWithQualityHeaderValue(ConstantFields.Headers_Type));
         }
 
@@ -164,11 +170,27 @@ namespace WebSite_SocialNetwork.Controllers
                     Address = "",
                     WorkAddress = ""
                 });
+            AddSocialUser(registerUser);
             var registerResponse = _client.PostAsJsonAsync(ConstantFields.Authentication_Register, register).Result;
             var identityRepsonse = _clientIdentity.PostAsJsonAsync(ConstantFields.Identity_CreateUserIdentity, identity).Result;
             if (!identityRepsonse.IsSuccessStatusCode || !registerResponse.IsSuccessStatusCode)
                 throw new Exception("Error while register new user");
             return RedirectToAction(ConstantFields.IndexView, ConstantFields.Home);
+        }
+
+        public void AddSocialUser(RegisterUser user)
+        {
+            var social = JsonConvert.SerializeObject(
+                new
+                {
+                    UserId = 1,
+                    Token = "",
+                    Username = user.Username,
+                    Email = user.Email
+                });
+            var socialResponse = _clientSocial.PostAsJsonAsync(ConstantFields.Social_AddNewUser, social).Result;
+            if (!socialResponse.IsSuccessStatusCode)
+                RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, "Error while register new social user");            
         }
 
         [HttpPost]
