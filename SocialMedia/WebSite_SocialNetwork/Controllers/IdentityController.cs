@@ -49,7 +49,7 @@ namespace WebSite_SocialNetwork.Controllers
             try
             {
                 string json = JsonConvert.SerializeObject(identity);
-                var result = _client.PostAsync(ConstantFields.UpdateUserIdentity(identity), new StringContent(json, System.Text.Encoding.UTF8, "application/json")).Result;
+                var result = _client.PostAsync(ConstantFields.UpdateUserIdentity(identity), new StringContent(json, System.Text.Encoding.UTF8, ConstantFields.Headers_Type)).Result;
                 if (!result.IsSuccessStatusCode)
                 {
                     throw new Exception(result.Content.ReadAsStringAsync().Result);
