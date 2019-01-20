@@ -28,7 +28,6 @@ namespace Social.DAL
                            $"Return p";
             var result = _repo.RunQuery(driver, query);
             var posts = _repo.StatementToList<Post>(result);
-           
             var myPosts = GetMyPosts(token);
             posts.AddRange(myPosts);
             
