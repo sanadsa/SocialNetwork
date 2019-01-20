@@ -203,6 +203,7 @@ namespace WebSite_SocialNetwork.Controllers
             {
                 UserId = post.UserId,
                 PostId = post.PostId,
+                Username = post.Username,
                 Text = post.Text,
                 Image = ConvertToByteArray(post.Image),
                 Tags = post.Tags,

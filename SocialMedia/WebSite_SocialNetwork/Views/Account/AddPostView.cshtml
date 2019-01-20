@@ -25,14 +25,13 @@
                 @Html.TextBoxFor(model => model.Image, new { type = "file", name = "Files" })
             </label>
         </div>
-
         @if (ViewBag.Folowings != null)
         {
             <div class="form-conrol-file">
                 <label class="col-md-10">
                     Tag your frinds:
-                    @Html.DropDownList("Tag", (SelectList)ViewBag.Folowings)
-                    @Html.TextBox("search")
+                    @Html.DropDownList("Tag", (SelectList)ViewBag.Folowings, new { id = "myDropBox"})
+                    @Html.TextBoxFor(m => m.Tags, htmlAttributes: new { id = "myInput" })
                     <input type="submit" value="Search" />
                 </label>
             </div>
@@ -45,3 +44,13 @@
         </div>
     </div>
 }
+<script>
+    $(document).ready(function(){
+      $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+          $("#myDropBox").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+</script>

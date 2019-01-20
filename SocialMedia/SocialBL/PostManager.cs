@@ -39,6 +39,7 @@ namespace SocialBL
                     ImageUrl = null,
                     PostId = post.PostId,
                     Privacy = post.Privacy,
+                    Username = post.Username,
                     Tags = post.Tags,
                     Text = post.Text,
                     UserId = post.UserId

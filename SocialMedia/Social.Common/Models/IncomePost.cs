@@ -11,6 +11,7 @@ namespace Social.Common.Models
     {
         public int UserId { get; set; }
         public int PostId { get; set; }
+        public string Username { get; set; }
         public string Text { get; set; }
         public byte[] Image { get; set; }
         public List<string> Tags { get; set; }
