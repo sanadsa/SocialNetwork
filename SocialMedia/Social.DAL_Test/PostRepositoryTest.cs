@@ -72,7 +72,7 @@ namespace Social.DAL_Test
             AmazonS3Uploader s = new AmazonS3Uploader();
             string postId = Guid.NewGuid().ToString();
             string path = @"C:\Users\Sanad\Pictures\box.jpg";
-            var url = s.UploadFile(path, postId);
+            //var url = s.UploadFile(path, postId);
             var cd = "";
         }
     }

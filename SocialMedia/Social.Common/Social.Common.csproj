@@ -53,6 +53,7 @@
     <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Feed.cs" />
+    <Compile Include="Models\IncomePost.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

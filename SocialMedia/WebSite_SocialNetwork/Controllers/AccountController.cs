@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -192,19 +193,55 @@ namespace WebSite_SocialNetwork.Controllers
                 });
             var socialResponse = _clientSocial.PostAsJsonAsync(ConstantFields.Social_AddNewUser, social).Result;
             if (!socialResponse.IsSuccessStatusCode)
-                RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, "Error while register new social user");            
+                RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error while register new social user" });            
         }
 
         [HttpPost]
         public ActionResult AddNewPost(UploadPost post)
         {
-            var response = _client.PostAsJsonAsync(ConstantFields.Social_AddNewPost, post.PostAsJson).Result;
+            var newPostJson = JsonConvert.SerializeObject(new
+            {
+                UserId = post.UserId,
+                PostId = post.PostId,
+                Text = post.Text,
+                Image = ConvertToByteArray(post.Image),
+                Tags = post.Tags,
+                Privacy = post.Privacy
+            });
+            var response = _clientSocial.PostAsJsonAsync(ConstantFields.Social_AddNewPost, newPostJson).Result;
             if (response.IsSuccessStatusCode)
+            {
+                var postRes = response.Content.ReadAsAsync<Post>().Result;
+                var currentUser = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
+                currentUser.Posts.Add(postRes);
+                Session[ConstantFields.CurrentUser] = currentUser.UserAsJson;
                 return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
+            }
             else
-                return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, "Error adding new post");
+                return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error adding new post" });
         }
 
+        private byte[] ConvertToByteArray(HttpPostedFileBase fileBase)
+        {
+            byte[] data;
+            if(fileBase != null)
+            {
+                using(Stream inputStream = fileBase.InputStream)
+                {
+                    MemoryStream memoryStream = inputStream as MemoryStream;
+                    if(memoryStream == null)
+                    {
+                        memoryStream = new MemoryStream();
+                        inputStream.CopyTo(memoryStream);
+                    }
+                    data = memoryStream.ToArray();
+                }
+                return data;
+            }
+            return null;
+        }
+
+        [HttpGet]
         public ActionResult AddNewPost()
         {
             if (Session[ConstantFields.CurrentUser] != null)

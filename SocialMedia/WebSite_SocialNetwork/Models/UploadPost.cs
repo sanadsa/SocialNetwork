@@ -17,7 +17,7 @@ namespace WebSite_SocialNetwork.Models
 
         public int PostId { get; set; }
 
-        public DateTime PostDate { get { return PostDate; } set { PostDate = DateTime.Now; } }
+        public DateTime PostDate { get;  set; }
 
         [DataType(DataType.MultilineText)]
         [Display(Name = "Content")]
@@ -41,7 +41,7 @@ namespace WebSite_SocialNetwork.Models
                     UserId = this.UserId,
                     PostId = this.PostId,
                     Username = this.Username,
-                    PostDate = this.PostDate,
+                    PostDate = DateTime.Now,
                     Text = this.Text,
                     Image = this.Image,
                     Tags = this.Tags,

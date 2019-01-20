@@ -1,4 +1,5 @@
-﻿using Social.Common.Enums;
+﻿using Newtonsoft.Json;
+using Social.Common.Enums;
 using Social.Common.Interfaces;
 using Social.Common.Models;
 using System;
@@ -26,24 +27,33 @@ namespace SocialBL
         /// add post to neo4j db and relate it to the user
         /// </summary>
         /// <param name="post"></param>
-        public void AddPost(Post post)
+        public Post AddPost(string postJson)
         {
+            var post = JsonConvert.DeserializeObject<IncomePost>(postJson);
             string guid = Guid.NewGuid().ToString();
-            string imageUrl;
+            string image;
             try
             {
-                if (post.ImageUrl == null)
+                Post newPost = new Post()
                 {
-                    imageUrl = _s3Uploader.UploadFile(post.ImageUrl, guid);
+                    ImageUrl = null,
+                    PostId = post.PostId,
+                    Privacy = post.Privacy,
+                    Tags = post.Tags,
+                    Text = post.Text,
+                    UserId = post.UserId
+                };
+                if (post.Image != null)
+                {
+                    image = _s3Uploader.UploadFile(post.Image, guid);
+                    newPost.ImageUrl = image;
                 }
-
-                _postRepo.AddPost(post.UserId, post);
-
+                _postRepo.AddPost(post.UserId, newPost);
+                return newPost;
             }
             catch (Exception)
             {
-                // log
-                
+                throw new Exception();
             }
         }
 

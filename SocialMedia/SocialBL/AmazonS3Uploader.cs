@@ -20,15 +20,12 @@ namespace SocialBL
             bucketUrl = ConfigurationManager.AppSettings["s3Key"];
         }
 
-        public string UploadFile(string imagePath, string guid)
+        public string UploadFile(byte[] imagePath, string guid)
         {
             try
             {
-                string format = Regex.Match(imagePath, @"^data:image\/([a-zA-Z]+);").Groups[1].Value;
-                // string result = Regex.Replace(imagePath, @"^data:image\/[a-zA-Z]+;base64,", String.Empty);
-                // byte[] bytes = Convert.FromBase64String(result);
-                string key = guid + "." + format;
-                byte[] imageData = File.ReadAllBytes(imagePath);
+                string key = guid + ".";
+                byte[] imageData = imagePath;
                 using (client)
                 {
                     var putRequest = new PutObjectRequest();
