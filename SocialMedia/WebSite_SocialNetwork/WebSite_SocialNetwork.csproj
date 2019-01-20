@@ -225,6 +225,7 @@
     <Content Include="Views\Profile\Profile.cshtml" />
     <Content Include="Views\Shared\_Search.cshtml" />
     <Content Include="Views\Profile\OtherProfile.cshtml" />
+    <Content Include="Views\Profile\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Social\" />

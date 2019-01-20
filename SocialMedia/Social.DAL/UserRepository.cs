@@ -135,9 +135,9 @@ namespace Social.DAL
         /// </summary>
         public User GetUser(int userId)
         {
-            var query = $@"MATCH (u:User)
-                           WHERE u.UserId = {userId}
-                           RETURN u";
+            var query = $"MATCH (u:User)"+
+                        $"WHERE u.Username = {userId}"+
+                        $"RETURN u";
             var result = _repo.RunQuery(driver, query);
             var user = new User();
             foreach (var item in result)
@@ -146,6 +146,25 @@ namespace Social.DAL
                 user = JsonConvert.DeserializeObject<User>(props);
             }
             return user;
+        }
+
+        /// <summary>
+        /// get users from neo4j
+        /// assuming that the userId is unique
+        /// </summary>
+        public IEnumerable<User> GetUsers(string username)
+        {
+            var query = $"MATCH (u:User)" +
+                        $"WHERE u.Username = \"{username}\" " +
+                        $"RETURN u";
+            var result = _repo.RunQuery(driver, query);
+            var users = new List<User>();
+            foreach (var item in result)
+            {
+                var props = JsonConvert.SerializeObject(item[0].As<INode>().Properties);
+                users.Add(JsonConvert.DeserializeObject<User>(props));
+            }
+            return users;
         }
 
         /// <summary>

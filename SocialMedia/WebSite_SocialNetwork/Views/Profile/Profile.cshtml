@@ -36,7 +36,7 @@
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="following">
-            @if (Model.Following == null)
+            @if (Model.Following.Count == 0)
             {
                 <h2>you are not following anyone!</h2>
             }
@@ -50,17 +50,18 @@
                             {
                                 <input type="submit" value="@user.Username" class="buttonProfile" />
                             }
-                            @using (Html.BeginForm("Unfollow", "Profile", new { emailToUnfollow = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            @*@using (Html.BeginForm("Unfollow", "Profile", new { emailToUnfollow = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                             {
                                 <input type="submit" value="UnFollow" />
-                            }
+                            }*@
+                            @Html.Action("Unfollow", "Profile", new { emailToUnfollow = user.Email })
                         </div>
                     </div>
                 }
             }
         </div>
         <div role="tabpanel" class="tab-pane" id="followers">
-            @if (Model.Followers == null)
+            @if (Model.Followers.Count == 0)
             {
                 <h2>No Followers</h2>
             }

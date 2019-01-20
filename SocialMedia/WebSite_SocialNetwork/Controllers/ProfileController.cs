@@ -39,7 +39,7 @@ namespace WebSite_SocialNetwork.Controllers
             }
             catch (Exception)
             {
-                return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, "Error getting profile");
+                return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error getting profile" });
             }
         }
 
@@ -58,7 +58,7 @@ namespace WebSite_SocialNetwork.Controllers
             }
             catch (Exception)
             {
-                return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, "Error getting profile");
+                return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error getting profile" });
             }
         }
 
@@ -68,18 +68,21 @@ namespace WebSite_SocialNetwork.Controllers
             var result = _client.GetAsync($"api/User/UnFollowUser?email={user.Email}&emailToUnFollow={emailToUnfollow}").Result;
             if (!result.IsSuccessStatusCode)
             {
-                RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, "Error in follow");
+                RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error in unfollow" });
             }
+            GetProfile(user.Email);
         }
 
-        public void Follow(string emailToFollow)
+        public ActionResult Follow(string emailToFollow)
         {
             var user = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
             var result = _client.GetAsync($"api/User/FollowUser?email={user.Email}&emailToFollow={emailToFollow}").Result;
             if (!result.IsSuccessStatusCode)
             {
-                RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, "Error in follow");
+                return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error in follow" });
             }
+
+            return GetProfile(user.Email);
         }
 
         public void Block(string emailToBlock)
@@ -88,18 +91,42 @@ namespace WebSite_SocialNetwork.Controllers
             var result = _client.GetAsync($"api/User/BlockUser?email={user.Email}&emailToBlock={emailToBlock}").Result;
             if (!result.IsSuccessStatusCode)
             {
-                RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, "Error in follow");
+                RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error in block" });
             }
+            GetProfile(user.Email);        
         }
 
-        public void Unblock(string emailToUnblock)
+        public ActionResult Unblock(string emailToUnblock)
         {
             var user = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
             var result = _client.GetAsync($"api/User/BlockUser?email={user.Email}&emailToUnBlock={emailToUnblock}").Result;
             if (!result.IsSuccessStatusCode)
             {
-                RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, "Error in follow");
+                return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error in unblock" });
             }
+            return GetProfile(user.Email);
+        }
+
+        public ActionResult Search(string username)
+        {
+            List<ProfileUser> users;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ConstantFields.Social_BaseAddress);
+                var result = client.GetAsync($"api/User/GetUsers?username={username}").Result;
+                if (!result.IsSuccessStatusCode)
+                {
+                    return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error finding user" });
+                }
+
+                var response = result.Content.ReadAsStringAsync().Result;
+                users = JsonConvert.DeserializeObject<List<ProfileUser>>(response);
+            }
+            if (users.Count == 0)
+            {
+                return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "User Not Found ;(" });
+            }
+            return View(users);
         }
 
         private List<ProfileUser> GetBlocked(string email)

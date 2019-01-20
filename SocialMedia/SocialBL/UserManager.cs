@@ -87,6 +87,14 @@ namespace SocialBL
         }
 
         /// <summary>
+        /// get user bl - calls the repo
+        /// </summary>
+        public IEnumerable<User> GetUsers(string username)
+        {
+            return _userRepo.GetUsers(username);
+        }
+
+        /// <summary>
         /// unblock user bl - calls the repo
         /// </summary>
         public void UnBlock(string email, string emailToUnBlock)

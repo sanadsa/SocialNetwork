@@ -103,9 +103,36 @@ namespace Social.Service.Controllers
         }
 
         /// <summary>
+        /// get users from neo4j db using http call from the client
+        /// </summary>
+        [HttpGet]
+        [Route("GetUsers")]
+        public HttpResponseMessage GetUsers(string username)
+        {
+            try
+            {
+                var result = _userBl.GetUsers(username);
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Neo4jException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+        }
+
+        /// <summary>
         /// block user in neo4j db using http call from the client
         /// </summary>
-        [HttpPost]
+        [HttpGet]
         [Route("BlockUser")]
         public HttpResponseMessage BlockUser(string email, string emailToBlock)
         {
@@ -160,7 +187,7 @@ namespace Social.Service.Controllers
         /// <summary>
         /// unblock user from neo4j db using http call from the client
         /// </summary>
-        [HttpPost]
+        [HttpGet]
         [Route("UnBlock")]
         public HttpResponseMessage UnBlock(string email, string emailToUnBlock)
         {
@@ -187,7 +214,7 @@ namespace Social.Service.Controllers
         /// <summary>
         /// unfollow user from neo4j db using http call from the client
         /// </summary>
-        [HttpPost]
+        [HttpGet]
         [Route("UnFollowUser")]
         public HttpResponseMessage UnFollowUser(string email, string emailToUnFollow)
         {

@@ -1,0 +1,14 @@
+﻿@model List<WebSite_SocialNetwork.Models.ProfileUser>
+@{
+    ViewBag.Title = "SearchedProfiles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@foreach (var user in Model)
+{
+    using (Html.BeginForm("GetOtherProfile", "Profile", new { email = user.Email }, FormMethod.Post))
+    {
+        <input type="submit" value="@user.Username" class="buttonProfile" />
+    }
+}
+
