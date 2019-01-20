@@ -137,11 +137,13 @@ namespace WebSite_SocialNetwork.Controllers
                 if (user.Posts == null)
                 {
                     user.Posts = new List<Post>();
+                    SetUserCookie(user);
                     Session[ConstantFields.CurrentUser] = user.UserAsJson;
                     return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
                 }
                 else
                 {
+                    SetUserCookie(user);
                     Session[ConstantFields.CurrentUser] = user.UserAsJson;
                     return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
                 }
@@ -227,6 +229,5 @@ namespace WebSite_SocialNetwork.Controllers
         private ICollection<Post> GetPosts(string token) => new SocialController().GetMyPosts(token);
 
         public ActionResult LogOff() => View();
-
     }
 }

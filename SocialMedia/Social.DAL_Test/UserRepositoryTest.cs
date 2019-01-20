@@ -26,25 +26,25 @@ namespace Social.DAL_Test
         [TestMethod]
         public void Follow()
         {
-            u.Follow(22, 11);
+            //u.Follow(22, 11);
         }
 
         [TestMethod]
         public void Block()
         {
-            u.Block(1, 4);
+            //u.Block(1, 4);
         }
 
         [TestMethod]
         public void UnFollow()
         {
-            u.UnFollow(3, 1);
+            //u.UnFollow(3, 1);
         }
 
         [TestMethod]
         public void UnBlock()
         {
-            u.UnBlock(3, 1);
+            //u.UnBlock(3, 1);
         }
 
         [TestMethod]
