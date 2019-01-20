@@ -176,7 +176,7 @@ namespace WebSite_SocialNetwork.Controllers
             var registerResponse = _client.PostAsJsonAsync(ConstantFields.Authentication_Register, register).Result;
             var identityRepsonse = _clientIdentity.PostAsJsonAsync(ConstantFields.Identity_CreateUserIdentity, identity).Result;
             if (!identityRepsonse.IsSuccessStatusCode || !registerResponse.IsSuccessStatusCode)
-                throw new Exception("Error while register new user");
+                return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Fuck off" });
             return RedirectToAction(ConstantFields.IndexView, ConstantFields.Home);
         }
 
