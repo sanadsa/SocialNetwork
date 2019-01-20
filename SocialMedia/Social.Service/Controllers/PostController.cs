@@ -27,9 +27,8 @@ namespace Social.Service.Controllers
         {
             try
             {
-                var post = JsonConvert.DeserializeObject<Post>(postJson);
-                _postBl.AddPost(post);
-                return Request.CreateResponse(HttpStatusCode.OK, "post added successfully");
+                Post post = _postBl.AddPost(postJson);
+                return Request.CreateResponse(HttpStatusCode.OK, post);
             }
             catch (Neo4jException e)
             {

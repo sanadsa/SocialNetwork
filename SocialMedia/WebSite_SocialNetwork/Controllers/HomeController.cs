@@ -13,6 +13,7 @@ namespace WebSite_SocialNetwork.Controllers
         {
             HttpCookie cookie = new HttpCookie(ConstantFields.UserCookie);
             cookie.Values[ConstantFields.UserCookie_username] = "";
+            Session[ConstantFields.IsAvailble] = false;
             return View();
         }
 

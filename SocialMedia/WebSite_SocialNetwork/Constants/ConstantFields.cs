@@ -56,6 +56,7 @@ namespace WebSite_SocialNetwork.Constants
         /* Cookie Names */
         public const string UserCookie = "UserCookie";
         public const string UserCookie_username = "User name";
+        public const string IsAvailble = "application/json";
 
         /* Facebook Login */
         public const string Facebook_AppId = "302110027103118";

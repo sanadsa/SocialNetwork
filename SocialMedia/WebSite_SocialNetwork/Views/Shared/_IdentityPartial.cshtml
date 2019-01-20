@@ -23,5 +23,9 @@
     {
         <input type="submit" value="Edit Identity" class="buttonT" />
     }
+    @using (Html.BeginForm("AddNewPost", "Account", FormMethod.Get ,new { @class = "form-horizontal", role = "form" }))
+    {
+        <input type="submit" value="Create new Post" class="buttonT" />
+    }
     <hr class="d-sm-none">
 </div>
