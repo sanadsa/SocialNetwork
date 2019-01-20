@@ -3,9 +3,6 @@
     ViewBag.Title = "OtherProfile";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>OtherProfile</h2>
-
 <div>
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
@@ -17,25 +14,25 @@
         <div style="float:left;">
             @using (Html.BeginForm("Unfollow", "Profile", new { emailToUnfollow = Model.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
-                <input type="submit" value="Unfollow" class="buttonProfile" />
+                <input type="submit" value="Unfollow" class="btn" />
             }
         </div>
         <div style="float:left;">
             @using (Html.BeginForm("Follow", "Profile", new { emailToFollow = Model.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
-                <input type="submit" value="Follow" class="buttonProfile" />
+                <input type="submit" value="Follow" class="btn" />
             }
         </div>
         <div style="float:left;">
             @using (Html.BeginForm("Block", "Profile", new { emailToBlock = Model.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
-                <input type="submit" value="Block" class="buttonProfile" />
+                <input type="submit" value="Block" class="btn" />
             }
         </div>
         <div>
             @using (Html.BeginForm("Block", "Profile", new { emailToUnblock = Model.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
-                <input type="submit" value="Unblock" class="buttonProfile" />
+                <input type="submit" value="Unblock" class="btn" />
             }
         </div>
         <li role="presentation" class="active"><a href="#identity" aria-controls="identity" role="tab" data-toggle="tab">Identity</a></li>
@@ -75,10 +72,6 @@
                             {
                                 <input type="submit" value="@user.Username" class="buttonProfile" />
                             }
-                            @using (Html.BeginForm("Unfollow", "Profile", new { user = Model.Email, userToUnFollow = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                            {
-                                <input type="submit" value="UnFollow" />
-                            }
                         </div>
                     </div>
                 }
@@ -97,7 +90,7 @@
                         <div class="row">
                             @using (Html.BeginForm("GetProfile", "Profile", new { email = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                             {
-                                <input type="submit" value="@user.Username" />
+                                <input type="submit" value="@user.Username" class="buttonProfile" />
                             }
                         </div>
                     </div>

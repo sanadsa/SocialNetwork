@@ -66,6 +66,7 @@ namespace Social.DAL
         /// </summary>
         public void Follow(string activeUserEmail, string userToFollow)
         {
+            UnBlock(activeUserEmail, userToFollow);
             var query = "MATCH (following:User{Email:\"" + activeUserEmail + "\"})," +
                 "(followed:User{Email:\"" + userToFollow + "\"})" +
                 "CREATE UNIQUE (following)-[r:Following]->(followed)" +
@@ -172,7 +173,6 @@ namespace Social.DAL
         /// </summary>
         public void UnBlock(string activeUserEmail, string userToUnBlock)
         {
-            UnFollow(activeUserEmail, userToUnBlock);
             string query = "MATCH (:User{Email:\"" + activeUserEmail + "\"})-[r:Blocked]->" +
                 "(:User{Email:\"" + userToUnBlock + "\"})" +
                 "DELETE r";

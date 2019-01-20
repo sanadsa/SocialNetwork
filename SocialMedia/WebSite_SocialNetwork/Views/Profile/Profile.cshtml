@@ -46,15 +46,8 @@
                 {
                     <div class="container">
                         <div class="row">
-                            @using (Html.BeginForm("GetOtherProfile", "Profile", new { email = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                            {
-                                <input type="submit" value="@user.Username" class="buttonProfile" />
-                            }
-                            @*@using (Html.BeginForm("Unfollow", "Profile", new { emailToUnfollow = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                            {
-                                <input type="submit" value="UnFollow" />
-                            }*@
-                            @Html.Action("Unfollow", "Profile", new { emailToUnfollow = user.Email })
+                            <button class="btn btn-lg">@Html.ActionLink(user.Username, "GetOtherProfile", "Profile", new { email = user.Email }, null)</button>
+                            <button class="btn">@Html.ActionLink("Unfollow", "Unfollow", "Profile", new { emailToUnfollow = user.Email }, null) &raquo;</button>
                         </div>
                     </div>
                 }
@@ -71,18 +64,15 @@
                 {
                     <div class="container">
                         <div class="row">
-                            @using (Html.BeginForm("GetOtherProfile", "Profile", new { email = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                            {
-                                <input type="submit" value="@user.Username" />
-                            }
+                            <button class="btn btn-lg">@Html.ActionLink(user.Username, "GetOtherProfile", "Profile", new { email = user.Email }, null)</button>
+                            <button class="btn">@Html.ActionLink("Block", "Block", "Profile", new { emailToBlock = user.Email }, null) &raquo;</button>
                         </div>
                     </div>
-
                 }
             }
         </div>
         <div role="tabpanel" class="tab-pane" id="blocked">
-            @if (Model.Following == null)
+            @if (Model.Following.Count == 0)
             {
                 <h2>No Blocked Users</h2>
             }
@@ -92,14 +82,8 @@
                 {
                     <div class="container">
                         <div class="row">
-                            @using (Html.BeginForm("GetOtherProfile", "Profile", new { email = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                            {
-                                <input type="submit" value="@user.Username" />
-                            }
-                            @using (Html.BeginForm("Unblock", "Profile", new { emailToUnblock = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                            {
-                                <input type="submit" value="@user.Username" />
-                            }
+                            <button class="btn btn-lg">@Html.ActionLink(user.Username, "GetOtherProfile", "Profile", new { email = user.Email }, null)</button>
+                            <button class="btn">@Html.ActionLink("Unblock", "Unblock", "Profile", new { emailToUnblock = user.Email }, null) &raquo;</button>
                         </div>
                     </div>
                 }
