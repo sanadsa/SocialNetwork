@@ -68,7 +68,7 @@
                 {
                     <div class="container">
                         <div class="row">
-                            @using (Html.BeginForm("GetProfile", "Profile", new { email = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            @using (Html.BeginForm("GetOtherProfile", "Profile", new { email = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                             {
                                 <input type="submit" value="@user.Username" class="buttonProfile" />
                             }
@@ -88,7 +88,7 @@
                 {
                     <div class="container">
                         <div class="row">
-                            @using (Html.BeginForm("GetProfile", "Profile", new { email = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            @using (Html.BeginForm("GetOtherProfile", "Profile", new { email = user.Email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                             {
                                 <input type="submit" value="@user.Username" class="buttonProfile" />
                             }

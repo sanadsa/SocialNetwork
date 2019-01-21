@@ -94,7 +94,7 @@ namespace WebSite_SocialNetwork.Controllers
             var user = response.Content.ReadAsAsync<User>().Result;
             if (response.IsSuccessStatusCode)
             {
-                user.Identity = SetUserIdentity(user.Email);
+                user.Identity = GetUserIdentity(user.Email);
                 user.Posts = GetPosts(user.Token.TokenId);
                 return RedirectToAction(ConstantFields.WallView, ConstantFields.Account, user.UserAsJson);
             }
@@ -116,7 +116,7 @@ namespace WebSite_SocialNetwork.Controllers
         public ActionResult Wall()
         {
             var loginUser = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
-            loginUser.Identity = SetUserIdentity(loginUser.Email);
+            loginUser.Identity = GetUserIdentity(loginUser.Email);
             ViewBag.Username = loginUser.Username;
             return View(ConstantFields.WallView, loginUser);
         }
@@ -135,8 +135,8 @@ namespace WebSite_SocialNetwork.Controllers
             {
                 if (user != null)
                 {
-                    user.Identity = SetUserIdentity(user.Email);
-                    user.Posts = GetPosts(user.Token.TokenId);
+                    user.Identity = GetUserIdentity(user.Email);
+                    user.Posts = GetPosts(user.Email);
                     if (user.Posts == null)
                     {
                         user.Posts = new List<Post>();
@@ -176,7 +176,7 @@ namespace WebSite_SocialNetwork.Controllers
                     Email = registerUser.Email,
                     FirstName = "",
                     LastName = "",
-                    Age = 0,    
+                    Age = 0,
                     Address = "",
                     WorkAddress = ""
                 });
@@ -200,45 +200,45 @@ namespace WebSite_SocialNetwork.Controllers
                 });
             var socialResponse = _clientSocial.PostAsJsonAsync(ConstantFields.Social_AddNewUser, social).Result;
             if (!socialResponse.IsSuccessStatusCode)
-                RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error while register new social user" });            
+                RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error while register new social user" });
         }
 
         [HttpPost]
         public ActionResult AddNewPost(UploadPost post)
         {
+            var user = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
             var newPostJson = JsonConvert.SerializeObject(new
             {
-                UserId = post.UserId,
-                PostId = post.PostId,
-                Username = post.Username,
+                PostId = Guid.NewGuid().ToString(),
+                UserEmail = user.Email,
                 PostDate = DateTime.Now,
                 Text = post.Text,
                 Image = ConvertToByteArray(post.Image),
                 Tags = post.Tags,
                 Privacy = post.Privacy
             });
-            var response = _clientSocial.PostAsJsonAsync(ConstantFields.Social_AddNewPost, newPostJson).Result;
-            if (response.IsSuccessStatusCode)
+            var postRepsonse = _clientSocial.PostAsJsonAsync(ConstantFields.Social_AddNewPost, newPostJson).Result;
+            if (!postRepsonse.IsSuccessStatusCode)
             {
-                var postRes = response.Content.ReadAsAsync<Post>().Result;
-                var currentUser = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
-                currentUser.Posts.Add(postRes);
-                Session[ConstantFields.CurrentUser] = currentUser.UserAsJson;
-                return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
+                return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = postRepsonse.Content.ReadAsStringAsync().Result });
             }
-            else
-                return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error adding new post" });
+
+            var postRes = postRepsonse.Content.ReadAsAsync<Post>().Result;
+            var currentUser = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
+            currentUser.Posts.Add(postRes);
+            Session[ConstantFields.CurrentUser] = currentUser.UserAsJson;
+            return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
         }
 
         private byte[] ConvertToByteArray(HttpPostedFileBase fileBase)
         {
             byte[] data;
-            if(fileBase != null)
+            if (fileBase != null)
             {
-                using(Stream inputStream = fileBase.InputStream)
+                using (Stream inputStream = fileBase.InputStream)
                 {
                     MemoryStream memoryStream = inputStream as MemoryStream;
-                    if(memoryStream == null)
+                    if (memoryStream == null)
                     {
                         memoryStream = new MemoryStream();
                         inputStream.CopyTo(memoryStream);
@@ -256,21 +256,28 @@ namespace WebSite_SocialNetwork.Controllers
             if (Session[ConstantFields.CurrentUser] != null)
             {
                 var user = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
-                List<string> Folowings = new List<string>() { "njcsakc", "kbfjaba" }; //TODO: connect to action that gives me all the folowings user names.
-                ViewBag.Folowings = new SelectList(Folowings);
+                List<ProfileUser> FollowingUsers = GetFollowing(user.Email);
+                List<string> Following = new List<string>();
+                foreach (var following in FollowingUsers)
+                {
+                    Following.Add(following.Username);
+                }
+                ViewBag.Following = new SelectList(Following);
                 return View(ConstantFields.PostView);
             }
             else
             {
-                return View(ConstantFields.PostView);
+                return View(ConstantFields.ProfileView);
             }
         }
 
         public ActionResult GetIdentityPartial(UserIdentity userIdentity) => PartialView("_IdentityPartial", userIdentity);
 
         public ActionResult GetPostPartial(Post post) => PartialView("_PostPartial", post);
-        
-        private UserIdentity SetUserIdentity(string email) => new IdentityController().GetUserIdentity(email);
+
+        private UserIdentity GetUserIdentity(string email) => new IdentityController().GetUserIdentity(email);
+
+        private List<ProfileUser> GetFollowing(string email) => new ProfileController().GetFollowing(email);
 
         private ICollection<Post> GetPosts(string token) => new SocialController().GetMyPosts(token);
 

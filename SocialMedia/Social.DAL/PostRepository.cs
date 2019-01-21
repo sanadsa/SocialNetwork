@@ -19,22 +19,22 @@ namespace Social.DAL
         /// <summary>
         /// add post to neo4j and relate it to an existing user
         /// </summary>
-        public void AddPost(int userId, Post post)
+        public void AddPost(string userEmail, Post post)
         {
             var json = _repo.ObjectToJson(post);
             var query = $"CREATE (p:Post {json})";
 
             _repo.RunQuery(driver, query);
-            RelatePostToUser(userId, post.PostId);
+            RelatePostToUser(userEmail, post.PostId);
         }
 
         /// <summary>
         /// relate post to an existing user
         /// </summary>
-        public void RelatePostToUser(int userId, int postId)
+        public void RelatePostToUser(string userEmail, string postId)
         {
-            var query = "MATCH (u:User{UserId:" + userId + "})," +
-                "(p:Post{PostId:" + postId + "})" +
+            var query = "MATCH (u:User{Email:\"" + userEmail + "\"})," +
+                "(p:Post{PostId:\"" + postId + "\"})" +
                 "CREATE (u)-[r:Posted]->(p)" +
                 "RETURN type(r)";
             _repo.RunQuery(driver, query);

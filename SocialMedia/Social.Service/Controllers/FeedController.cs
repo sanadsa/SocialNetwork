@@ -20,15 +20,15 @@ namespace Social.Service.Controllers
         /// <summary>
         /// get feed to neo4j db using http call from the client
         /// </summary>
-        [HttpGet]
+        [HttpPost]
         [Route("GetFeed")]
-        public HttpResponseMessage GetFeed(string token)
+        public HttpResponseMessage GetFeed([FromBody]string email)
         {
             try
             {
-                _feedBl.GetFeed(token);
+                var posts = _feedBl.GetFeed(email);
 
-                return Request.CreateResponse(HttpStatusCode.OK, "feed updated successfully");
+                return Request.CreateResponse(HttpStatusCode.OK, posts);
             }
             catch (Neo4jException e)
             {
@@ -47,13 +47,13 @@ namespace Social.Service.Controllers
         /// <summary>
         /// get my posts to neo4j db using http call from the client
         /// </summary>
-        [HttpGet]
+        [HttpPost]
         [Route("GetMyPosts")]
-        public HttpResponseMessage GetMyPosts([FromBody]string token)
+        public HttpResponseMessage GetMyPosts([FromBody]string email)
         {
             try
             {
-                var posts = _feedBl.GetMyPosts(token);
+                var posts = _feedBl.GetMyPosts(email);
 
                 return Request.CreateResponse(HttpStatusCode.OK, posts);
             }

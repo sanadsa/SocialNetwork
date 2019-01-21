@@ -11,11 +11,9 @@ namespace WebSite_SocialNetwork.Models
 {
     public class UploadPost
     {
-        public string Username { get; set; }
+        public string PostId { get; set; }
 
-        public int UserId { get; set; }
-
-        public int PostId { get; set; }
+        public string UserEmail { get; set; }
 
         public DateTime PostDate { get;  set; }
 
@@ -30,7 +28,7 @@ namespace WebSite_SocialNetwork.Models
         [Display(Name = "Tag Your Frinds")]
         public List<string> Tags { get; set; }
 
-        public EPostPrivacy Privacy { get; set; }
+        public ePostPrivacy Privacy { get; set; }
 
         public string PostAsJson
         {
@@ -38,9 +36,8 @@ namespace WebSite_SocialNetwork.Models
             {
                 return JsonConvert.SerializeObject(new
                 {
-                    UserId = this.UserId,
                     PostId = this.PostId,
-                    Username = this.Username,
+                    UserEmail = this.UserEmail,
                     PostDate = DateTime.Now,
                     Text = this.Text,
                     Image = this.Image,

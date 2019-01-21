@@ -156,7 +156,7 @@
     <Compile Include="Controllers\IdentityController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\SocialController.cs" />
-    <Compile Include="Enums\EPostPrivacy.cs" />
+    <Compile Include="Enums\ePostPrivacy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

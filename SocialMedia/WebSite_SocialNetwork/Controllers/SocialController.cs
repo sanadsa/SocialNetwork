@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -12,23 +13,26 @@ namespace WebSite_SocialNetwork.Controllers
 {
     public class SocialController : Controller
     {
-        private HttpClient _client;
-
         public SocialController()
         {
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri(ConstantFields.Authentication_BaseAddress);
-            _client.DefaultRequestHeaders.Accept.Add(new
-                MediaTypeWithQualityHeaderValue(ConstantFields.Headers_Type));
         }
 
-        public ICollection<Post> GetMyPosts(string token)
+        public ICollection<Post> GetMyPosts(string email)
         {
-            var response = _client.PutAsJsonAsync(ConstantFields.Social_GetMyPosts, token).Result;
-            if (response.IsSuccessStatusCode)
-                return response.Content.ReadAsAsync<List<Post>>().Result;
-            else
-                return null;
+            ICollection<Post> posts;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ConstantFields.Social_BaseAddress);
+                var result = client.PostAsJsonAsync(ConstantFields.Social_GetFeed, email).Result;
+                if (!result.IsSuccessStatusCode)
+                {
+                    RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error Getting Posts" });
+                }
+
+                var response = result.Content.ReadAsStringAsync().Result;
+                posts = JsonConvert.DeserializeObject<ICollection<Post>>(response);
+                return posts;
+            }
         }
     }
 }

@@ -46,20 +46,13 @@ namespace WebSite_SocialNetwork.Controllers
         [HttpPost]
         public ActionResult Edit(UserIdentity identity)
         {
-            try
+            string json = JsonConvert.SerializeObject(identity);
+            var result = _client.PostAsync(ConstantFields.UpdateUserIdentity(identity), new StringContent(json, System.Text.Encoding.UTF8, ConstantFields.Headers_Type)).Result;
+            if (!result.IsSuccessStatusCode)
             {
-                string json = JsonConvert.SerializeObject(identity);
-                var result = _client.PostAsync(ConstantFields.UpdateUserIdentity(identity), new StringContent(json, System.Text.Encoding.UTF8, ConstantFields.Headers_Type)).Result;
-                if (!result.IsSuccessStatusCode)
-                {
-                    throw new Exception(result.Content.ReadAsStringAsync().Result);
-                }
-                return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
+                return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error edit identity" });
             }
-            catch
-            {
-                return RedirectToAction(ConstantFields.IndexView, ConstantFields.Home);
-            }
+            return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
         }
 
         public UserIdentity GetUserIdentity(string email)

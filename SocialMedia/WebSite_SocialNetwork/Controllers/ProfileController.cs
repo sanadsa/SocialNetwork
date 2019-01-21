@@ -138,7 +138,7 @@ namespace WebSite_SocialNetwork.Controllers
                 return null;
         }
 
-        private List<ProfileUser> GetFollowing(string email)
+        public List<ProfileUser> GetFollowing(string email)
         {
             var response = _client.PostAsJsonAsync(ConstantFields.Social_GetFollowing, email).Result;
             if (response.IsSuccessStatusCode)
