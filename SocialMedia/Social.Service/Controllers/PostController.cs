@@ -13,10 +13,8 @@ namespace Social.Service.Controllers
     public class PostController : ApiController
     {
         private readonly IPostManager _postBl;
-        public PostController(IPostManager manager)
-        {
-            _postBl = manager;
-        }
+
+        public PostController(IPostManager manager) => _postBl = manager;
 
         /// <summary>
         /// Add post to neo4j db using http call from the client
@@ -28,7 +26,17 @@ namespace Social.Service.Controllers
             try
             {
                 Post post = _postBl.AddPost(postJson);
-                return Request.CreateResponse(HttpStatusCode.OK, post);
+                return Request.CreateResponse(HttpStatusCode.OK, new
+                {
+                    UserId = post.UserId,
+                    PostId = post.PostId,
+                    Username = post.Username,
+                    PostDate = post.PostDate,
+                    Text = post.Text,
+                    ImageUrl = post.ImageUrl,
+                    Tags = post.Tags,
+                    Privacy = post.Privacy
+                });
             }
             catch (Neo4jException e)
             {
