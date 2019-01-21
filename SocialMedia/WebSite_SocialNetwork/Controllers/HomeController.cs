@@ -19,7 +19,14 @@ namespace WebSite_SocialNetwork.Controllers
 
         public ActionResult Login()
         {
+            ViewBag.ErrorMessage = "";
             return View();
+        }
+
+        public ActionResult LoginWithMessage(string msg)
+        {
+            ViewBag.ErrorMessage = msg;
+            return View("Login");
         }
 
         public ActionResult Register()

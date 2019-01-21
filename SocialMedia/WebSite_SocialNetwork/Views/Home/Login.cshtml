@@ -54,6 +54,12 @@
             </button>
         </div>
     </div>
+    @if (ViewBag.ErrorMessage != "")
+    {
+        <div class="alert alert-danger">
+            <strong>Danger!</strong> Indicates a dangerous or potentially negative action.
+        </div>
+    }
 </div>
 
 @section Scripts {

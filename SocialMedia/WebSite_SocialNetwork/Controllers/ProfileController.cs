@@ -99,7 +99,7 @@ namespace WebSite_SocialNetwork.Controllers
         public ActionResult Unblock(string emailToUnblock)
         {
             var user = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
-            var result = _client.GetAsync($"api/User/BlockUser?email={user.Email}&emailToUnBlock={emailToUnblock}").Result;
+            var result = _client.GetAsync($"api/User/UnBlock?email={user.Email}&emailToUnBlock={emailToUnblock}").Result;
             if (!result.IsSuccessStatusCode)
             {
                 return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error in unblock" });

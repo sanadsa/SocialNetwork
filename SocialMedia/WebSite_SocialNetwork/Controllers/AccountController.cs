@@ -133,20 +133,27 @@ namespace WebSite_SocialNetwork.Controllers
             var user = response.Content.ReadAsAsync<User>().Result;
             if (response.IsSuccessStatusCode)
             {
-                user.Identity = SetUserIdentity(user.Email);
-                user.Posts = GetPosts(user.Token.TokenId);
-                if (user.Posts == null)
+                if (user != null)
                 {
-                    user.Posts = new List<Post>();
-                    SetUserCookie(user);
-                    Session[ConstantFields.CurrentUser] = user.UserAsJson;
-                    return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
+                    user.Identity = SetUserIdentity(user.Email);
+                    user.Posts = GetPosts(user.Token.TokenId);
+                    if (user.Posts == null)
+                    {
+                        user.Posts = new List<Post>();
+                        SetUserCookie(user);
+                        Session[ConstantFields.CurrentUser] = user.UserAsJson;
+                        return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
+                    }
+                    else
+                    {
+                        SetUserCookie(user);
+                        Session[ConstantFields.CurrentUser] = user.UserAsJson;
+                        return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
+                    }
                 }
                 else
                 {
-                    SetUserCookie(user);
-                    Session[ConstantFields.CurrentUser] = user.UserAsJson;
-                    return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
+                    return RedirectToAction("LoginWithMessage", "Home", new { msg = "User not found" });
                 }
             }
             else
@@ -204,6 +211,7 @@ namespace WebSite_SocialNetwork.Controllers
                 UserId = post.UserId,
                 PostId = post.PostId,
                 Username = post.Username,
+                PostDate = DateTime.Now,
                 Text = post.Text,
                 Image = ConvertToByteArray(post.Image),
                 Tags = post.Tags,
