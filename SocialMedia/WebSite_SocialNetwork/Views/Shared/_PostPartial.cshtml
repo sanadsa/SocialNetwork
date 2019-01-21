@@ -1,9 +1,39 @@
-﻿@model WebSite_SocialNetwork.Models.Post
+﻿@model WebSite_SocialNetwork.Models.User
 
-<div class="col-sm-8">
-    <h2>TITLE HEADING</h2>
-    <h5>Title description, Sep 2, 2017</h5>
-    <div class="fakeimg">Fake Image</div>
-    <p>Some text..</p>
-    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+<div class="col-sm-6">
+    @if (Model.Posts != null)
+    {
+        foreach (var p in Model.Posts)
+        {
+
+            if (p.ImageUrl != null)
+            {
+                <div class="col-lg-4 col-sm-6 portfolio-item">
+                    <div class="card h-100">
+                        <a href="#"><img class="card-img-top" src="@p.ImageUrl" hight="100" width="50" alt=""></a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <button class="btn btn-lg">@Html.ActionLink(p.UserEmail, "GetOtherProfile", "Profile", new { email = p.UserEmail }, null)</button>
+                            </h4>
+                            <p class="card-text">@p.Text</p>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="col-lg-4 col-sm-6 portfolio-item">
+                    <div class="card h-100">
+                        <a href="#"><img class="card-img-top" src="http://placehold.it/150x75" alt=""></a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <button class="btn btn-lg">@Html.ActionLink(p.UserEmail, "GetOtherProfile", "Profile", new { email = p.UserEmail }, null)</button>
+                            </h4>
+                            <p class="card-text">@p.Text</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    }
 </div>

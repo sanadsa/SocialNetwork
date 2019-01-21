@@ -25,12 +25,12 @@
                 @Html.TextBoxFor(model => model.Image, new { type = "file", name = "Files" })
             </label>
         </div>
-        @if (ViewBag.Folowings != null)
+        @if (ViewBag.Following != null)
         {
             <div class="form-conrol-file">
                 <label class="col-md-10">
                     Tag your frinds:
-                    @Html.DropDownList("Tag", (SelectList)ViewBag.Folowings, new { id = "myDropBox"})
+                    @Html.DropDownList("Tag", (SelectList)ViewBag.Following, new { id = "myDropBox"})
                     @Html.TextBoxFor(m => m.Tags, htmlAttributes: new { id = "myInput" })
                     <input type="submit" value="Search" />
                 </label>
@@ -39,7 +39,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="buttonT" />
             </div>
         </div>
     </div>

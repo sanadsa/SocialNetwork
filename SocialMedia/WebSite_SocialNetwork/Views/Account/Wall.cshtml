@@ -11,45 +11,11 @@
     }
     @Html.Partial("_Search")
     @Html.Partial("_IdentityPartial")
-    @if (Model.Posts != null)
-    {
-        foreach (var p in Model.Posts)
-        {
-
-            if (p.ImageUrl != null)
-            {
-                <div class="col-lg-4 col-sm-6 portfolio-item">
-                    <div class="card h-100">
-                        <a href="#"><img class="card-img-top" src="@p.ImageUrl" hight="100" width="50" alt=""></a>
-                        <div class="card-body">
-                            <h4 class="card-title">
-                                <a href="#">@p.Username</a>
-                            </h4>
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur eum quasi sapiente nesciunt? Voluptatibus sit, repellat sequi itaque deserunt, dolores in, nesciunt, illum tempora ex quae? Nihil, dolorem!</p>
-                        </div>
-                    </div>
-                </div>
-            }
-            else
-            {
-                <div class="col-lg-4 col-sm-6 portfolio-item">
-                    <div class="card h-100">
-                        <a href="#"><img class="card-img-top" src="http://placehold.it/150x75" alt=""></a>
-                        <div class="card-body">
-                            <h4 class="card-title">
-                                <a href="#">Project One</a>
-                            </h4>
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur eum quasi sapiente nesciunt? Voluptatibus sit, repellat sequi itaque deserunt, dolores in, nesciunt, illum tempora ex quae? Nihil, dolorem!</p>
-                        </div>
-                    </div>
-                </div>
-            }
-        }
-    }
+    @Html.Partial("_PostPartial")
 </div>
 
-<div class="jumbotron text-center" style="margin-bottom:0">
+@*<div class="jumbotron text-center" style="margin-bottom:0">
     <p>Footer</p>
-</div>
+</div>*@
 
 

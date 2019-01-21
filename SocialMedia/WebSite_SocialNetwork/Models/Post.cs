@@ -10,11 +10,9 @@ namespace WebSite_SocialNetwork.Models
 {
     public class Post
     {
-        public int UserId { get; set; }
+        public string PostId { get; set; }
 
-        public int PostId { get; set; }
-
-        public int Username { get; set; }
+        public string UserEmail { get; set; }
 
         public DateTime PostDate { get; set; }
 
@@ -24,7 +22,7 @@ namespace WebSite_SocialNetwork.Models
 
         public List<string> Tags { get; set; }
 
-        public EPostPrivacy Privacy { get; set; }
+        public ePostPrivacy Privacy { get; set; }
 
         public string PostAsJson
         {
@@ -32,12 +30,11 @@ namespace WebSite_SocialNetwork.Models
             {
                 return JsonConvert.SerializeObject(new
                 {
-                    UserId = this.UserId,
                     PostId = this.PostId,
-                    Username = this.Username,
+                    UserEmail = this.UserEmail,
                     PostDate = this.PostDate,
                     Text = this.Text,
-                    Image = this.ImageUrl,
+                    ImageUrl = this.ImageUrl,
                     Tags = this.Tags,
                     Privacy = this.Privacy
                 });

@@ -19,11 +19,11 @@
         <p>@Model.Identity.WorkAddress</p>
     </div>
     @*Photo Here*@
-    @using (Html.BeginForm("IdentityEdit", "Identity", Model, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    @using (Html.BeginForm("IdentityEdit", "Identity", Model, FormMethod.Post))
     {
         <input type="submit" value="Edit Identity" class="buttonT" />
     }
-    @using (Html.BeginForm("AddNewPost", "Account", FormMethod.Get ,new { @class = "form-horizontal", role = "form" }))
+    @using (Html.BeginForm("AddNewPost", "Account", FormMethod.Get))
     {
         <input type="submit" value="Create new Post" class="buttonT" />
     }

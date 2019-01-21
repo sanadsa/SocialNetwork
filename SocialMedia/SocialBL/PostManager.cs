@@ -39,22 +39,21 @@ namespace SocialBL
                     ImageUrl = null,
                     PostId = post.PostId,
                     Privacy = post.Privacy,
-                    Username = post.Username,
+                    UserEmail = post.UserEmail,
                     Tags = post.Tags,
                     Text = post.Text,
-                    UserId = post.UserId
                 };
                 if (post.Image != null)
                 {
                     image = _s3Uploader.UploadFile(post.Image, guid);
                     newPost.ImageUrl = image;
                 }
-                _postRepo.AddPost(post.UserId, newPost);
+                _postRepo.AddPost(post.UserEmail, newPost);
                 return newPost;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception();
+                throw new Exception(ex.Message);
             }
         }
 
