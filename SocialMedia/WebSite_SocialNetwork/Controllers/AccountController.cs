@@ -220,7 +220,8 @@ namespace WebSite_SocialNetwork.Controllers
             var response = _clientSocial.PostAsJsonAsync(ConstantFields.Social_AddNewPost, newPostJson).Result;
             if (response.IsSuccessStatusCode)
             {
-                var postRes = response.Content.ReadAsAsync<Post>().Result;
+                var postJson = response.Content.ReadAsAsync<string>().Result;
+                var postRes = JsonConvert.DeserializeObject<Post>(postJson);
                 var currentUser = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
                 currentUser.Posts.Add(postRes);
                 Session[ConstantFields.CurrentUser] = currentUser.UserAsJson;
