@@ -12,10 +12,10 @@ namespace SocialBL
     {
         //private string keyName = "Statham.png";
         private string keyName = "instabook";
-        private string bucketName = "myselabucket";
+        private string bucketName = "sanaditamar";
         readonly string bucketUrl;
-        private string hostUrl = "https://s3.eu-central-1.amazonaws.com";
-        IAmazonS3 s3client;
+        //private string hostUrl = "https://s3.eu-central-1.amazonaws.com";
+        static AmazonS3Client s3client;// = new AmazonS3Client();
 
         public AmazonS3Uploader()
         {
@@ -32,7 +32,7 @@ namespace SocialBL
             try
             {
                 fileTransferUtility.Upload(stream: image, bucketName: bucketName, key: fileName);
-
+                
                 fileTransferUtility.S3Client.PutACL(new PutACLRequest
                 {
                     CannedACL = S3CannedACL.PublicReadWrite,
@@ -44,7 +44,7 @@ namespace SocialBL
                 {
                     BucketName = bucketName,
                     Key = fileName,
-                    Expires = DateTime.MaxValue
+                    Expires = (DateTime.FromOADate(10))
                 });
 
                 var finalURL = URL.Split('?');
