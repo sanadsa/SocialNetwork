@@ -14,7 +14,7 @@ namespace Social.DAL
         static IDriver driver;
         private Repository _repo = new Repository();
         // 🚏 -> 🚍 -> 🚏
-        public PostRepository() => driver = GraphDatabase.Driver("bolt://localhost:7687", AuthTokens.Basic("neo4j", "password"));
+        public PostRepository() => driver = GraphDatabase.Driver("bolt://ec2-18-221-146-154.us-east-2.compute.amazonaws.com:7687", AuthTokens.Basic("neo4j", "iTa1995Da"));
 
         /// <summary>
         /// add post to neo4j and relate it to an existing user
@@ -23,7 +23,6 @@ namespace Social.DAL
         {
             var json = _repo.ObjectToJson(post);
             var query = $"CREATE (p:Post {json})";
-
             _repo.RunQuery(driver, query);
             RelatePostToUser(userEmail, post.PostId);
         }
