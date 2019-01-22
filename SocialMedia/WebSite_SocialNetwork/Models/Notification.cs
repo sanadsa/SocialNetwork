@@ -1,12 +1,11 @@
 ﻿using Newtonsoft.Json;
-using Notification_Common.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
+using WebSite_SocialNetwork.Enums;
 
-namespace Notification_Common.Models
+namespace WebSite_SocialNetwork.Models
 {
     public class Notification
     {
@@ -24,7 +23,8 @@ namespace Notification_Common.Models
         {
             get
             {
-                return JsonConvert.SerializeObject(new {
+                return JsonConvert.SerializeObject(new
+                {
                     NotificationId = this.NotificationId,
                     NotificationSource = this.NotificationSource,
                     NotificationDestination = this.NotificationDestination,

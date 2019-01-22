@@ -157,13 +157,16 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IdentityController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\SocialController.cs" />
-    <Compile Include="Enums\ePostPrivacy.cs" />
+    <Compile Include="Enums\EpostPrivacy.cs" />
+    <Compile Include="Enums\EnotificationTypes.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\FacebookUser.cs" />
+    <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\ProfileUser.cs" />
     <Compile Include="Models\UploadPost.cs" />
@@ -229,8 +232,10 @@
     <Content Include="Views\Shared\_Search.cshtml" />
     <Content Include="Views\Profile\OtherProfile.cshtml" />
     <Content Include="Views\Profile\Search.cshtml" />
+    <Content Include="Views\Shared\_NotificationPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Views\Notification\" />
     <Folder Include="Views\Social\" />
   </ItemGroup>
   <ItemGroup>

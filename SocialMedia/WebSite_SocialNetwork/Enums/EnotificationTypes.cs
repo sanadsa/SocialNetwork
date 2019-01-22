@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace Notification_Common.Enum
+namespace WebSite_SocialNetwork.Enums
 {
-    public enum NotificationTypes
+    public enum EnotificationTypes
     {
         Comment = 1,
         Like = 2,

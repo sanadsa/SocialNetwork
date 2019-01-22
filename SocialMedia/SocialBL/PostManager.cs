@@ -62,7 +62,7 @@ namespace SocialBL
         /// </summary>
         /// <param name="id"></param>
         /// <param name="privacy"></param>
-        public void ChangePostPrivacy(int id, ePostPrivacy privacy)
+        public void ChangePostPrivacy(int id, EpostPrivacy privacy)
         {
             _postRepo.ChangePostPrivacy(id, privacy);
         }

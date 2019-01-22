@@ -11,8 +11,6 @@ namespace WebSite_SocialNetwork.Controllers
     {
         public ActionResult Index()
         {
-            HttpCookie cookie = new HttpCookie(ConstantFields.UserCookie);
-            cookie.Values[ConstantFields.UserCookie_username] = "";
             Session[ConstantFields.IsAvailble] = false;
             return View();
         }

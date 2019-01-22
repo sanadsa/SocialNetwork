@@ -1,0 +1,22 @@
+﻿@model WebSite_SocialNetwork.Models.User
+
+@{
+    ViewBag.Title = "_NotificationPartial";
+}
+
+<div class="list-group col-sm-4">
+    @if (Model.Notifications != null)
+    {
+        foreach (var Notification in Model.Notifications)
+        {
+            <div class="list-group-item disabled">
+                <strong>@Notification.Text</strong>
+                @Html.ActionLink(Notification.NotificationSource, "GetNotificationSource", "Notification", new { source = Notification.NotificationSource }, null)
+            </div>
+        }
+    }
+    else
+    {
+        <strong>There is no notifications</strong>
+    }
+</div>
