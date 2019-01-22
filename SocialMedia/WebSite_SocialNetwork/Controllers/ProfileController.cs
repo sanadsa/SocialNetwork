@@ -62,15 +62,15 @@ namespace WebSite_SocialNetwork.Controllers
             }
         }
 
-        public void Unfollow(string emailToUnfollow)
+        public ActionResult Unfollow(string emailToUnfollow)
         {
             var user = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
             var result = _client.GetAsync($"api/User/UnFollowUser?email={user.Email}&emailToUnFollow={emailToUnfollow}").Result;
             if (!result.IsSuccessStatusCode)
             {
-                RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error in unfollow" });
+                return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error in unfollow" });
             }
-            GetProfile(user.Email);
+            return GetProfile(user.Email);
         }
 
         public ActionResult Follow(string emailToFollow)
@@ -85,15 +85,15 @@ namespace WebSite_SocialNetwork.Controllers
             return GetProfile(user.Email);
         }
 
-        public void Block(string emailToBlock)
+        public ActionResult Block(string emailToBlock)
         {
             var user = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
             var result = _client.GetAsync($"api/User/BlockUser?email={user.Email}&emailToBlock={emailToBlock}").Result;
             if (!result.IsSuccessStatusCode)
             {
-                RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error in block" });
+                return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error in block" });
             }
-            GetProfile(user.Email);        
+            return GetProfile(user.Email);        
         }
 
         public ActionResult Unblock(string emailToUnblock)
@@ -128,6 +128,8 @@ namespace WebSite_SocialNetwork.Controllers
             }
             return View(users);
         }
+
+        private ICollection<Post> GetPosts(string token) => new SocialController().GetMyPosts(token);
 
         private List<ProfileUser> GetBlocked(string email)
         {

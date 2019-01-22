@@ -31,7 +31,7 @@ namespace SocialBL
         {
             var post = JsonConvert.DeserializeObject<IncomePost>(postJson);
             string guid = Guid.NewGuid().ToString();
-            string image;
+            string imageUrl;
             try
             {
                 Post newPost = new Post()
@@ -45,8 +45,8 @@ namespace SocialBL
                 };
                 if (post.Image != null)
                 {
-                    image = _s3Uploader.UploadFile(post.Image, guid);
-                    newPost.ImageUrl = image;
+                    imageUrl = _s3Uploader.UploadFile(post.Image, guid);
+                    newPost.ImageUrl = imageUrl;
                 }
                 _postRepo.AddPost(post.UserEmail, newPost);
                 return newPost;

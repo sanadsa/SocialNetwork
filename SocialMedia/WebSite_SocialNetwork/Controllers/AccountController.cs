@@ -117,6 +117,7 @@ namespace WebSite_SocialNetwork.Controllers
         {
             var loginUser = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
             loginUser.Identity = GetUserIdentity(loginUser.Email);
+            loginUser.Posts = GetPosts(loginUser.Email);
             ViewBag.Username = loginUser.Username;
             return View(ConstantFields.WallView, loginUser);
         }
@@ -279,7 +280,7 @@ namespace WebSite_SocialNetwork.Controllers
 
         private List<ProfileUser> GetFollowing(string email) => new ProfileController().GetFollowing(email);
 
-        private ICollection<Post> GetPosts(string token) => new SocialController().GetMyPosts(token);
+        private ICollection<Post> GetPosts(string email) => new SocialController().GetMyPosts(email);
 
         public ActionResult LogOff() => View();
     }
