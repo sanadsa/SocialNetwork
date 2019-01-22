@@ -28,9 +28,8 @@ namespace Social.Service.Controllers
                 Post post = _postBl.AddPost(postJson);
                 return Request.CreateResponse(HttpStatusCode.OK, new
                 {
-                    UserId = post.UserId,
                     PostId = post.PostId,
-                    Username = post.Username,
+                    UserEmail = post.UserEmail,
                     PostDate = post.PostDate,
                     Text = post.Text,
                     ImageUrl = post.ImageUrl,
