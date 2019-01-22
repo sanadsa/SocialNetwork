@@ -9,7 +9,7 @@ namespace Social.Common.Enums
     /// <summary>
     /// who can see my post
     /// </summary>
-    public enum ePostPrivacy
+    public enum EpostPrivacy
     {
         Public = 1,
         Followers = 2,

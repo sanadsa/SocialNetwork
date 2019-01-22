@@ -22,7 +22,7 @@ namespace WebSite_SocialNetwork.Models
 
         public List<string> Tags { get; set; }
 
-        public ePostPrivacy Privacy { get; set; }
+        public EpostPrivacy Privacy { get; set; }
 
         public string PostAsJson
         {

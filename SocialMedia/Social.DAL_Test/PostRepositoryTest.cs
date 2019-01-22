@@ -20,7 +20,7 @@ namespace Social.DAL_Test
             {
                 PostId = 8,
                 ImageUrl = "url:-)",
-                Privacy = ePostPrivacy.Public,
+                Privacy = EpostPrivacy.Public,
                 Tags = new List<string> { "@omer", "@shahaf" },
                 Text = "lakerda"
             };
@@ -56,7 +56,7 @@ namespace Social.DAL_Test
         [TestMethod]
         public void ChangePostPrivacy()
         {
-            p.ChangePostPrivacy(5, ePostPrivacy.Public);
+            p.ChangePostPrivacy(5, EpostPrivacy.Public);
         }
 
         [TestMethod]

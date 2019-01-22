@@ -43,7 +43,7 @@ namespace Social.DAL
         /// <summary>
         /// change post privacy
         /// </summary>
-        public void ChangePostPrivacy(int postId, ePostPrivacy privacy)
+        public void ChangePostPrivacy(int postId, EpostPrivacy privacy)
         {
             var privacyEnumToInt = (int) privacy;
             var privacyQuery = "MATCH (p:Post{PostId:"+postId+"})"+

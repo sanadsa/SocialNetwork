@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebSite_SocialNetwork.Enums
 {
-    public enum ePostPrivacy
+    public enum EpostPrivacy
     {
         Public = 1,
         Followers = 2,

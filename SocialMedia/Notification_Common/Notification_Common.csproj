@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enum\NotificationTypes.cs" />
+    <Compile Include="Enum\EnotificationTypes.cs" />
     <Compile Include="Interfaces\INotificationManager.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

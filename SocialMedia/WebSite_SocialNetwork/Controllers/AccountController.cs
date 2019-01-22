@@ -137,17 +137,20 @@ namespace WebSite_SocialNetwork.Controllers
                 {
                     user.Identity = GetUserIdentity(user.Email);
                     user.Posts = GetPosts(user.Email);
+                    //TODO GET notifications.
                     if (user.Posts == null)
                     {
                         user.Posts = new List<Post>();
                         SetUserCookie(user);
                         Session[ConstantFields.CurrentUser] = user.UserAsJson;
+                        Session[ConstantFields.IsAvailble] = true;
                         return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
                     }
                     else
                     {
                         SetUserCookie(user);
                         Session[ConstantFields.CurrentUser] = user.UserAsJson;
+                        Session[ConstantFields.IsAvailble] = true;
                         return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
                     }
                 }
