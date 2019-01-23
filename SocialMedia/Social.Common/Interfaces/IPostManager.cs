@@ -12,8 +12,8 @@ namespace Social.Common.Interfaces
     {
         Post AddPost(string post);
         void LikePost(int userId, int postId);
-        void CommentPost(string postId, Comment comment);
         void Comment(string commentJson);
         void ChangePostPrivacy(int postId, EpostPrivacy privacy);
+        IEnumerable<IncomeComment> GetComments(string postId);
     }
 }

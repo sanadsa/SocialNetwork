@@ -17,6 +17,9 @@ namespace WebSite_SocialNetwork.Controllers
         {
         }
 
+        /// <summary>
+        /// Get my posts
+        /// </summary>
         public ICollection<Post> GetMyPosts(string email)
         {
             ICollection<Post> posts;
@@ -35,6 +38,9 @@ namespace WebSite_SocialNetwork.Controllers
             }
         }
 
+        /// <summary>
+        /// Get comments from server on a post
+        /// </summary>
         public ICollection<Comment> GetCommentsList(string postId)
         {
             ICollection<Comment> comments;
@@ -53,6 +59,9 @@ namespace WebSite_SocialNetwork.Controllers
             }
         }
 
+        /// <summary>
+        /// Go to comments view
+        /// </summary>
         public ActionResult GetComments(string postId)
         {
             ICollection<Comment> comments = GetCommentsList(postId);
@@ -60,7 +69,10 @@ namespace WebSite_SocialNetwork.Controllers
             return View(comments);
         }
 
-        public ActionResult Comment(string userId, string postId, string comment)
+        /// <summary>
+        /// comment on a post
+        /// </summary>
+        public ActionResult Comment(string userEmail, string postId, string comment)
         {
             if (comment == "" || comment == null)
             {
@@ -69,6 +81,7 @@ namespace WebSite_SocialNetwork.Controllers
             var jsonComment = JsonConvert.SerializeObject(new
             {
                 CommentId = Guid.NewGuid().ToString(),
+                UserId = userEmail,
                 PostId = postId,
                 CommentValue = comment
             });

@@ -71,7 +71,7 @@ namespace SocialBL
                 Text = comment.CommentValue
             };
 
-            _postRepo.CommentPost(comment.UserId, comment.PostId, c);
+            _postRepo.CommentPost(comment.UserId, comment.PostId, comment);
         }
 
         /// <summary>
@@ -85,15 +85,6 @@ namespace SocialBL
         }
 
         /// <summary>
-        /// add comment to neo4j db and relate it to post - calls the repository to edit the db
-        /// </summary>
-        public void CommentPost(string postId, Comment comment)
-        {
-            _postRepo.CommentPost(postId, postId, comment);
-
-        }
-
-        /// <summary>
         /// add like relation from user to post - calls the repository to edit the db
         /// </summary>
         public void LikePost(int userId, int postId)
@@ -101,5 +92,9 @@ namespace SocialBL
             _postRepo.LikePost(userId, postId);
         }
 
+        public IEnumerable<IncomeComment> GetComments(string postId)
+        {
+            return _postRepo.GetComments(postId);
+        }
     }
 }

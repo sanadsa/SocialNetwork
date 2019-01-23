@@ -1,0 +1,21 @@
+﻿@model List<WebSite_SocialNetwork.Models.Comment>
+@{
+    ViewBag.Title = "Comments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Comments</h2>
+@using (Html.BeginForm("ActiveFeed", "Profile", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <input type="submit" value="Back To Feed" class="buttonT" />
+}
+
+@foreach (var comment in Model)
+{
+    <div class="col-sm-4">
+        <button class="btn btn-lg">@Html.ActionLink(comment.UserId, "GetOtherProfile", "Profile", new { email = comment.UserId }, null)</button>
+        <h2>@comment.CommentValue</h2>
+    </div>
+}
+
+

@@ -26,15 +26,15 @@ namespace WebSite_SocialNetwork.Controllers
         /// Get identity info by email
         /// </summary>
         [HttpPost]
-        public ActionResult IdentityEdit(User user)
+        public ActionResult IdentityEdit(string userEmail)
         {
-            if (user == null)
+            if (userEmail == null)
             {
-                return RedirectToAction(ConstantFields.IndexView, ConstantFields.Home);
+                return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error Getting User"});
             }
+            var user = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
 
-            Session["user"] = user;
-            user.Identity = GetUserIdentity(user.Email);
+            user.Identity = GetUserIdentity(userEmail);
             return View(user);
         }
 

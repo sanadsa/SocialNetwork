@@ -79,17 +79,17 @@ namespace Social.Service.Controllers
         }
 
         /// <summary>
-        /// comment on post in neo4j db using http call from the client
+        /// get comments from neo4j db using http call from the client
         /// </summary>
         [HttpPost]
-        [Route("CommentPost")]
-        public HttpResponseMessage CommentPost(string postId, Comment comment)
+        [Route("GetComments")]
+        public HttpResponseMessage GetComments([FromBody]string postId)
         {
             try
             {
-                _postBl.CommentPost(postId, comment);
+                var posts = _postBl.GetComments(postId);
 
-                return Request.CreateResponse(HttpStatusCode.OK, "comment added to post successfully");
+                return Request.CreateResponse(HttpStatusCode.OK, posts);
             }
             catch (Neo4jException e)
             {

@@ -159,6 +159,5 @@ namespace WebSite_SocialNetwork.Controllers
         }
 
         private UserIdentity GetUserIdentity(string email) => new IdentityController().GetUserIdentity(email);
-
     }
 }
