@@ -34,5 +34,55 @@ namespace WebSite_SocialNetwork.Controllers
                 return posts;
             }
         }
+
+        public ICollection<Comment> GetCommentsList(string postId)
+        {
+            ICollection<Comment> comments;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ConstantFields.Social_BaseAddress);
+                var result = client.PostAsJsonAsync(ConstantFields.Social_GetComments, postId).Result;
+                if (!result.IsSuccessStatusCode)
+                {
+                    RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error Getting Comments" });
+                }
+
+                var response = result.Content.ReadAsStringAsync().Result;
+                comments = JsonConvert.DeserializeObject<ICollection<Comment>>(response);
+                return comments;
+            }
+        }
+
+        public ActionResult GetComments(string postId)
+        {
+            ICollection<Comment> comments = GetCommentsList(postId);
+            
+            return View(comments);
+        }
+
+        public ActionResult Comment(string userId, string postId, string comment)
+        {
+            if (comment == "" || comment == null)
+            {
+                return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
+            }
+            var jsonComment = JsonConvert.SerializeObject(new
+            {
+                CommentId = Guid.NewGuid().ToString(),
+                PostId = postId,
+                CommentValue = comment
+            });
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ConstantFields.Social_BaseAddress);
+                var result = client.PostAsJsonAsync(ConstantFields.Social_AddComment, jsonComment).Result;
+                if (!result.IsSuccessStatusCode)
+                {
+                    RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error Getting Comments" });
+                }
+
+                return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
+            }
+        }
     }
 }

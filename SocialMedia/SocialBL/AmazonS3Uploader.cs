@@ -4,41 +4,51 @@ using System.IO;
 using System.Text.RegularExpressions;
 using Amazon.S3;
 using Amazon.S3.Model;
+using Amazon.S3.Transfer;
 
 namespace SocialBL
 {
     public class AmazonS3Uploader
     {
-        private string keyName = "Boxing.jpg";
-        private string bucketName = "myselabucket";
+        //private string keyName = "Statham.png";
+        private string keyName = "instabook";
+        private string bucketName = "sanaditamar";
         readonly string bucketUrl;
-        IAmazonS3 client;
+        //private string hostUrl = "https://s3.eu-central-1.amazonaws.com";
+        static AmazonS3Client s3client;// = new AmazonS3Client();
 
         public AmazonS3Uploader()
         {
-            client = new AmazonS3Client(Amazon.RegionEndpoint.EUCentral1);
+            s3client = new AmazonS3Client(Amazon.RegionEndpoint.EUCentral1);
             bucketUrl = ConfigurationManager.AppSettings["s3Key"];
         }
 
-        public string UploadFile(byte[] imagePath, string guid)
+        public string UploadFile(byte[] imageFile, string guid)
         {
+            var image = new MemoryStream(imageFile);
+            var fileName = $"{keyName}/{DateTime.Now.ToString()}.png";
+            var fileTransferUtility = new TransferUtility(s3client);
+
             try
             {
-                string key = guid + ".";
-                byte[] imageData = imagePath;
-                using (client)
+                fileTransferUtility.Upload(stream: image, bucketName: bucketName, key: fileName);
+                
+                fileTransferUtility.S3Client.PutACL(new PutACLRequest
                 {
-                    var putRequest = new PutObjectRequest();
-                    putRequest.BucketName = bucketName;
-                    putRequest.Key = keyName;
+                    CannedACL = S3CannedACL.PublicReadWrite,
+                    BucketName = bucketName,
+                    Key = fileName
+                });
 
-                    using (var ms = new MemoryStream(imageData))
-                    {
-                        putRequest.InputStream = ms;
-                        var response = client.PutObject(putRequest);
-                    }
-                }
-                return bucketUrl + key;
+                var URL = s3client.GetPreSignedURL(new GetPreSignedUrlRequest
+                {
+                    BucketName = bucketName,
+                    Key = fileName,
+                    Expires = (DateTime.FromOADate(10))
+                });
+
+                var finalURL = URL.Split('?');
+                return finalURL[0];
             }
             catch (AmazonS3Exception amazonS3Exception)
             {
@@ -60,5 +70,4 @@ namespace SocialBL
             }
         }
     }
-
 }

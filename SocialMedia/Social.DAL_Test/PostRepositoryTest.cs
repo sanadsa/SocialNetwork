@@ -18,13 +18,13 @@ namespace Social.DAL_Test
         {
             Post post = new Post
             {
-                PostId = 8,
+                PostId = "fdsg",
                 ImageUrl = "url:-)",
                 Privacy = EpostPrivacy.Public,
                 Tags = new List<string> { "@omer", "@shahaf" },
                 Text = "lakerda"
             };
-            p.AddPost(1, post);
+            p.AddPost("dsad", post);
         }
 
         [TestMethod]

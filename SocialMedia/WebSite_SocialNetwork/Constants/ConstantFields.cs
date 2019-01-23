@@ -44,6 +44,8 @@ namespace WebSite_SocialNetwork.Constants
         public const string Social_BaseAddress = "http://localhost:13608/";
         public const string Social_GetMyPosts = "api/Feed/GetMyPosts";
         public const string Social_GetFeed = "api/Feed/GetFeed";
+        public const string Social_GetComments = "api/Post/GetComments";
+        public const string Social_AddComment = "api/Post/Comment";
         public const string Social_AddNewPost = "api/Post/CreatePost";
         public const string Social_AddNewUser = "api/User/CreateUser";
         public const string Social_GetFollowing = "api/User/GetFollowing";

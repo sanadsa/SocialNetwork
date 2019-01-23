@@ -5,35 +5,33 @@
     {
         foreach (var p in Model.Posts)
         {
-
-            if (p.ImageUrl != null)
-            {
-                <div class="col-lg-4 col-sm-6 portfolio-item">
-                    <div class="card h-100">
+            <div class="col-lg-4 col-sm-6 portfolio-item">
+                <div class="card h-100">
+                    @if (p.ImageUrl != null)
+                    {
                         <a href="#"><img class="card-img-top" src="@p.ImageUrl" hight="100" width="50" alt=""></a>
-                        <div class="card-body">
-                            <h4 class="card-title">
-                                <button class="btn btn-lg">@Html.ActionLink(p.UserEmail, "GetOtherProfile", "Profile", new { email = p.UserEmail }, null)</button>
-                            </h4>
-                            <p class="card-text">@p.Text</p>
-                        </div>
+                    }
+                    <div class="card-body">
+                        <h2 class="card-title">
+                            <button class="btn btn-lg">@Html.ActionLink(p.UserEmail, "GetOtherProfile", "Profile", new { email = p.UserEmail }, null)</button>
+                        </h2>
+                        <p class="card-text">@p.Text</p>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">
+                            @using (Html.BeginForm("Comment", "Social",new { comment = Model.Comment, postId = p.PostId, userId = p.UserEmail }, FormMethod.Post))
+                            {
+                                <div class="form-group">
+                                    
+                                    @Html.TextBoxFor(m => m.Comment, new { @class = "form-control" })
+                                </div>
+                                <button type="submit" class="btn btn-primary">Comment</button>
+                            }
+                            <button class="btn btn-lg">@Html.ActionLink("Show Comments", "GetComments", "Social", new { postId = p.PostId }, null)</button>
+                        </h3>
                     </div>
                 </div>
-            }
-            else
-            {
-                <div class="col-lg-4 col-sm-6 portfolio-item">
-                    <div class="card h-100">
-                        <a href="#"><img class="card-img-top" src="http://placehold.it/150x75" alt=""></a>
-                        <div class="card-body">
-                            <h4 class="card-title">
-                                <button class="btn btn-lg">@Html.ActionLink(p.UserEmail, "GetOtherProfile", "Profile", new { email = p.UserEmail }, null)</button>
-                            </h4>
-                            <p class="card-text">@p.Text</p>
-                        </div>
-                    </div>
-                </div>
-            }
+            </div>
         }
     }
 </div>

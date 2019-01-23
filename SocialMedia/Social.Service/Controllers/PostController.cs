@@ -55,8 +55,35 @@ namespace Social.Service.Controllers
         /// comment on post in neo4j db using http call from the client
         /// </summary>
         [HttpPost]
+        [Route("Comment")]
+        public HttpResponseMessage Comment([FromBody]string commentJson)
+        {
+            try
+            {
+                _postBl.Comment(commentJson);
+
+                return Request.CreateResponse(HttpStatusCode.OK, "comment added to post successfully");
+            }
+            catch (Neo4jException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+        }
+
+        /// <summary>
+        /// comment on post in neo4j db using http call from the client
+        /// </summary>
+        [HttpPost]
         [Route("CommentPost")]
-        public HttpResponseMessage CommentPost(int postId, Comment comment)
+        public HttpResponseMessage CommentPost(string postId, Comment comment)
         {
             try
             {
