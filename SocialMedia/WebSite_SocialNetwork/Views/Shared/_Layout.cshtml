@@ -6,6 +6,7 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
 </head>
 <body>
     <div class="navbar-inverse navbar-fixed-top">
@@ -34,7 +35,7 @@
             <p>&copy; @DateTime.Now.Year - InstaBook</p>
         </footer>
     </div>
-    @Scripts.Render("~/bundles/jquery")
+
     @Scripts.Render("~/bundles/bootstrap")
     <script src="~/Scripts/jquery.signalR-2.4.0.js"></script>
     <script src="~/Scripts/jquery.signalR-2.4.0.min.js"></script>

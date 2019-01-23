@@ -138,7 +138,6 @@ namespace WebSite_SocialNetwork.Controllers
                 {
                     user.Identity = GetUserIdentity(user.Email);
                     user.Posts = GetPosts(user.Email);
-                    //TODO GET notifications.
                     if (user.Posts == null)
                     {
                         user.Posts = new List<Post>();
@@ -166,8 +165,7 @@ namespace WebSite_SocialNetwork.Controllers
 
         public ActionResult RegisterNewClient(RegisterUser registerUser)
         {
-            var register = JsonConvert.SerializeObject(
-                new
+            var register = JsonConvert.SerializeObject(new
                 {
                     Username = registerUser.Username,
                     Password = registerUser.Password,
