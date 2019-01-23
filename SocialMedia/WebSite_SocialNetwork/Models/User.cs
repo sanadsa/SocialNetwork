@@ -26,8 +26,6 @@ namespace WebSite_SocialNetwork.Models
 
         public ICollection<Post> Posts { get; set; }
 
-        public Comment Comment { get; set; }
-
         public string UserAsJson
         {
             get

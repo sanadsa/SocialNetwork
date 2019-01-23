@@ -4,30 +4,22 @@
     ViewBag.Title = "_NotificationPartial";
 }
 
-<div id="notificationListView" class="list-group col-sm-4">
-    weedewd
+<div class="list-group col-sm-4">
     <ul id="notificationListView"></ul>
 </div>
 <script>
-    $(document).ready(
-        function () {
-            alert(1);
-            var connection = $.hubConnection(hubUrl, { useDefaultPath: false });
-            var hub = connection.createHubProxy("NotificationHub");
-            var hubStart = connection.start({ jsonp: true });
-
-            $hubStart().done(function () {
-            });
-        });
-
     var hubUrl = "http://localhost:55140/";
     var connection = $.hubConnection(hubUrl, { useDefaultPath: false });
     var notificationHubProxy = connection.createHubProxy('NotificationHub');
-    notificationHubProxy.on('GotNotifactionsFromServer', function (username) {
-        console.log(username);
-    });
-    connection.start().done(function () {
-        // Wire up Send button to call NewContosoChatMessage on the server.
-        contosoChatHubProxy.invoke('PushNotification', $('#discussion').append('<li><strong>' + htmlEncode(name) + '</strong>: ' + htmlEncode(message) + '</li>')
-    });
+    alert(1);
+    $(document).ready(function () {
+        notificationHubProxy.on('GotNotifactionsFromServer', function (username) {
+            alert(2);
+            console.log(username);
+        });
+        connection.start().done(function (username) {
+            // Wire up Send button to call NewContosoChatMessage on the server.
+            notificationHubProxy.invoke('PushNotification', $('#notificationListView').append('<li><strong>' + htmlEncode(username) + '</strong></li>')
+        });
+        alert(3);
 </script>

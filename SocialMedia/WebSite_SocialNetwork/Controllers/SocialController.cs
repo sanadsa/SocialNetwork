@@ -13,9 +13,7 @@ namespace WebSite_SocialNetwork.Controllers
 {
     public class SocialController : Controller
     {
-        public SocialController()
-        {
-        }
+        public SocialController() {}
 
         /// <summary>
         /// Get my posts
