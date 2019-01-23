@@ -97,5 +97,28 @@ namespace WebSite_SocialNetwork.Controllers
                 return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
             }
         }
+
+        /// <summary>
+        /// like on a post
+        /// </summary>
+        public ActionResult Like(string userEmail, string postId)
+        {
+            var jsonLike = JsonConvert.SerializeObject(new
+            {
+                UserEmail = userEmail,
+                PostId = postId,
+            });
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ConstantFields.Social_BaseAddress);
+                var result = client.PostAsJsonAsync(ConstantFields.Social_Like, jsonLike).Result;
+                if (!result.IsSuccessStatusCode)
+                {
+                    return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error Liking" });
+                }
+
+                return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
+            }
+        }
     }
 }

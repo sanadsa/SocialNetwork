@@ -19,8 +19,8 @@
         </div>
         <div class="card-body">
             <h3 class="card-title">
-                <button class="btn btn-primary">@Html.ActionLink("Like", "Like", "Social", new { postId = p.PostId, userEmail = p.UserEmail }, null)</button>
-                @using (Html.BeginForm("Comment", "Social", new { comment = Model.Comment, postId = p.PostId, userEmail = p.UserEmail }, FormMethod.Post))
+                <button class="btn btn-lg">@Html.ActionLink("Like", "Like", "Social", new { postId = p.PostId, userEmail = Model.Email }, null)</button>
+                @using (Html.BeginForm("Comment", "Social", new { comment = Model.Comment, postId = p.PostId, userEmail = Model.Email }, FormMethod.Post))
                 {
                     <div class="form-group">
 

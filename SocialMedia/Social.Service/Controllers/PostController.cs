@@ -110,11 +110,11 @@ namespace Social.Service.Controllers
         /// </summary>
         [HttpPost]
         [Route("LikePost")]
-        public HttpResponseMessage LikePost(int userId, int postId)
+        public HttpResponseMessage LikePost([FromBody] string likeJson)
         {
             try
             {
-                _postBl.LikePost(userId, postId);
+                _postBl.LikePost(likeJson);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "user liked a post successfully");
             }

@@ -11,7 +11,7 @@ namespace Social.Common.Interfaces
     public interface IPostRepository
     {
         void AddPost(string email, Post post);
-        void LikePost(int userId, int postId);
+        void LikePost(string userId, string postId);
         int GetNumberOfLikes(int postId);
         IEnumerable<IncomeComment> GetComments(string postId);
         void CommentPost(string userId, string postId, IncomeComment comment);  

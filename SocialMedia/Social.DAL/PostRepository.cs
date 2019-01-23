@@ -92,10 +92,10 @@ namespace Social.DAL
         /// user like a post, only if he didnt liked it already
         /// creates a relate between user and a post in neo4j
         /// </summary>
-        public void LikePost(int userId, int postId)
+        public void LikePost(string userEmail, string postId)
         {
-            var query = "MATCH (u:User{UserId:" + userId + "})," +
-                "(p:Post{PostId:" + postId + "})" +
+            var query = "MATCH (u:User{Email:\"" + userEmail + "\"})," +
+                "(p:Post{PostId:\"" + postId + "\"})" +
                 "CREATE UNIQUE (u)-[r:Liked]->(p)" +
                 "RETURN type(r)";
             _repo.RunQuery(driver, query);

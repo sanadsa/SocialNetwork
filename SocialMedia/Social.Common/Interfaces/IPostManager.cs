@@ -11,7 +11,7 @@ namespace Social.Common.Interfaces
     public interface IPostManager
     {
         Post AddPost(string post);
-        void LikePost(int userId, int postId);
+        void LikePost(string likeJson);
         void Comment(string commentJson);
         void ChangePostPrivacy(int postId, EpostPrivacy privacy);
         IEnumerable<IncomeComment> GetComments(string postId);

@@ -87,9 +87,10 @@ namespace SocialBL
         /// <summary>
         /// add like relation from user to post - calls the repository to edit the db
         /// </summary>
-        public void LikePost(int userId, int postId)
+        public void LikePost(string likeJson)
         {
-            _postRepo.LikePost(userId, postId);
+            var like = JsonConvert.DeserializeObject<IncomeLike>(likeJson);
+            _postRepo.LikePost(like.UserEmail, like.PostId);
         }
 
         public IEnumerable<IncomeComment> GetComments(string postId)
