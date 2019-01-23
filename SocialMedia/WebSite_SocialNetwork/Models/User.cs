@@ -22,6 +22,8 @@ namespace WebSite_SocialNetwork.Models
 
         public UserIdentity Identity { get; set; }
 
+        public string Comment { get; set; }
+
         public ICollection<Post> Posts { get; set; }
 
         public Comment Comment { get; set; }

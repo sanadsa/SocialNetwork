@@ -5,33 +5,36 @@
     {
         foreach (var p in Model.Posts)
         {
-            <div class="col-lg-4 col-sm-6 portfolio-item">
-                <div class="card h-100">
-                    @if (p.ImageUrl != null)
-                    {
-                        <a href="#"><img class="card-img-top" src="@p.ImageUrl" hight="100" width="50" alt=""></a>
-                    }
-                    <div class="card-body">
-                        <h2 class="card-title">
-                            <button class="btn btn-lg">@Html.ActionLink(p.UserEmail, "GetOtherProfile", "Profile", new { email = p.UserEmail }, null)</button>
-                        </h2>
-                        <p class="card-text">@p.Text</p>
+            @*<div class="col-lg-4 col-sm-6 portfolio-item">*@
+    <div class="card h-100">
+        <h2 class="card-title">
+            <button class="btn btn-lg">@Html.ActionLink(p.UserEmail, "GetOtherProfile", "Profile", new { email = p.UserEmail }, null)</button>
+            <p class="card-body">@p.Text</p>
+        </h2>
+        <div class="card-img-top">
+            @if (p.ImageUrl != null)
+            {
+                <a href="#"><img class="card-img-top" src="@p.ImageUrl" hight="450" width="350" alt=""></a>
+            }
+        </div>
+        <div class="card-body">
+            <h3 class="card-title">
+                <button class="btn btn-lg">@Html.ActionLink("Like", "Like", "Social", new { postId = p.PostId, userEmail = Model.Email }, null)</button>
+                @using (Html.BeginForm("Comment", "Social", new { comment = Model.Comment, postId = p.PostId, userEmail = Model.Email }, FormMethod.Post))
+                {
+                    <div class="form-group">
+
+                        @Html.TextBoxFor(m => m.Comment, new { @class = "form-control" })
                     </div>
-                    <div class="card-body">
-                        <h3 class="card-title">
-                            @using (Html.BeginForm("Comment", "Social",new { comment = Model.Comment, postId = p.PostId, userId = p.UserEmail }, FormMethod.Post))
-                            {
-                                <div class="form-group">
-                                    
-                                    @Html.TextBoxFor(m => m.Comment, new { @class = "form-control" })
-                                </div>
-                                <button type="submit" class="btn btn-primary">Comment</button>
-                            }
-                            <button class="btn btn-lg">@Html.ActionLink("Show Comments", "GetComments", "Social", new { postId = p.PostId }, null)</button>
-                        </h3>
-                    </div>
-                </div>
-            </div>
+                    <button type="submit" class="btn btn-primary">Comment</button>
+                }
+                <button class="btn btn-lg">@Html.ActionLink("Show Comments", "GetComments", "Social", new { postId = p.PostId }, null)</button>
+            </h3>
+        </div>
+        <hr style="height:1px;border:none;color:#333;background-color:#333;" />
+        <hr style="height:1px;border:none;color:#333;background-color:#333;" />
+    </div>
+            @*</div>*@
         }
     }
 </div>

@@ -19,7 +19,7 @@
         <p>@Model.Identity.WorkAddress</p>
     </div>
     @*Photo Here*@
-    @using (Html.BeginForm("IdentityEdit", "Identity", Model, FormMethod.Post))
+    @using (Html.BeginForm("IdentityEdit", "Identity", new { userEmail = Model.Email }, FormMethod.Post))
     {
         <input type="submit" value="Edit Identity" class="buttonT" />
     }

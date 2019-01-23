@@ -52,9 +52,6 @@ namespace Social.DAL
         /// </summary>
         public void DeleteUser(int userId)
         {
-            //var query = $@"MATCH (user:User)
-            //               WHERE user.UserId = {userId}
-            //               DELETE user";
             var query = $@"OPTIONAL MATCH (user:User)<-[r]->()
                            WHERE user.UserId = {userId}
                            DELETE r, user";

@@ -3,6 +3,7 @@ using Social.Common.Enums;
 using Social.Common.Interfaces;
 using Social.Common.Models;
 using System;
+using System.Collections.Generic;
 
 namespace Social.DAL
 {
@@ -53,7 +54,7 @@ namespace Social.DAL
         /// <summary>
         /// create a comment in neo4j and relate it to an existing post
         /// </summary>
-        public void CommentPost(string userId, string postId, Comment comment)
+        public void CommentPost(string userId, string postId, IncomeComment comment)
         {
             var json = _repo.ObjectToJson(comment);
             var query = $"CREATE (c:Comment {json})";
@@ -80,7 +81,7 @@ namespace Social.DAL
         /// </summary>
         public void RelateCommentToUser(string userId, string commentId)
         {
-            var query = "MATCH (u:User{UserId:\"" + userId + "\"})," +
+            var query = "MATCH (u:User{Email:\"" + userId + "\"})," +
                 "(c:Comment{CommentId:\"" + commentId + "\"})" +
                 "CREATE (u)-[r:Commented]->(c)" +
                 "RETURN type(r)";
@@ -91,10 +92,10 @@ namespace Social.DAL
         /// user like a post, only if he didnt liked it already
         /// creates a relate between user and a post in neo4j
         /// </summary>
-        public void LikePost(int userId, int postId)
+        public void LikePost(string userEmail, string postId)
         {
-            var query = "MATCH (u:User{UserId:" + userId + "})," +
-                "(p:Post{PostId:" + postId + "})" +
+            var query = "MATCH (u:User{Email:\"" + userEmail + "\"})," +
+                "(p:Post{PostId:\"" + postId + "\"})" +
                 "CREATE UNIQUE (u)-[r:Liked]->(p)" +
                 "RETURN type(r)";
             _repo.RunQuery(driver, query);
@@ -111,6 +112,19 @@ namespace Social.DAL
             var result = _repo.RunQuery(driver, query);
             var likes = _repo.StatementToList<User>(result);
             return likes.Count;
+        }
+
+        /// <summary>
+        /// gt comments of post
+        /// </summary>
+        public IEnumerable<IncomeComment> GetComments(string postId)
+        {
+            var query = $"Match (c:Comment)-[:CommentOn]->(p:Post) " +
+                        $"Where p.PostId=\"{postId}\" " +
+                        $"Return c";
+            var result = _repo.RunQuery(driver, query);
+            var comments = _repo.StatementToList<IncomeComment>(result);
+            return comments;
         }
     }
 }
