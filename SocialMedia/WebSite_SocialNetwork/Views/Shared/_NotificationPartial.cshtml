@@ -4,19 +4,60 @@
     ViewBag.Title = "_NotificationPartial";
 }
 
-<div class="list-group col-sm-4">
-    @if (Model.Notifications != null)
-    {
-        foreach (var Notification in Model.Notifications)
-        {
-            <div class="list-group-item disabled">
-                <strong>@Notification.Text</strong>
-                @Html.ActionLink(Notification.NotificationSource, "GetNotificationSource", "Notification", new { source = Notification.NotificationSource }, null)
-            </div>
-        }
-    }
-    else
-    {
-        <strong>There is no notifications</strong>
-    }
+<div id="notificationListView" class="list-group col-sm-4">
+    <ul id="notificationListView"></ul>
+</div>
+<script>
+    $(function () {
+        var hubUrl = "http://localhost:55140/";
+        var connection = $.hubConnection(hubUrl, { useDefaultPath: false });
+        var hub = connection.createHubProxy("NotificationHub");
+        var hubStart = connection.start({ jsonp: true });
+
+        $("#notification").GotNotifactionsFromServer({
+            width: "100%",
+            position: {
+                top: 0,
+                left: 0
+            }
+        });
+        chat.client.addNewMessageToPage = function (name, message) {
+            $('#discussion').append('<li><strong>' + htmlEncode(name)
+                + '</strong>: ' + htmlEncode(message) + '</li>');
+        
+    });
+</script>
+
+<div id="example">
+    <div id="grid" style="margin-bottom:20px"></div>
+    <span id="notification"></span>
+    <script>
+        $(function () {
+            var hubUrl = "http://localhost:55140/";
+            var connection = $.hubConnection(hubUrl, { useDefaultPath: false });
+            var hub = connection.createHubProxy("NotificationHub");
+            var hubStart = connection.start({ jsonp: true });
+
+            $("#notification").GotNotifactionsFromServer({
+                width: "100%",
+                position: {
+                    top: 0,
+                    left: 0
+                }
+            });
+        });
+    </script>
+    <div class="box wide">
+        <h4>Information</h4>
+        <p>This example demonstrates real-time push-notifications from <a href="https://www.asp.net/signalr">SignalR</a>. To see the real-time updates:</p>
+        <ol>
+            <li>Open this page in another browser window by clicking <a href="./signalr" target="_new">here</a></li>
+            <li>Create, update or destroy grid items.</li>
+        </ol>
+        <p>
+            <strong>Note:</strong> To further enhance real-time experience, the Grid will also display changes from other users,
+            which currently happen to perform CRUD operations on the same demo.
+            If you refresh the page, all changes will be lost, because the remote service only broadcasts changes, it does not actually save them.
+        </p>
+    </div>
 </div>

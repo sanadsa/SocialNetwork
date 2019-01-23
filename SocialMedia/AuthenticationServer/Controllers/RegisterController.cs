@@ -1,5 +1,6 @@
 ﻿using AuthenticationServer.Models;
 using BL;
+using Common.Environment_Services;
 using Common.Interfaces;
 using Newtonsoft.Json;
 using System;
@@ -26,11 +27,24 @@ namespace AuthenticationServer.Controllers
         [Route("RegisterNewUser")]
         public async Task<bool> RegisterNewUser([FromBody]string registerJson)
         {
-            var registerUser = JsonConvert.DeserializeObject<RegisterUser>(registerJson);
-            if (registerUser != null)
-                return await _registerService.AddUser(registerUser.Email, registerUser.Username, registerUser.Password);
-            else
-                throw new Exception("A problem during Register Process");
+            try
+            {
+                if (registerJson != null)
+                {
+                    var registerUser = JsonConvert.DeserializeObject<RegisterUser>(registerJson);
+                    if (registerUser != null)
+                        return await _registerService.AddUser(registerUser.Email, registerUser.Username, registerUser.Password);
+                    else
+                        return false;
+                }
+                else
+                    return false;
+            }
+            catch(Exception ex)
+            {
+                LogService.WriteExceptionsToLogger(ex);
+                return false;
+            }
         }
     }
 }

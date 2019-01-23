@@ -24,8 +24,6 @@ namespace WebSite_SocialNetwork.Models
 
         public ICollection<Post> Posts { get; set; }
 
-        public ICollection<Notification> Notifications { get; set; }
-
         public string UserAsJson
         {
             get

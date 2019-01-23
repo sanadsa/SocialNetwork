@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enum\EnotificationTypes.cs" />
+    <Compile Include="Environment Services\Logger.cs" />
+    <Compile Include="Environment Services\LogService.cs" />
     <Compile Include="Interfaces\INotificationManager.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
