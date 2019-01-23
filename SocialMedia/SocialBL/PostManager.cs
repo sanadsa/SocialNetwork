@@ -58,6 +58,23 @@ namespace SocialBL
         }
 
         /// <summary>
+        /// comment on post
+        /// </summary>
+        public void Comment(string commentJson)
+        {
+            var comment = JsonConvert.DeserializeObject<IncomeComment>(commentJson);
+            Comment c = new Comment
+            {
+                CommentId = comment.CommentId,
+                Image = null,
+                Tags = new List<string>(),
+                Text = comment.CommentValue
+            };
+
+            _postRepo.CommentPost(comment.UserId, comment.PostId, c);
+        }
+
+        /// <summary>
         /// change the privacy of an existing post - who can see the post (all, followers, non)
         /// </summary>
         /// <param name="id"></param>
@@ -70,9 +87,9 @@ namespace SocialBL
         /// <summary>
         /// add comment to neo4j db and relate it to post - calls the repository to edit the db
         /// </summary>
-        public void CommentPost(int postId, Comment comment)
+        public void CommentPost(string postId, Comment comment)
         {
-            _postRepo.CommentPost(postId, comment);
+            _postRepo.CommentPost(postId, postId, comment);
 
         }
 
@@ -83,5 +100,6 @@ namespace SocialBL
         {
             _postRepo.LikePost(userId, postId);
         }
+
     }
 }

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebSite_SocialNetwork.Enums
 {
-    public enum EnotificationTypes
+    public enum eNotificationTypes
     {
         Comment = 1,
         Like = 2,

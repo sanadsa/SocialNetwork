@@ -53,23 +53,36 @@ namespace Social.DAL
         /// <summary>
         /// create a comment in neo4j and relate it to an existing post
         /// </summary>
-        public void CommentPost(int postId, Comment comment)
+        public void CommentPost(string userId, string postId, Comment comment)
         {
             var json = _repo.ObjectToJson(comment);
             var query = $"CREATE (c:Comment {json})";
 
             _repo.RunQuery(driver, query);
             RelateCommentToPost(postId, comment.CommentId);
+            RelateCommentToUser(userId, comment.CommentId);
         }
 
         /// <summary>
         /// relate a comment to an existing post in neo4j
         /// </summary>
-        public void RelateCommentToPost(int postId, int commentId)
+        public void RelateCommentToPost(string postId, string commentId)
         {
-            var query = "MATCH (p:Post{PostId:" + postId + "})," +
-                "(c:Comment{CommentId:" + commentId + "})" +
+            var query = "MATCH (p:Post{PostId:\"" + postId + "\"})," +
+                "(c:Comment{CommentId:\"" + commentId + "\"})" +
                 "CREATE (c)-[r:CommentOn]->(p)" +
+                "RETURN type(r)";
+            _repo.RunQuery(driver, query);
+        }
+
+        /// <summary>
+        /// relate a comment to an existing post in neo4j
+        /// </summary>
+        public void RelateCommentToUser(string userId, string commentId)
+        {
+            var query = "MATCH (u:User{UserId:\"" + userId + "\"})," +
+                "(c:Comment{CommentId:\"" + commentId + "\"})" +
+                "CREATE (u)-[r:Commented]->(c)" +
                 "RETURN type(r)";
             _repo.RunQuery(driver, query);
         }

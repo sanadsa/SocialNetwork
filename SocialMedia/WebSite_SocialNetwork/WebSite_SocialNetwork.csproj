@@ -161,10 +161,11 @@
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\SocialController.cs" />
     <Compile Include="Enums\EpostPrivacy.cs" />
-    <Compile Include="Enums\EnotificationTypes.cs" />
+    <Compile Include="Enums\eNotificationTypes.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\FacebookUser.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\Post.cs" />
@@ -233,10 +234,10 @@
     <Content Include="Views\Profile\OtherProfile.cshtml" />
     <Content Include="Views\Profile\Search.cshtml" />
     <Content Include="Views\Shared\_NotificationPartial.cshtml" />
+    <Content Include="Views\Social\Comments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Notification\" />
-    <Folder Include="Views\Social\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

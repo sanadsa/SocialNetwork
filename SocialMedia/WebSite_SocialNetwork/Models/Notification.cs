@@ -17,7 +17,7 @@ namespace WebSite_SocialNetwork.Models
 
         public string Text { get; set; }
 
-        public EnotificationTypes Type { get; set; }
+        public eNotificationTypes Type { get; set; }
 
         public string NotificationAsJson
         {
