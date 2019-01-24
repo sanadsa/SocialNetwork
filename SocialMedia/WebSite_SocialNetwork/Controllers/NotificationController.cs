@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebSite_SocialNetwork.Models;
 
 namespace WebSite_SocialNetwork.Controllers
 {
@@ -14,9 +15,21 @@ namespace WebSite_SocialNetwork.Controllers
             return View();
         }
 
-        public ActionResult GetNotificationSource(string source)
+        /// <summary>
+        /// Get the notification from the notification service.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult GetNotification(string username)
         {
-            return View();
+            var notifications = new List<Notification>();
+            notifications.Add(new Notification { NotificationDestination = "eee", NotificationSource = "ddd", Text = "Hello from Notification 1", Type = Enums.eNotificationTypes.Comment });
+            notifications.Add(new Notification { NotificationDestination = "eee", NotificationSource = "ddd", Text = "Hello from Notification 1", Type = Enums.eNotificationTypes.Comment });
+            notifications.Add(new Notification { NotificationDestination = "eee", NotificationSource = "ddd", Text = "Hello from Notification 1", Type = Enums.eNotificationTypes.Comment });
+            notifications.Add(new Notification { NotificationDestination = "eee", NotificationSource = "ddd", Text = "Hello from Notification 1", Type = Enums.eNotificationTypes.Comment });
+            notifications.Add(new Notification { NotificationDestination = "eee", NotificationSource = "ddd", Text = "Hello from Notification 1", Type = Enums.eNotificationTypes.Comment });
+            return Json(notifications, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -23,7 +23,6 @@ namespace NotificationServer
                 //serrvices
                 container.Register<INotificationManager, NotificationManager>(Lifestyle.Singleton);
             }
-
         }
     }
 }

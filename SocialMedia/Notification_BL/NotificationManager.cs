@@ -62,12 +62,17 @@ namespace Notification_BL
             }
         }
 
-        public Task<ICollection<Notification>> PushNotification()
+        public Notification PushNotification(string username)
         {
             throw new NotImplementedException();
         }
 
-        Task INotificationManager.AddNotification(Notification notification)
+        public ICollection<Notification> PushNotifications()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICollection<Notification> PushNotifications(string username)
         {
             throw new NotImplementedException();
         }

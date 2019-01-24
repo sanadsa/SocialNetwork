@@ -9,9 +9,14 @@ namespace Notification_Common.Interfaces
 {
     public interface INotificationManager
     {
-        Task<ICollection<Notification>> PushNotification();
+        ICollection<Notification> PushNotifications(string username);
+
+        Notification PushNotification(string username);
+
         Dictionary<string, string> Connections { get; set; }
-        Task AddNotification(Notification notification);
+
+        void AddNotification(Notification notification);
+
         List<Notification> GetNotifications(string username);
     }
 }

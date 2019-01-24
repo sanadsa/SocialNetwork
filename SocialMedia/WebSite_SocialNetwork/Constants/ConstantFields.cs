@@ -70,5 +70,12 @@ namespace WebSite_SocialNetwork.Constants
         public const string Facebook_GetFieldsUrl = "me?fields=link,first_name,last_name,email,id";
         public const string Facebook_ResponseType = "code";
         public const string Facebook_Scope = "email";
+
+        /* Notification Service */
+        public const string Notification_BaseAddress = "http://localhost:55140/";
+        public const string Notification_PushToService = "api/Notification/PushToService";
+        public const string Notification_GetNotification = "api/Notification/GetNotifications";
+        public const string Notification_InssertToConnections = "api/Notification/InssertToConnections";
+        public const string Notification_GetConnections = "api/Notification/GetConnections";
     }
 }
