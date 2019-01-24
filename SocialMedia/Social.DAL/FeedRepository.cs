@@ -34,6 +34,21 @@ namespace Social.DAL
             return posts;
         }
 
+        public ICollection<string> GetLikes(string postId)
+        {
+            var query = $"Match (u:User)-[:Liked]->(p:Post) " +
+                        $"Where p.PostId=\"{postId}\" " +
+                        $"Return u";
+            var result = _repo.RunQuery(driver, query);
+            var usersThatLikedPost = _repo.StatementToList<User>(result);
+            List<string> emails = new List<string>();
+            foreach (var user in usersThatLikedPost)
+            {
+                emails.Add(user.Email);
+            }
+            return emails;
+        }
+
         /// <summary>
         /// get all my posts
         /// </summary>

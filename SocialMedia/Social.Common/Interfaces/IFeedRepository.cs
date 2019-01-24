@@ -9,7 +9,8 @@ namespace Social.Common.Interfaces
 {
     public interface IFeedRepository
     {
-        IEnumerable<Post> GetFeed(string Token);
-        IEnumerable<Post> GetMyPosts(string Token);
+        IEnumerable<Post> GetFeed(string email);
+        IEnumerable<Post> GetMyPosts(string email);
+        ICollection<string> GetLikes(string postId);
     }
 }

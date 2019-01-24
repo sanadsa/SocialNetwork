@@ -12,6 +12,7 @@ namespace Social.Common.Interfaces
     {
         void AddPost(string email, Post post);
         void LikePost(string userId, string postId);
+        void UnLikePost(string userEmail, string postId);
         int GetNumberOfLikes(int postId);
         IEnumerable<IncomeComment> GetComments(string postId);
         void CommentPost(string userId, string postId, IncomeComment comment);  

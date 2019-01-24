@@ -16,14 +16,31 @@ namespace SocialBL
             _feedRepo = manager;
         }
 
-        public IEnumerable<Post> GetFeed(string token)
+        public IEnumerable<PostDTO> GetFeed(string email)
         {
-            return _feedRepo.GetFeed(token);
+            var posts = _feedRepo.GetFeed(email);
+            List<PostDTO> postDTOs = new List<PostDTO>();
+            foreach (var post in posts)
+            {
+                postDTOs.Add(new PostDTO
+                {
+                    ImageUrl = post.ImageUrl,
+                    PostDate = post.PostDate,
+                    PostId = post.PostId,
+                    Privacy = post.Privacy,
+                    Tags = post.Tags,
+                    Text = post.Text,
+                    UserEmail = post.UserEmail,
+                    EmailsLiked = _feedRepo.GetLikes(post.PostId)
+                });
+            }
+
+            return postDTOs;
         }
 
-        public IEnumerable<Post> GetMyPosts(string token)
+        public IEnumerable<Post> GetMyPosts(string email)
         {
-            return _feedRepo.GetMyPosts(token);
+            return _feedRepo.GetMyPosts(email);
         }
     }
 }

@@ -131,5 +131,32 @@ namespace Social.Service.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
             }
         }
+
+        /// <summary>
+        /// comment on post in neo4j db using http call from the client
+        /// </summary>
+        [HttpPost]
+        [Route("UnLikePost")]
+        public HttpResponseMessage UnLikePost([FromBody] string unlikeJson)
+        {
+            try
+            {
+                _postBl.UnLikePost(unlikeJson);
+
+                return Request.CreateResponse(HttpStatusCode.OK, "user liked a post successfully");
+            }
+            catch (Neo4jException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+        }
     }
 }

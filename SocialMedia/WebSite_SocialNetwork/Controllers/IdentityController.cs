@@ -38,7 +38,7 @@ namespace WebSite_SocialNetwork.Controllers
             return View(user);
         }
 
-        private ICollection<Post> GetPosts(string token) => new SocialController().GetMyPosts(token);
+        private ICollection<Post> GetPosts(string email) => new SocialController().GetMyPosts(email);
 
         /// <summary>
         /// edit identity details

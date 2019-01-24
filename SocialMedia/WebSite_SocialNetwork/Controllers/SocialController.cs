@@ -27,7 +27,7 @@ namespace WebSite_SocialNetwork.Controllers
                 var result = client.PostAsJsonAsync(ConstantFields.Social_GetFeed, email).Result;
                 if (!result.IsSuccessStatusCode)
                 {
-                    RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error Getting Posts" });
+                    throw new Exception("Error Getting posts");
                 }
 
                 var response = result.Content.ReadAsStringAsync().Result;
@@ -65,6 +65,14 @@ namespace WebSite_SocialNetwork.Controllers
             ICollection<Comment> comments = GetCommentsList(postId);
             
             return View(comments);
+        }
+
+        /// <summary>
+        /// Go to likes view
+        /// </summary>
+        public ActionResult GetLikes(ICollection<string> emails)
+        {
+            return View(emails);
         }
 
         /// <summary>
@@ -113,6 +121,29 @@ namespace WebSite_SocialNetwork.Controllers
                 if (!result.IsSuccessStatusCode)
                 {
                     return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error Liking" });
+                }
+
+                return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
+            }
+        }
+
+        /// <summary>
+        /// unlike on a post
+        /// </summary>
+        public ActionResult UnLike(string userEmail, string postId)
+        {
+            var jsonUnLike = JsonConvert.SerializeObject(new
+            {
+                UserEmail = userEmail,
+                PostId = postId,
+            });
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ConstantFields.Social_BaseAddress);
+                var result = client.PostAsJsonAsync(ConstantFields.Social_UnLike, jsonUnLike).Result;
+                if (!result.IsSuccessStatusCode)
+                {
+                    return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = "Error UnLiking" });
                 }
 
                 return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);

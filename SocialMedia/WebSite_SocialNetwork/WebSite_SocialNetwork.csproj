@@ -238,6 +238,7 @@
     <Content Include="Views\Profile\Search.cshtml" />
     <Content Include="Views\Shared\_NotificationPartial.cshtml" />
     <Content Include="Views\Social\GetComments.cshtml" />
+    <Content Include="Views\Social\GetLikes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Notification\" />

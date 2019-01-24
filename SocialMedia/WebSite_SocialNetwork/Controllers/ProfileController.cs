@@ -129,7 +129,7 @@ namespace WebSite_SocialNetwork.Controllers
             return View(users);
         }
 
-        private ICollection<Post> GetPosts(string token) => new SocialController().GetMyPosts(token);
+        private ICollection<Post> GetPosts(string email) => new SocialController().GetMyPosts(email);
 
         private List<ProfileUser> GetBlocked(string email)
         {
