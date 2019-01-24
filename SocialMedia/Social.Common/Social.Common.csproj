@@ -57,6 +57,7 @@
     <Compile Include="Models\IncomeLike.cs" />
     <Compile Include="Models\IncomePost.cs" />
     <Compile Include="Models\Post.cs" />
+    <Compile Include="Models\PostDTO.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

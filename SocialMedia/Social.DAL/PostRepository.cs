@@ -99,7 +99,18 @@ namespace Social.DAL
                 "CREATE UNIQUE (u)-[r:Liked]->(p)" +
                 "RETURN type(r)";
             _repo.RunQuery(driver, query);
-        }        
+        }
+
+        /// <summary>
+        /// delete a relate between user and a post in neo4j
+        /// </summary>
+        public void UnLikePost(string userEmail, string postId)
+        {
+            var query = "MATCH (u:User{Email:\"" + userEmail + "\"})," +
+                "(p:Post{PostId:\"" + postId + "\"})" +
+                ", (u)-[r:Liked]->(p) DELETE r";                
+            _repo.RunQuery(driver, query);
+        }
 
         /// <summary>
         /// get likes of a post

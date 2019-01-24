@@ -24,6 +24,8 @@ namespace WebSite_SocialNetwork.Models
 
         public EpostPrivacy Privacy { get; set; }
 
+        public ICollection<string> EmailsLiked { get; set; }
+
         public string PostAsJson
         {
             get
@@ -36,7 +38,8 @@ namespace WebSite_SocialNetwork.Models
                     Text = this.Text,
                     ImageUrl = this.ImageUrl,
                     Tags = this.Tags,
-                    Privacy = this.Privacy
+                    Privacy = this.Privacy,
+                    EmailsLiked = this.EmailsLiked
                 });
             }
         }

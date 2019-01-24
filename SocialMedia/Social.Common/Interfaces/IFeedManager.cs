@@ -9,7 +9,7 @@ namespace Social.Common.Interfaces
 {
     public interface IFeedManager
     {
-        IEnumerable<Post> GetFeed(string email);
+        IEnumerable<PostDTO> GetFeed(string email);
         IEnumerable<Post> GetMyPosts(string email);
     }
 }

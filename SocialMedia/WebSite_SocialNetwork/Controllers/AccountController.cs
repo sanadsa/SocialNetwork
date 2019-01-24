@@ -115,63 +115,78 @@ namespace WebSite_SocialNetwork.Controllers
 
         public ActionResult Wall()
         {
-            var loginUser = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
-            loginUser.Identity = GetUserIdentity(loginUser.Email);
-            loginUser.Posts = GetPosts(loginUser.Email);
-            ViewBag.Username = loginUser.Username;
-            return View(ConstantFields.WallView, loginUser);
+            try
+            {
+                var loginUser = JsonConvert.DeserializeObject<User>(Session[ConstantFields.CurrentUser].ToString());
+                loginUser.Identity = GetUserIdentity(loginUser.Email);
+                loginUser.Posts = GetPosts(loginUser.Email);
+                
+                ViewBag.Username = loginUser.Username;
+                return View(ConstantFields.WallView, loginUser);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = e.Message });
+            }
         }
 
         [HttpPost]
         public ActionResult Login(LoginViewModel loginViewModel)
         {
-            var loginUser = JsonConvert.SerializeObject(new
+            try
             {
-                Username = loginViewModel.Username,
-                Password = loginViewModel.Password
-            });
-            var response = _client.PostAsJsonAsync(ConstantFields.Authentication_Login, loginUser).Result;
-            var user = response.Content.ReadAsAsync<User>().Result;
-            if (response.IsSuccessStatusCode)
-            {
-                if (user != null)
+                var loginUser = JsonConvert.SerializeObject(new
                 {
-                    user.Identity = GetUserIdentity(user.Email);
-                    user.Posts = GetPosts(user.Email);
-                    if (user.Posts == null)
+                    Username = loginViewModel.Username,
+                    Password = loginViewModel.Password
+                });
+                var response = _client.PostAsJsonAsync(ConstantFields.Authentication_Login, loginUser).Result;
+                var user = response.Content.ReadAsAsync<User>().Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    if (user != null)
                     {
-                        user.Posts = new List<Post>();
-                        SetUserCookie(user);
-                        Session[ConstantFields.CurrentUser] = user.UserAsJson;
-                        Session[ConstantFields.IsAvailble] = true;
-                        return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
+                        user.Identity = GetUserIdentity(user.Email);
+                        user.Posts = GetPosts(user.Email);
+                        if (user.Posts == null)
+                        {
+                            user.Posts = new List<Post>();
+                            SetUserCookie(user);
+                            Session[ConstantFields.CurrentUser] = user.UserAsJson;
+                            Session[ConstantFields.IsAvailble] = true;
+                            return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
+                        }
+                        else
+                        {
+                            SetUserCookie(user);
+                            Session[ConstantFields.CurrentUser] = user.UserAsJson;
+                            Session[ConstantFields.IsAvailble] = true;
+                            return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
+                        }
                     }
                     else
                     {
-                        SetUserCookie(user);
-                        Session[ConstantFields.CurrentUser] = user.UserAsJson;
-                        Session[ConstantFields.IsAvailble] = true;
-                        return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
+                        return RedirectToAction("LoginWithMessage", "Home", new { msg = "User not found" });
                     }
                 }
                 else
-                {
-                    return RedirectToAction("LoginWithMessage", "Home", new { msg = "User not found" });
-                }
+                    return RedirectToAction(ConstantFields.IndexView, ConstantFields.Home);
             }
-            else
-                return RedirectToAction(ConstantFields.IndexView, ConstantFields.Home);
+            catch (Exception e)
+            {
+                return RedirectToAction(ConstantFields.ErrorView, ConstantFields.Home, new { message = e.Message });
+            }
         }
 
         public ActionResult RegisterNewClient(RegisterUser registerUser)
         {
             var register = JsonConvert.SerializeObject(new
-                {
-                    Username = registerUser.Username,
-                    Password = registerUser.Password,
-                    Email = registerUser.Email,
-                    IsAvilable = registerUser.IsAvilable
-                });
+            {
+                Username = registerUser.Username,
+                Password = registerUser.Password,
+                Email = registerUser.Email,
+                IsAvilable = registerUser.IsAvilable
+            });
             var identity = JsonConvert.SerializeObject(
                 new
                 {
@@ -283,6 +298,10 @@ namespace WebSite_SocialNetwork.Controllers
 
         private ICollection<Post> GetPosts(string email) => new SocialController().GetMyPosts(email);
 
-        public ActionResult LogOff() => View();
+        public ActionResult LogOff()
+        {
+            Session[ConstantFields.CurrentUser] = null;
+            return RedirectToAction(ConstantFields.IndexView, ConstantFields.Home);
+        }
     }
 }

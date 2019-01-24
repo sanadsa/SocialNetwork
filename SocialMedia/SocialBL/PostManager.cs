@@ -93,6 +93,15 @@ namespace SocialBL
             _postRepo.LikePost(like.UserEmail, like.PostId);
         }
 
+        /// <summary>
+        /// delete like relation from user to post - calls the repository to edit the db       
+        /// </summary>
+        public void UnLikePost(string likeJson)
+        {
+            var like = JsonConvert.DeserializeObject<IncomeLike>(likeJson);
+            _postRepo.UnLikePost(like.UserEmail, like.PostId);
+        }
+
         public IEnumerable<IncomeComment> GetComments(string postId)
         {
             return _postRepo.GetComments(postId);
