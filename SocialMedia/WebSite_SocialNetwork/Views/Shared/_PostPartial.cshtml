@@ -8,6 +8,7 @@
             <div class="card h-100">
                 <h2 class="card-title">
                     <button class="btn btn-lg">@Html.ActionLink(p.UserEmail, "GetOtherProfile", "Profile", new { email = p.UserEmail }, null)</button>
+                    <p>@p.PostDate</p>
                     <p class="card-body">@p.Text</p>
                 </h2>
                 <div class="card-img-top">
