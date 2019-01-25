@@ -9,8 +9,6 @@ namespace WebSite_SocialNetwork.Models
 {
     public class Notification
     {
-        public string NotificationId { get; set; }
-
         public string NotificationSource { get; set; }
 
         public string NotificationDestination { get; set; }
@@ -25,7 +23,6 @@ namespace WebSite_SocialNetwork.Models
             {
                 return JsonConvert.SerializeObject(new
                 {
-                    NotificationId = this.NotificationId,
                     NotificationSource = this.NotificationSource,
                     NotificationDestination = this.NotificationDestination,
                     Text = this.Text,

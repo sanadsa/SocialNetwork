@@ -8,18 +8,22 @@
     <ul id="notificationListView"></ul>
 </div>
 <script>
-    var hubUrl = "http://localhost:55140/";
-    var connection = $.hubConnection(hubUrl, { useDefaultPath: false });
-    var notificationHubProxy = connection.createHubProxy('NotificationHub');
-    alert(1);
     $(document).ready(function () {
-        notificationHubProxy.on('GotNotifactionsFromServer', function (username) {
-            alert(2);
-            console.log(username);
+        $.ajax({
+            url: "Notification/GetNotification",
+            type: "GET",
+            data: { username: @Model.Username },
+            success: function (response) {
+                var notifications = JSON.parse(response);
+                for (var i = 0; i < notifications.length; i++) {
+                    $("#notificationListView").append("<li>" + notifications[i].Text + "</li>").click(function () {
+                        $(this).hide();
+                    });
+                }
+            },
+            error: function (response) {
+                alert(response);
+            }
         });
-        connection.start().done(function (username) {
-            // Wire up Send button to call NewContosoChatMessage on the server.
-            notificationHubProxy.invoke('PushNotification', $('#notificationListView').append('<li><strong>' + htmlEncode(username) + '</strong></li>')
-        });
-        alert(3);
+    });
 </script>

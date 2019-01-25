@@ -16,20 +16,36 @@ namespace NotificationServer.Controllers
     public class NotificationController : ApiController
     {
         INotificationManager notificationManager { get; set; }
+
         public NotificationController()
         {
             notificationManager = NotificationContainer.container.GetInstance<INotificationManager>();
         }
 
-        [Route("PushToService")]
-        public HttpResponseMessage PushToService([FromBody]string notificationJson)
+        [HttpGet]
+        [Route("GetConnections")]
+        public HttpResponseMessage GetConnections()
         {
             try
             {
-                if (notificationJson != null)
+                var connections = notificationManager.Connections;
+                return Request.CreateResponse(HttpStatusCode.OK, connections);
+            }
+            catch (Exception ex)
+            {
+                LogService.WriteExceptionsToLogger(ex);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+        [Route("InssertToConnections")]
+        public HttpResponseMessage InssertToConnections([FromBody]Tuple<string, string> connection)
+        {
+            try
+            {
+                if (connection != null)
                 {
-                    var notification = JsonConvert.DeserializeObject<Notification>(notificationJson);
-                    //TODO - send the notification to the BL.
+                    notificationManager.Connections[connection.Item1] = connection.Item2;
                     return Request.CreateResponse(HttpStatusCode.OK);
                 }
                 else
@@ -37,7 +53,51 @@ namespace NotificationServer.Controllers
                     return Request.CreateErrorResponse(HttpStatusCode.NoContent, "The notification is empty");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
+            {
+                LogService.WriteExceptionsToLogger(ex);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+        [Route("GetNotifications")]
+        public HttpResponseMessage GetNotifications([FromBody]string username)
+        {
+            try
+            {
+                if (username != null)
+                {
+                    var notifications = notificationManager.GetNotifications(username);
+                    return Request.CreateResponse(HttpStatusCode.OK, notifications);
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NoContent, "The notification is empty");
+                }
+            }
+            catch (Exception ex)
+            {
+                LogService.WriteExceptionsToLogger(ex);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+        [Route("PushToService")]
+        public HttpResponseMessage PushToService([FromBody]Notification notification)
+        {
+            try
+            {
+                if (notification != null)
+                {
+                    //notificationManager.PushNotifications();
+                    return Request.CreateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NoContent, "The notification is empty");
+                }
+            }
+            catch (Exception ex)
             {
                 LogService.WriteExceptionsToLogger(ex);
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);

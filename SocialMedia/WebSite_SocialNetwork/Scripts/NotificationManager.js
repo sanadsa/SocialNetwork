@@ -1,17 +1,21 @@
-﻿$(function () {
-    var connection = $.hubConnection("http://localhost:55140/");
-    var hub = connection.createHubProxy("echo");
-    hub.on("AddMessage", Method);
-    connection.start({ jsonp: true })
-        .done(function () {
-            console.log('connected');
-            hub.say("success?");
-        })
-        .fail(function (a) {
-            console.log('not connected' + a);
-        });
-});
+﻿var notificationType = {
+    Comment: 1,
+    Like: 2,
+    Follow: 3
+};
 
-function Method(messageFromHub) {
-    alert(messageFromHub);
+function Notification(notificationSource, notificationDestination, text, type) {
+    this.notificationSource = notificationSource;
+    this.notificationDestination = notificationDestination;
+    this.text = text;
+    this.type = type;
+}
+
+function createNotification(notificationSource, notificationDestination, text, type) {
+    var obj = {};
+    obj.notificationSource = notificationSource;
+    obj.notificationDestination = notificationDestination;
+    obj.text = text;
+    obj.type = type;
+    return obj;
 }
