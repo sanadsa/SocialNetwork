@@ -32,7 +32,7 @@ namespace WebSite_SocialNetwork.SignalR
         public void PushNotification(Notification notification)
         {
             using (ProfileController controller = new ProfileController())
-            {
+            { 
                 //var followers = controller.GetFollowers(user.Email);
                 //var response = _client.GetAsync(ConstantFields.Notification_GetConnections).Result;
                 //if (response.IsSuccessStatusCode)

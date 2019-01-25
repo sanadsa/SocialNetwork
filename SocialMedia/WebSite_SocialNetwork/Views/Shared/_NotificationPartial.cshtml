@@ -10,6 +10,7 @@
 <script>
     $(document).ready(function () {
         $.ajax({
+            alert(1)
             url: "Notification/GetNotification",
             type: "GET",
             data: { username: @Model.Username },
