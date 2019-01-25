@@ -102,17 +102,6 @@ namespace WebSite_SocialNetwork.Controllers
                 return RedirectToAction(ConstantFields.IndexView, ConstantFields.Home);
         }
 
-        /// <summary>
-        /// Gets the login user and insert to he's cookie the username.
-        /// </summary>
-        /// <param name="user"></param>
-        private void SetUserCookie(User user)
-        {
-            HttpCookie cookie = new HttpCookie(ConstantFields.UserCookie);
-            cookie.Expires = DateTime.Now.AddMinutes(30);
-            cookie.Values[ConstantFields.UserCookie_username] = user.Username;
-        }
-
         public ActionResult Wall()
         {
             try
@@ -151,14 +140,12 @@ namespace WebSite_SocialNetwork.Controllers
                         if (user.Posts == null)
                         {
                             user.Posts = new List<Post>();
-                            SetUserCookie(user);
                             Session[ConstantFields.CurrentUser] = user.UserAsJson;
                             Session[ConstantFields.IsAvailble] = true;
                             return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
                         }
                         else
                         {
-                            SetUserCookie(user);
                             Session[ConstantFields.CurrentUser] = user.UserAsJson;
                             Session[ConstantFields.IsAvailble] = true;
                             return RedirectToAction(ConstantFields.WallView, ConstantFields.Account);
