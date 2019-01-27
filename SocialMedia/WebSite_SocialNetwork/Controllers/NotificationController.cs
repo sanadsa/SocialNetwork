@@ -24,11 +24,11 @@ namespace WebSite_SocialNetwork.Controllers
         public ActionResult GetNotification(string username)
         {
             var notifications = new List<Notification>();
-            notifications.Add(new Notification { NotificationDestination = "eee", NotificationSource = "ddd", Text = "Hello from Notification 1", Type = Enums.eNotificationTypes.Comment });
-            notifications.Add(new Notification { NotificationDestination = "eee", NotificationSource = "ddd", Text = "Hello from Notification 1", Type = Enums.eNotificationTypes.Comment });
-            notifications.Add(new Notification { NotificationDestination = "eee", NotificationSource = "ddd", Text = "Hello from Notification 1", Type = Enums.eNotificationTypes.Comment });
-            notifications.Add(new Notification { NotificationDestination = "eee", NotificationSource = "ddd", Text = "Hello from Notification 1", Type = Enums.eNotificationTypes.Comment });
-            notifications.Add(new Notification { NotificationDestination = "eee", NotificationSource = "ddd", Text = "Hello from Notification 1", Type = Enums.eNotificationTypes.Comment });
+            notifications.Add(new Notification { NotificationDestination = "itamar", NotificationSource = "ddd", Text = "Hello from Notification 1", Type = Enums.eNotificationTypes.Comment });
+            notifications.Add(new Notification { NotificationDestination = "sanad", NotificationSource = "ddd", Text = "Hello from Notification 1", Type = Enums.eNotificationTypes.Comment });
+            notifications.Add(new Notification { NotificationDestination = "ben", NotificationSource = "ddd", Text = "Hello from Notification 1", Type = Enums.eNotificationTypes.Comment });
+            notifications.Add(new Notification { NotificationDestination = "Baba", NotificationSource = "ddd", Text = "Hello from Notification 1", Type = Enums.eNotificationTypes.Comment });
+            notifications.Add(new Notification { NotificationDestination = "Chen", NotificationSource = "Hello from", Text = "Hello from Notification 1", Type = Enums.eNotificationTypes.Comment });
             return Json(notifications, JsonRequestBehavior.AllowGet);
         }
     }

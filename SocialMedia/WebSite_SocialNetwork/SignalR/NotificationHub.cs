@@ -33,12 +33,11 @@ namespace WebSite_SocialNetwork.SignalR
         {
             using (ProfileController controller = new ProfileController())
             { 
-                //var followers = controller.GetFollowers(user.Email);
                 //var response = _client.GetAsync(ConstantFields.Notification_GetConnections).Result;
                 //if (response.IsSuccessStatusCode)
                 //{   
                 //    var connections = response.Content.ReadAsAsync<Dictionary<string, string>>();
-                //    Clients.Client(connections[username]).GotNotifactionsFromServer(notificationManager.GetNotifications(username));
+                //    Clients.Client(connections[notification.NotificationDestination]).GotNotifactionsFromServer(notificationManager.GetNotifications(username));
                 //}
             }
         }
