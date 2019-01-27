@@ -9,11 +9,11 @@
 </div>
 <script>
     $(document).ready(function () {
+        var currentUsername = @Model.Username;
         $.ajax({
-            alert(1)
-            url: "Notification/GetNotification",
+            url: 'Notification/GetNotification',
             type: "GET",
-            data: { username: @Model.Username },
+            data: { username: currentUsername },
             success: function (response) {
                 var notifications = JSON.parse(response);
                 for (var i = 0; i < notifications.length; i++) {
