@@ -8,14 +8,15 @@
     <ul id="notificationListView"></ul>
 </div>
 <script>
+    var currentUser = "@Model.Username";
     $(document).ready(function () {
         $.ajax({
-            alert(1)
-            url: "Notification/GetNotification",
+            url: "/Notification/GetNotification",
             type: "GET",
-            data: { username: @Model.Username },
+            data: { username: currentUser },
             success: function (response) {
-                var notifications = JSON.parse(response);
+                //var notifications = JSON.parse(response);
+                var notifications = response;
                 for (var i = 0; i < notifications.length; i++) {
                     $("#notificationListView").append("<li>" + notifications[i].Text + "</li>").click(function () {
                         $(this).hide();
